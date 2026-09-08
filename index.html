@@ -3,42 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>FlowMoney — Know What You Can Safely Spend</title>
+
   <meta name="description" content="FlowMoney helps people with variable income plan their money, protect essentials, and build an emergency reserve.">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
-    header{background:#111827;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#f5f7fb;
+      color:#172033;
+    }
+
+    header{
+      background:#111827;
+      color:white;
+      padding:18px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
     header h2{margin:0}
-    .container{width:min(100% - 32px,900px);margin:30px auto}
-    .hero{text-align:center;margin-bottom:25px}
-    .hero h1{font-size:38px;margin:0 0 10px}
-    .hero p{color:#667085;font-size:17px}
-    .card{background:white;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 8px 30px rgba(0,0,0,.07)}
-    label{display:block;font-weight:bold;margin:15px 0 7px}
-    input{width:100%;padding:13px;border:1px solid #d0d5dd;border-radius:10px;font-size:16px}
-    button{border:0;border-radius:10px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px;background:#111827;color:white}
-    button.secondary{background:#e5e7eb;color:#111827}
-    button:disabled{opacity:.6;cursor:not-allowed}
-    .hidden{display:none!important}
-    .message{margin-top:12px;padding:12px;border-radius:10px;background:#f2f4f7}
-    .success{background:#ecfdf3;color:#027a48}
-    .warning{background:#fffaeb;color:#b54708}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-    .metric{background:#f8fafc;border-radius:14px;padding:18px}
-    .metric span{display:block;color:#667085;font-size:14px;margin-bottom:8px}
-    .metric strong{font-size:24px}
-    .record{border:1px solid #eaecf0;border-radius:12px;padding:15px;margin-top:12px}
-    .record strong{display:block;margin-bottom:7px}
-    .small{color:#667085;font-size:14px}
-    footer{text-align:center;padding:30px 15px;color:#667085;font-size:13px}
+
+    .container{
+      width:min(100% - 32px,900px);
+      margin:30px auto;
+    }
+
+    .hero{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+    .hero h1{
+      font-size:38px;
+      margin:0 0 10px;
+    }
+
+    .hero p{
+      color:#667085;
+      font-size:17px;
+    }
+
+    .card{
+      background:white;
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:20px;
+      box-shadow:0 8px 30px rgba(0,0,0,.07);
+    }
+
+    label{
+      display:block;
+      font-weight:bold;
+      margin:15px 0 7px;
+    }
+
+    input{
+      width:100%;
+      padding:13px;
+      border:1px solid #d0d5dd;
+      border-radius:10px;
+      font-size:16px;
+    }
+
+    button{
+      border:0;
+      border-radius:10px;
+      padding:13px 18px;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:15px;
+      background:#111827;
+      color:white;
+    }
+
+    button.secondary{
+      background:#e5e7eb;
+      color:#111827;
+    }
+
+    button:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
+    .hidden{
+      display:none!important;
+    }
+
+    .message{
+      margin-top:12px;
+      padding:12px;
+      border-radius:10px;
+      background:#f2f4f7;
+      word-break:break-word;
+    }
+
+    .success{
+      background:#ecfdf3;
+      color:#027a48;
+    }
+
+    .warning{
+      background:#fffaeb;
+      color:#b54708;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:15px;
+    }
+
+    .metric{
+      background:#f8fafc;
+      border-radius:14px;
+      padding:18px;
+    }
+
+    .metric span{
+      display:block;
+      color:#667085;
+      font-size:14px;
+      margin-bottom:8px;
+    }
+
+    .metric strong{
+      font-size:24px;
+    }
+
+    .record{
+      border:1px solid #eaecf0;
+      border-radius:12px;
+      padding:15px;
+      margin-top:12px;
+    }
+
+    .record strong{
+      display:block;
+      margin-bottom:7px;
+    }
+
+    .small{
+      color:#667085;
+      font-size:14px;
+    }
+
+    footer{
+      text-align:center;
+      padding:30px 15px;
+      color:#667085;
+      font-size:13px;
+    }
+
     @media(max-width:650px){
-      .grid{grid-template-columns:1fr}
-      .hero h1{font-size:30px}
-      header{flex-direction:column;align-items:flex-start;gap:10px}
+      .grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero h1{
+        font-size:30px;
+      }
+
+      header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+      }
     }
   </style>
 </head>
@@ -53,58 +192,117 @@
 <div class="container">
 
   <section id="authSection" class="card">
+
     <div class="hero">
       <p><strong>BUILT FOR VARIABLE INCOME</strong></p>
+
       <h1>Know what you can safely spend.</h1>
-      <p>Plan your money even when your income changes from month to month.</p>
+
+      <p>
+        Plan your money even when your income changes from month to month.
+      </p>
     </div>
 
     <h2>Create your FlowMoney account</h2>
 
     <label>Email</label>
-    <input id="email" type="email" placeholder="you@example.com">
+    <input
+      id="email"
+      type="email"
+      placeholder="you@example.com"
+    >
 
     <label>Password</label>
-    <input id="password" type="password" placeholder="At least 6 characters">
+    <input
+      id="password"
+      type="password"
+      placeholder="At least 6 characters"
+    >
 
     <button id="signupBtn">Create Account</button>
-    <button id="loginBtn" class="secondary">Log In</button>
+
+    <button id="loginBtn" class="secondary">
+      Log In
+    </button>
 
     <div id="authMessage" class="message hidden"></div>
+
   </section>
 
 
   <section id="dashboardSection" class="hidden">
 
     <div class="card">
+
       <h2>Your Money Dashboard</h2>
-      <p class="small">Add your monthly income and essential expenses.</p>
+
+      <p class="small">
+        Add your monthly income and essential expenses.
+      </p>
 
       <label>Month</label>
-      <input id="month" type="month">
+
+      <input
+        id="month"
+        type="month"
+      >
 
       <label>Income</label>
-      <input id="income" type="number" min="0" placeholder="0">
+
+      <input
+        id="income"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
 
       <label>Housing</label>
-      <input id="housing" type="number" min="0" placeholder="0">
+
+      <input
+        id="housing"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
 
       <label>Food</label>
-      <input id="food" type="number" min="0" placeholder="0">
+
+      <input
+        id="food"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
 
       <label>Transport</label>
-      <input id="transport" type="number" min="0" placeholder="0">
+
+      <input
+        id="transport"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
 
       <label>Bills & Other Essentials</label>
-      <input id="bills" type="number" min="0" placeholder="0">
 
-      <button id="saveBtn">Save Monthly Record</button>
+      <input
+        id="bills"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
+      <button id="saveBtn">
+        Save Monthly Record
+      </button>
 
       <div id="saveMessage" class="message hidden"></div>
+
     </div>
 
 
     <div class="card">
+
       <h2>Your Money Plan</h2>
 
       <div class="grid">
@@ -144,28 +342,46 @@
       <div id="planMessage" class="message">
         Add your monthly information to calculate your plan.
       </div>
+
     </div>
 
 
     <div class="card">
+
       <h2>Your Saved Records</h2>
+
       <div id="recordsList">
-        <p class="small">No records yet.</p>
+        <p class="small">
+          No records yet.
+        </p>
       </div>
+
     </div>
 
 
     <div class="card">
+
       <h2>FlowMoney Pro</h2>
-      <p>Get a clearer picture of your changing income, spending capacity and emergency reserve.</p>
+
+      <p>
+        Get a clearer picture of your changing income,
+        spending capacity and emergency reserve.
+      </p>
+
       <strong>$5/month</strong>
+
       <br>
-      <button disabled>Pro Coming Soon</button>
+
+      <button disabled>
+        Pro Coming Soon
+      </button>
+
     </div>
 
   </section>
 
 </div>
+
 
 <footer>
   Planning estimates only — not financial advice.
@@ -174,312 +390,715 @@
 
 <script>
 
-const SUPABASE_URL = "https://dsqheepfmumjpfrpniuy.supabase.co";
+const SUPABASE_URL =
+  "https://dsqheepfmumjpfrpniuy.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIOs";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+  "sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIOs";
 
 
-const authSection = document.getElementById("authSection");
-const dashboardSection = document.getElementById("dashboardSection");
-const logoutBtn = document.getElementById("logoutBtn");
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
 
-const signupBtn = document.getElementById("signupBtn");
-const loginBtn = document.getElementById("loginBtn");
+const authSection =
+  document.getElementById("authSection");
 
-const authMessage = document.getElementById("authMessage");
-const saveMessage = document.getElementById("saveMessage");
+const dashboardSection =
+  document.getElementById("dashboardSection");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const signupBtn =
+  document.getElementById("signupBtn");
+
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const authMessage =
+  document.getElementById("authMessage");
+
+const saveMessage =
+  document.getElementById("saveMessage");
 
 
 function showMessage(element,text,type=""){
-  element.textContent=text;
-  element.className="message "+type;
+
+  element.textContent = text;
+
+  element.className =
+    "message " + type;
+
   element.classList.remove("hidden");
+
 }
 
 
-signupBtn.addEventListener("click",async()=>{
+async function getCurrentUser(){
 
-  const email=emailInput.value.trim();
-  const password=passwordInput.value;
-
-  if(!email||!password){
-    showMessage(authMessage,"Please enter your email and password.","warning");
-    return;
-  }
-
-  if(password.length<6){
-    showMessage(authMessage,"Password must be at least 6 characters.","warning");
-    return;
-  }
-
-  signupBtn.disabled=true;
-
-  const {data,error}=await supabaseClient.auth.signUp({
-    email,
-    password
-  });
-
-  signupBtn.disabled=false;
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getUser();
 
   if(error){
-    showMessage(authMessage,error.message,"warning");
-    return;
+
+    console.error("Authentication error:",error);
+
+    return {
+      user:null,
+      error
+    };
+
   }
 
-  if(data.session){
-    showDashboard();
-  }else{
-    showMessage(
-      authMessage,
-      "Account created successfully. You can now log in.",
-      "success"
+  return {
+    user:data.user,
+    error:null
+  };
+
+}
+
+
+/* SIGN UP */
+
+signupBtn.addEventListener(
+  "click",
+  async()=>{
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+
+    if(!email || !password){
+
+      showMessage(
+        authMessage,
+        "Please enter your email and password.",
+        "warning"
+      );
+
+      return;
+    }
+
+
+    if(password.length < 6){
+
+      showMessage(
+        authMessage,
+        "Password must be at least 6 characters.",
+        "warning"
+      );
+
+      return;
+    }
+
+
+    signupBtn.disabled = true;
+
+
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.signUp({
+
+      email,
+      password
+
+    });
+
+
+    signupBtn.disabled = false;
+
+
+    if(error){
+
+      showMessage(
+        authMessage,
+        error.message,
+        "warning"
+      );
+
+      return;
+    }
+
+
+    if(data.session){
+
+      await showDashboard();
+
+    }else{
+
+      showMessage(
+        authMessage,
+        "Account created successfully. You can now log in.",
+        "success"
+      );
+
+    }
+
+  }
+);
+
+
+/* LOGIN */
+
+loginBtn.addEventListener(
+  "click",
+  async()=>{
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+
+    if(!email || !password){
+
+      showMessage(
+        authMessage,
+        "Please enter your email and password.",
+        "warning"
+      );
+
+      return;
+    }
+
+
+    loginBtn.disabled = true;
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.signInWithPassword({
+
+        email,
+        password
+
+      });
+
+
+    loginBtn.disabled = false;
+
+
+    if(error){
+
+      showMessage(
+        authMessage,
+        error.message,
+        "warning"
+      );
+
+      return;
+    }
+
+
+    if(data.user){
+
+      await showDashboard();
+
+    }
+
+  }
+);
+
+
+/* LOG OUT */
+
+logoutBtn.addEventListener(
+  "click",
+  async()=>{
+
+    await supabaseClient.auth.signOut();
+
+
+    dashboardSection.classList.add(
+      "hidden"
     );
+
+    authSection.classList.remove(
+      "hidden"
+    );
+
+    logoutBtn.classList.add(
+      "hidden"
+    );
+
+
+    emailInput.value = "";
+
+    passwordInput.value = "";
+
   }
-
-});
-
-
-loginBtn.addEventListener("click",async()=>{
-
-  const email=emailInput.value.trim();
-  const password=passwordInput.value;
-
-  if(!email||!password){
-    showMessage(authMessage,"Please enter your email and password.","warning");
-    return;
-  }
-
-  loginBtn.disabled=true;
-
-  const {error}=await supabaseClient.auth.signInWithPassword({
-    email,
-    password
-  });
-
-  loginBtn.disabled=false;
-
-  if(error){
-    showMessage(authMessage,error.message,"warning");
-    return;
-  }
-
-  showDashboard();
-
-});
+);
 
 
-logoutBtn.addEventListener("click",async()=>{
-
-  await supabaseClient.auth.signOut();
-
-  dashboardSection.classList.add("hidden");
-  authSection.classList.remove("hidden");
-  logoutBtn.classList.add("hidden");
-
-  emailInput.value="";
-  passwordInput.value="";
-
-});
-
+/* SHOW DASHBOARD */
 
 async function showDashboard(){
 
-  authSection.classList.add("hidden");
-  dashboardSection.classList.remove("hidden");
-  logoutBtn.classList.remove("hidden");
+  authSection.classList.add(
+    "hidden"
+  );
+
+  dashboardSection.classList.remove(
+    "hidden"
+  );
+
+  logoutBtn.classList.remove(
+    "hidden"
+  );
+
 
   await loadRecords();
 
 }
 
 
-document.getElementById("saveBtn").addEventListener("click",async()=>{
+/* SAVE MONTHLY RECORD */
 
-  const {
-    data:{user}
-  }=await supabaseClient.auth.getUser();
+document
+  .getElementById("saveBtn")
+  .addEventListener(
+    "click",
+    async()=>{
 
-  if(!user){
-    showMessage(saveMessage,"Please log in first.","warning");
-    return;
-  }
+      const {
+        user,
+        error:userError
+      } = await getCurrentUser();
 
-  const month=document.getElementById("month").value;
-  const income=Number(document.getElementById("income").value)||0;
-  const housing=Number(document.getElementById("housing").value)||0;
-  const food=Number(document.getElementById("food").value)||0;
-  const transport=Number(document.getElementById("transport").value)||0;
-  const bills=Number(document.getElementById("bills").value)||0;
 
-  if(!month){
-    showMessage(saveMessage,"Please select a month.","warning");
-    return;
-  }
+      if(userError){
 
-  const {error}=await supabaseClient
-    .from("money_records")
-    .insert({
-      user_id:user.id,
-      month,
-      income,
-      housing,
-      food,
-      transport,
-      bills
-    });
+        showMessage(
+          saveMessage,
+          "Authentication error: " +
+          userError.message,
+          "warning"
+        );
 
-  if(error){
-    showMessage(saveMessage,error.message,"warning");
-    return;
-  }
+        return;
+      }
 
-  showMessage(
-    saveMessage,
-    "Monthly record saved successfully.",
-    "success"
+
+      if(!user){
+
+        showMessage(
+          saveMessage,
+          "Please log in first.",
+          "warning"
+        );
+
+        return;
+      }
+
+
+      const month =
+        document.getElementById("month").value;
+
+      const income =
+        Number(
+          document.getElementById("income").value
+        ) || 0;
+
+      const housing =
+        Number(
+          document.getElementById("housing").value
+        ) || 0;
+
+      const food =
+        Number(
+          document.getElementById("food").value
+        ) || 0;
+
+      const transport =
+        Number(
+          document.getElementById("transport").value
+        ) || 0;
+
+      const bills =
+        Number(
+          document.getElementById("bills").value
+        ) || 0;
+
+
+      if(!month){
+
+        showMessage(
+          saveMessage,
+          "Please select a month.",
+          "warning"
+        );
+
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("money_records")
+          .insert({
+
+            user_id:user.id,
+            month:month,
+            income:income,
+            housing:housing,
+            food:food,
+            transport:transport,
+            bills:bills
+
+          });
+
+
+      if(error){
+
+        console.error(
+          "Save error:",
+          error
+        );
+
+        showMessage(
+          saveMessage,
+          "Database error: " +
+          error.message,
+          "warning"
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        saveMessage,
+        "Monthly record saved successfully.",
+        "success"
+      );
+
+
+      document.getElementById(
+        "income"
+      ).value = "";
+
+      document.getElementById(
+        "housing"
+      ).value = "";
+
+      document.getElementById(
+        "food"
+      ).value = "";
+
+      document.getElementById(
+        "transport"
+      ).value = "";
+
+      document.getElementById(
+        "bills"
+      ).value = "";
+
+
+      await loadRecords();
+
+    }
   );
 
-  document.getElementById("income").value="";
-  document.getElementById("housing").value="";
-  document.getElementById("food").value="";
-  document.getElementById("transport").value="";
-  document.getElementById("bills").value="";
 
-  await loadRecords();
-
-});
-
+/* LOAD RECORDS */
 
 async function loadRecords(){
 
   const {
-    data:{user}
-  }=await supabaseClient.auth.getUser();
+    user,
+    error:userError
+  } = await getCurrentUser();
 
-  if(!user)return;
 
-  const {data,error}=await supabaseClient
-    .from("money_records")
-    .select("*")
-    .eq("user_id",user.id)
-    .order("month",{ascending:false});
+  if(userError){
 
-  if(error){
-    console.error(error);
     showMessage(
       saveMessage,
-      "Could not load your saved records.",
+      "Authentication error: " +
+      userError.message,
       "warning"
     );
+
     return;
   }
 
-  calculatePlan(data||[]);
-  displayRecords(data||[]);
+
+  if(!user){
+
+    showMessage(
+      saveMessage,
+      "No logged-in user found.",
+      "warning"
+    );
+
+    return;
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("money_records")
+      .select("*")
+      .eq("user_id",user.id)
+      .order(
+        "month",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "Supabase database error:",
+      error
+    );
+
+
+    showMessage(
+      saveMessage,
+      "Database error: " +
+      error.message,
+      "warning"
+    );
+
+
+    return;
+  }
+
+
+  calculatePlan(
+    data || []
+  );
+
+
+  displayRecords(
+    data || []
+  );
 
 }
 
 
+/* CALCULATE MONEY PLAN */
+
 function calculatePlan(records){
 
   if(!records.length){
-    document.getElementById("averageIncome").textContent="$0";
-    document.getElementById("lowestIncome").textContent="$0";
-    document.getElementById("essentialExpenses").textContent="$0";
-    document.getElementById("safeToSpend").textContent="$0";
-    document.getElementById("reserveTarget").textContent="$0";
-    document.getElementById("reserveProgress").textContent="$0";
+
+    document.getElementById(
+      "averageIncome"
+    ).textContent = "$0";
+
+    document.getElementById(
+      "lowestIncome"
+    ).textContent = "$0";
+
+    document.getElementById(
+      "essentialExpenses"
+    ).textContent = "$0";
+
+    document.getElementById(
+      "safeToSpend"
+    ).textContent = "$0";
+
+    document.getElementById(
+      "reserveTarget"
+    ).textContent = "$0";
+
+    document.getElementById(
+      "reserveProgress"
+    ).textContent = "$0";
+
     return;
+
   }
 
-  const incomes=records.map(r=>Number(r.income)||0);
 
-  const averageIncome=
-    incomes.reduce((a,b)=>a+b,0)/incomes.length;
+  const incomes =
+    records.map(
+      record =>
+        Number(record.income) || 0
+    );
 
-  const lowestIncome=Math.min(...incomes);
 
-  const latest=records[0];
+  const averageIncome =
+    incomes.reduce(
+      (a,b)=>a+b,
+      0
+    ) / incomes.length;
 
-  const essentialExpenses=
-    (Number(latest.housing)||0)+
-    (Number(latest.food)||0)+
-    (Number(latest.transport)||0)+
-    (Number(latest.bills)||0);
 
-  const safeToSpend=Math.max(
-    0,
-    lowestIncome-essentialExpenses
-  );
+  const lowestIncome =
+    Math.min(...incomes);
 
-  const reserveTarget=essentialExpenses*3;
 
-  const estimatedReserveProgress=Math.max(
-    0,
-    averageIncome-essentialExpenses
-  );
+  const latest =
+    records[0];
 
-  document.getElementById("averageIncome").textContent=
+
+  const essentialExpenses =
+
+    (Number(latest.housing) || 0) +
+
+    (Number(latest.food) || 0) +
+
+    (Number(latest.transport) || 0) +
+
+    (Number(latest.bills) || 0);
+
+
+  const safeToSpend =
+    Math.max(
+      0,
+      lowestIncome -
+      essentialExpenses
+    );
+
+
+  const reserveTarget =
+    essentialExpenses * 3;
+
+
+  const estimatedReserveProgress =
+    Math.max(
+      0,
+      averageIncome -
+      essentialExpenses
+    );
+
+
+  document.getElementById(
+    "averageIncome"
+  ).textContent =
     formatMoney(averageIncome);
 
-  document.getElementById("lowestIncome").textContent=
+
+  document.getElementById(
+    "lowestIncome"
+  ).textContent =
     formatMoney(lowestIncome);
 
-  document.getElementById("essentialExpenses").textContent=
+
+  document.getElementById(
+    "essentialExpenses"
+  ).textContent =
     formatMoney(essentialExpenses);
 
-  document.getElementById("safeToSpend").textContent=
+
+  document.getElementById(
+    "safeToSpend"
+  ).textContent =
     formatMoney(safeToSpend);
 
-  document.getElementById("reserveTarget").textContent=
+
+  document.getElementById(
+    "reserveTarget"
+  ).textContent =
     formatMoney(reserveTarget);
 
-  document.getElementById("reserveProgress").textContent=
-    formatMoney(estimatedReserveProgress);
 
-  document.getElementById("planMessage").textContent=
+  document.getElementById(
+    "reserveProgress"
+  ).textContent =
+    formatMoney(
+      estimatedReserveProgress
+    );
+
+
+  document.getElementById(
+    "planMessage"
+  ).textContent =
     "Your safe-to-spend estimate uses your lowest recent income and current essential expenses. Review it before making spending decisions.";
 
 }
 
 
+/* DISPLAY RECORDS */
+
 function displayRecords(records){
 
-  const list=document.getElementById("recordsList");
+  const list =
+    document.getElementById(
+      "recordsList"
+    );
+
 
   if(!records.length){
-    list.innerHTML='<p class="small">No records yet.</p>';
+
+    list.innerHTML =
+      '<p class="small">No records yet.</p>';
+
     return;
+
   }
 
-  list.innerHTML="";
+
+  list.innerHTML = "";
+
 
   records.forEach(record=>{
 
-    const essential=
-      (Number(record.housing)||0)+
-      (Number(record.food)||0)+
-      (Number(record.transport)||0)+
-      (Number(record.bills)||0);
+    const essential =
 
-    const div=document.createElement("div");
+      (Number(record.housing) || 0) +
 
-    div.className="record";
+      (Number(record.food) || 0) +
 
-    div.innerHTML=`
-      <strong>${escapeHtml(record.month)}</strong>
-      <div>Income: ${formatMoney(record.income)}</div>
-      <div>Essentials: ${formatMoney(essential)}</div>
+      (Number(record.transport) || 0) +
+
+      (Number(record.bills) || 0);
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className = "record";
+
+
+    div.innerHTML = `
+
+      <strong>
+        ${escapeHtml(record.month)}
+      </strong>
+
+      <div>
+        Income:
+        ${formatMoney(record.income)}
+      </div>
+
+      <div>
+        Essentials:
+        ${formatMoney(essential)}
+      </div>
+
     `;
+
 
     list.appendChild(div);
 
@@ -488,40 +1107,91 @@ function displayRecords(records){
 }
 
 
+/* FORMAT MONEY */
+
 function formatMoney(value){
 
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",
-    currency:"USD",
-    maximumFractionDigits:0
-  }).format(Number(value)||0);
+  return new Intl.NumberFormat(
+    "en-US",
+    {
+      style:"currency",
+      currency:"USD",
+      maximumFractionDigits:0
+    }
+  ).format(
+    Number(value) || 0
+  );
 
 }
 
+
+/* SECURITY */
 
 function escapeHtml(value){
 
   return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
+
+/* CHECK EXISTING SESSION */
 
 async function checkSession(){
 
   const {
-    data:{session}
-  }=await supabaseClient.auth.getSession();
+    data,
+    error
+  } =
+    await supabaseClient.auth.getSession();
 
-  if(session){
-    showDashboard();
+
+  if(error){
+
+    console.error(
+      "Session error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if(data.session){
+
+    await showDashboard();
+
   }
 
 }
+
+
+/* START APP */
 
 checkSession();
 
