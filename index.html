@@ -99,7 +99,8 @@ label{
   margin:16px 0 7px;
 }
 
-input{
+input,
+select{
   width:100%;
   padding:14px;
   border:1px solid #d0d5dd;
@@ -108,7 +109,8 @@ input{
   background:white;
 }
 
-input:focus{
+input:focus,
+select:focus{
   outline:none;
   border-color:#667085;
 }
@@ -461,6 +463,89 @@ footer{
 
     <div>
 
+      <label>Currency</label>
+
+      <select id="currencySelect">
+
+        <optgroup label="Africa">
+
+          <option value="NGN">NGN — Nigerian Naira (₦)</option>
+
+          <option value="GHS">GHS — Ghanaian Cedi (₵)</option>
+
+          <option value="KES">KES — Kenyan Shilling (KSh)</option>
+
+          <option value="ZAR">ZAR — South African Rand (R)</option>
+
+          <option value="EGP">EGP — Egyptian Pound (E£)</option>
+
+          <option value="TZS">TZS — Tanzanian Shilling (TSh)</option>
+
+          <option value="UGX">UGX — Ugandan Shilling (USh)</option>
+
+          <option value="RWF">RWF — Rwandan Franc (FRw)</option>
+
+          <option value="ETB">ETB — Ethiopian Birr (Br)</option>
+
+          <option value="XOF">XOF — West African CFA Franc (CFA)</option>
+
+          <option value="XAF">XAF — Central African CFA Franc (FCFA)</option>
+
+        </optgroup>
+
+
+        <optgroup label="Asia">
+
+          <option value="INR">INR — Indian Rupee (₹)</option>
+
+          <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
+
+          <option value="BDT">BDT — Bangladeshi Taka (৳)</option>
+
+          <option value="PHP">PHP — Philippine Peso (₱)</option>
+
+          <option value="IDR">IDR — Indonesian Rupiah (Rp)</option>
+
+          <option value="MYR">MYR — Malaysian Ringgit (RM)</option>
+
+          <option value="SGD">SGD — Singapore Dollar (S$)</option>
+
+          <option value="THB">THB — Thai Baht (฿)</option>
+
+          <option value="VND">VND — Vietnamese Dong (₫)</option>
+
+          <option value="JPY">JPY — Japanese Yen (¥)</option>
+
+          <option value="CNY">CNY — Chinese Yuan (¥)</option>
+
+          <option value="KRW">KRW — South Korean Won (₩)</option>
+
+          <option value="AED">AED — UAE Dirham (د.إ)</option>
+
+          <option value="SAR">SAR — Saudi Riyal (ر.س)</option>
+
+          <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
+
+        </optgroup>
+
+
+        <optgroup label="Global">
+
+          <option value="USD" selected>USD — US Dollar ($)</option>
+
+          <option value="GBP">GBP — British Pound (£)</option>
+
+          <option value="EUR">EUR — Euro (€)</option>
+
+        </optgroup>
+
+      </select>
+
+    </div>
+
+
+    <div>
+
       <label>Month</label>
 
       <input
@@ -805,6 +890,127 @@ document.getElementById(
 const saveMessage =
 document.getElementById(
   "saveMessage"
+);
+
+
+const currencySelect =
+document.getElementById(
+  "currencySelect"
+);
+
+
+
+/* CURRENCY SETTINGS */
+
+const currencySymbols = {
+
+  NGN:"₦",
+  GHS:"₵",
+  KES:"KSh",
+  ZAR:"R",
+  EGP:"E£",
+  TZS:"TSh",
+  UGX:"USh",
+  RWF:"FRw",
+  ETB:"Br",
+  XOF:"CFA",
+  XAF:"FCFA",
+
+  INR:"₹",
+  PKR:"Rs",
+  BDT:"৳",
+  PHP:"₱",
+  IDR:"Rp",
+  MYR:"RM",
+  SGD:"S$",
+  THB:"฿",
+  VND:"₫",
+  JPY:"¥",
+  CNY:"¥",
+  KRW:"₩",
+  AED:"د.إ",
+  SAR:"ر.س",
+  QAR:"ر.ق",
+
+  USD:"$",
+  GBP:"£",
+  EUR:"€"
+
+};
+
+
+const currencyNames = {
+
+  NGN:"Nigerian Naira",
+  GHS:"Ghanaian Cedi",
+  KES:"Kenyan Shilling",
+  ZAR:"South African Rand",
+  EGP:"Egyptian Pound",
+  TZS:"Tanzanian Shilling",
+  UGX:"Ugandan Shilling",
+  RWF:"Rwandan Franc",
+  ETB:"Ethiopian Birr",
+  XOF:"West African CFA Franc",
+  XAF:"Central African CFA Franc",
+
+  INR:"Indian Rupee",
+  PKR:"Pakistani Rupee",
+  BDT:"Bangladeshi Taka",
+  PHP:"Philippine Peso",
+  IDR:"Indonesian Rupiah",
+  MYR:"Malaysian Ringgit",
+  SGD:"Singapore Dollar",
+  THB:"Thai Baht",
+  VND:"Vietnamese Dong",
+  JPY:"Japanese Yen",
+  CNY:"Chinese Yuan",
+  KRW:"South Korean Won",
+  AED:"UAE Dirham",
+  SAR:"Saudi Riyal",
+  QAR:"Qatari Riyal",
+
+  USD:"US Dollar",
+  GBP:"British Pound",
+  EUR:"Euro"
+
+};
+
+
+
+/* LOAD SAVED CURRENCY */
+
+const savedCurrency =
+localStorage.getItem(
+  "flowmoney_currency"
+);
+
+
+if(
+  savedCurrency &&
+  currencySymbols[savedCurrency]
+){
+
+  currencySelect.value =
+    savedCurrency;
+
+}
+
+
+
+/* SAVE CURRENCY WHEN CHANGED */
+
+currencySelect.addEventListener(
+  "change",
+  ()=>{
+
+    localStorage.setItem(
+      "flowmoney_currency",
+      currencySelect.value
+    );
+
+    loadRecords();
+
+  }
 );
 
 
@@ -1368,32 +1574,38 @@ function calculatePlan(records){
 
     document.getElementById(
       "averageIncome"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     document.getElementById(
       "lowestIncome"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     document.getElementById(
       "essentialExpenses"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     document.getElementById(
       "safeToSpend"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     document.getElementById(
       "reserveTarget"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     document.getElementById(
       "reserveProgress"
-    ).textContent = "$0";
+    ).textContent =
+      formatMoney(0);
 
 
     return;
@@ -1603,15 +1815,24 @@ function displayRecords(records){
 
 function formatMoney(value){
 
-  return new Intl.NumberFormat(
-    "en-US",
-    {
-      style:"currency",
-      currency:"USD",
-      maximumFractionDigits:0
-    }
-  ).format(
-    Number(value) || 0
+  const amount =
+    Number(value) || 0;
+
+  const currency =
+    currencySelect.value || "USD";
+
+  const symbol =
+    currencySymbols[currency] || currency;
+
+  return (
+    symbol +
+    amount.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:0,
+        maximumFractionDigits:2
+      }
+    )
   );
 
 }
