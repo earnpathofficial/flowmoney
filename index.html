@@ -3,347 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowMoney — Know What You Can Safely Spend</title>
+  <meta name="description" content="FlowMoney helps people with variable income plan their money, protect essentials, and build an emergency reserve.">
 
-  <title>FlowMoney — Smart Money Planner</title>
-
-  <meta name="description" content="FlowMoney helps people with variable income plan their spending, savings, and emergency reserves.">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-      line-height: 1.6;
-    }
-
-    header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 18px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    .logo span {
-      color: #2563eb;
-    }
-
-    .header-btn {
-      text-decoration: none;
-      background: #2563eb;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 70px 20px 45px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #eaf1ff;
-      color: #2563eb;
-      padding: 7px 13px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-size: clamp(38px, 7vw, 64px);
-      line-height: 1.05;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: #2563eb;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: auto;
-      color: #64748b;
-      font-size: 18px;
-    }
-
-    .planner {
-      max-width: 1000px;
-      margin: 20px auto 70px;
-      padding: 20px;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 18px;
-      padding: 28px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.05);
-    }
-
-    .card h2 {
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .card-intro {
-      color: #64748b;
-      margin-bottom: 25px;
-    }
-
-    .income-grid,
-    .expense-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .expense-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    label {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #2563eb;
-    }
-
-    .expenses {
-      border-top: 1px solid #e5e7eb;
-      padding-top: 25px;
-      margin-top: 5px;
-    }
-
-    .expenses h3,
-    .card > h3 {
-      margin-bottom: 15px;
-    }
-
-    .calculate-btn {
-      width: 100%;
-      margin-top: 5px;
-      border: none;
-      background: #2563eb;
-      color: white;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .calculate-btn:hover {
-      background: #1d4ed8;
-    }
-
-    .results {
-      display: none;
-      margin-top: 25px;
-    }
-
-    .result-main {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-      margin-bottom: 15px;
-    }
-
-    .result-main small {
-      color: #475569;
-      font-weight: 700;
-    }
-
-    .safe-number {
-      font-size: 42px;
-      font-weight: 900;
-      color: #2563eb;
-      margin: 5px 0;
-    }
-
-    .result-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .result-box {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 20px;
-      background: white;
-    }
-
-    .result-box small {
-      color: #64748b;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .result-box strong {
-      font-size: 22px;
-    }
-
-    .tip {
-      margin-top: 15px;
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 18px;
-      color: #475569;
-    }
-
-    .features {
-      max-width: 1000px;
-      margin: 0 auto 70px;
-      padding: 0 20px;
-    }
-
-    .features h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 32px;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .feature {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 15px;
-      padding: 24px;
-    }
-
-    .feature-icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-    }
-
-    .feature h3 {
-      margin-bottom: 8px;
-    }
-
-    .feature p {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .pricing {
-      background: white;
-      border-top: 1px solid #e5e7eb;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .pricing h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .pricing > p {
-      color: #64748b;
-    }
-
-    .price-card {
-      max-width: 420px;
-      margin: 30px auto 0;
-      border: 2px solid #2563eb;
-      border-radius: 18px;
-      padding: 30px;
-      background: white;
-    }
-
-    .price {
-      font-size: 42px;
-      font-weight: 900;
-      margin: 10px 0;
-    }
-
-    .price span {
-      font-size: 16px;
-      color: #64748b;
-      font-weight: normal;
-    }
-
-    .price-card ul {
-      list-style: none;
-      text-align: left;
-      margin: 20px 0;
-    }
-
-    .price-card li {
-      padding: 7px 0;
-    }
-
-    .price-card li::before {
-      content: "✓ ";
-      color: #2563eb;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 20px;
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    @media (max-width: 700px) {
-      .income-grid,
-      .expense-grid,
-      .result-grid,
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 20px;
-      }
-
-      .hero {
-        padding-top: 50px;
-      }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+    header{background:#111827;color:white;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+    header h2{margin:0}
+    .container{width:min(100% - 32px,900px);margin:30px auto}
+    .hero{text-align:center;margin-bottom:25px}
+    .hero h1{font-size:38px;margin:0 0 10px}
+    .hero p{color:#667085;font-size:17px}
+    .card{background:white;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 8px 30px rgba(0,0,0,.07)}
+    label{display:block;font-weight:bold;margin:15px 0 7px}
+    input{width:100%;padding:13px;border:1px solid #d0d5dd;border-radius:10px;font-size:16px}
+    button{border:0;border-radius:10px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px;background:#111827;color:white}
+    button.secondary{background:#e5e7eb;color:#111827}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .hidden{display:none!important}
+    .message{margin-top:12px;padding:12px;border-radius:10px;background:#f2f4f7}
+    .success{background:#ecfdf3;color:#027a48}
+    .warning{background:#fffaeb;color:#b54708}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+    .metric{background:#f8fafc;border-radius:14px;padding:18px}
+    .metric span{display:block;color:#667085;font-size:14px;margin-bottom:8px}
+    .metric strong{font-size:24px}
+    .record{border:1px solid #eaecf0;border-radius:12px;padding:15px;margin-top:12px}
+    .record strong{display:block;margin-bottom:7px}
+    .small{color:#667085;font-size:14px}
+    footer{text-align:center;padding:30px 15px;color:#667085;font-size:13px}
+    @media(max-width:650px){
+      .grid{grid-template-columns:1fr}
+      .hero h1{font-size:30px}
+      header{flex-direction:column;align-items:flex-start;gap:10px}
     }
   </style>
 </head>
@@ -351,319 +46,484 @@
 <body>
 
 <header>
-  <div class="logo">Flow<span>Money</span></div>
-  <a href="#planner" class="header-btn">Try Planner</a>
+  <h2>FlowMoney</h2>
+  <button id="logoutBtn" class="secondary hidden">Log out</button>
 </header>
 
-<section class="hero">
+<div class="container">
 
-  <div class="badge">BUILT FOR VARIABLE INCOME</div>
-
-  <h1>
-    Know what you can
-    <span>safely spend.</span>
-  </h1>
-
-  <p>
-    FlowMoney helps freelancers, gig workers, creators,
-    tradespeople and small business owners plan their money
-    when income changes from month to month.
-  </p>
-
-</section>
-
-<section class="planner" id="planner">
-
-  <div class="card">
-
-    <h2>Build Your Money Plan</h2>
-
-    <p class="card-intro">
-      Enter your recent income and essential monthly expenses.
-      We'll estimate a safer spending amount.
-    </p>
-
-    <h3>Recent Monthly Income</h3>
-
-    <div class="income-grid">
-
-      <div class="input-group">
-        <label>Month 1</label>
-        <input type="number" id="income1" placeholder="e.g. 800">
-      </div>
-
-      <div class="input-group">
-        <label>Month 2</label>
-        <input type="number" id="income2" placeholder="e.g. 1400">
-      </div>
-
-      <div class="input-group">
-        <label>Month 3</label>
-        <input type="number" id="income3" placeholder="e.g. 600">
-      </div>
-
+  <section id="authSection" class="card">
+    <div class="hero">
+      <p><strong>BUILT FOR VARIABLE INCOME</strong></p>
+      <h1>Know what you can safely spend.</h1>
+      <p>Plan your money even when your income changes from month to month.</p>
     </div>
 
-    <div class="expenses">
+    <h2>Create your FlowMoney account</h2>
 
-      <h3>Essential Monthly Expenses</h3>
+    <label>Email</label>
+    <input id="email" type="email" placeholder="you@example.com">
 
-      <div class="expense-grid">
+    <label>Password</label>
+    <input id="password" type="password" placeholder="At least 6 characters">
 
-        <div class="input-group">
-          <label>Housing</label>
-          <input type="number" id="housing" placeholder="e.g. 300">
-        </div>
+    <button id="signupBtn">Create Account</button>
+    <button id="loginBtn" class="secondary">Log In</button>
 
-        <div class="input-group">
-          <label>Food</label>
-          <input type="number" id="food" placeholder="e.g. 150">
-        </div>
+    <div id="authMessage" class="message hidden"></div>
+  </section>
 
-        <div class="input-group">
-          <label>Transport</label>
-          <input type="number" id="transport" placeholder="e.g. 50">
-        </div>
 
-        <div class="input-group">
-          <label>Bills & Other Essentials</label>
-          <input type="number" id="bills" placeholder="e.g. 100">
-        </div>
+  <section id="dashboardSection" class="hidden">
 
-      </div>
+    <div class="card">
+      <h2>Your Money Dashboard</h2>
+      <p class="small">Add your monthly income and essential expenses.</p>
 
+      <label>Month</label>
+      <input id="month" type="month">
+
+      <label>Income</label>
+      <input id="income" type="number" min="0" placeholder="0">
+
+      <label>Housing</label>
+      <input id="housing" type="number" min="0" placeholder="0">
+
+      <label>Food</label>
+      <input id="food" type="number" min="0" placeholder="0">
+
+      <label>Transport</label>
+      <input id="transport" type="number" min="0" placeholder="0">
+
+      <label>Bills & Other Essentials</label>
+      <input id="bills" type="number" min="0" placeholder="0">
+
+      <button id="saveBtn">Save Monthly Record</button>
+
+      <div id="saveMessage" class="message hidden"></div>
     </div>
 
-    <button class="calculate-btn" onclick="calculatePlan()">
-      Calculate My Money Plan
-    </button>
 
-    <div class="results" id="results">
+    <div class="card">
+      <h2>Your Money Plan</h2>
 
-      <div class="result-main">
+      <div class="grid">
 
-        <small>Estimated Safe-to-Spend Amount</small>
-
-        <div class="safe-number" id="safeSpend">$0</div>
-
-        <p>
-          Keep this amount available for flexible spending
-          after protecting your essentials and reserve.
-        </p>
-
-      </div>
-
-      <div class="result-grid">
-
-        <div class="result-box">
-          <small>Average Income</small>
+        <div class="metric">
+          <span>Average Income</span>
           <strong id="averageIncome">$0</strong>
         </div>
 
-        <div class="result-box">
-          <small>Conservative Income</small>
-          <strong id="conservativeIncome">$0</strong>
+        <div class="metric">
+          <span>Lowest Recent Income</span>
+          <strong id="lowestIncome">$0</strong>
         </div>
 
-        <div class="result-box">
-          <small>3-Month Reserve Target</small>
+        <div class="metric">
+          <span>Essential Expenses</span>
+          <strong id="essentialExpenses">$0</strong>
+        </div>
+
+        <div class="metric">
+          <span>Safe-to-Spend</span>
+          <strong id="safeToSpend">$0</strong>
+        </div>
+
+        <div class="metric">
+          <span>3-Month Reserve Target</span>
           <strong id="reserveTarget">$0</strong>
+        </div>
+
+        <div class="metric">
+          <span>Reserve Progress</span>
+          <strong id="reserveProgress">$0</strong>
         </div>
 
       </div>
 
-      <div class="tip" id="moneyTip"></div>
-
+      <div id="planMessage" class="message">
+        Add your monthly information to calculate your plan.
+      </div>
     </div>
 
-  </div>
 
-</section>
-
-<section class="features">
-
-  <h2>Designed for unpredictable income</h2>
-
-  <div class="feature-grid">
-
-    <div class="feature">
-      <div class="feature-icon">📊</div>
-      <h3>Track Your Income</h3>
-      <p>
-        See how much you actually earn instead of
-        relying on a fixed monthly paycheck.
-      </p>
+    <div class="card">
+      <h2>Your Saved Records</h2>
+      <div id="recordsList">
+        <p class="small">No records yet.</p>
+      </div>
     </div>
 
-    <div class="feature">
-      <div class="feature-icon">🛡️</div>
-      <h3>Protect Your Essentials</h3>
-      <p>
-        Understand the minimum amount you need to
-        cover important monthly expenses.
-      </p>
+
+    <div class="card">
+      <h2>FlowMoney Pro</h2>
+      <p>Get a clearer picture of your changing income, spending capacity and emergency reserve.</p>
+      <strong>$5/month</strong>
+      <br>
+      <button disabled>Pro Coming Soon</button>
     </div>
 
-    <div class="feature">
-      <div class="feature-icon">💰</div>
-      <h3>Build Your Reserve</h3>
-      <p>
-        Know how much you should keep aside to
-        handle lower-income months.
-      </p>
-    </div>
+  </section>
 
-  </div>
-
-</section>
-
-<section class="pricing">
-
-  <h2>Simple pricing</h2>
-
-  <p>Start free. Upgrade when you need more control.</p>
-
-  <div class="price-card">
-
-    <h3>FlowMoney Pro</h3>
-
-    <div class="price">
-      $5 <span>/ month</span>
-    </div>
-
-    <ul>
-      <li>Advanced income planning</li>
-      <li>Reserve goals</li>
-      <li>Good-month recommendations</li>
-      <li>Income forecasting</li>
-      <li>Multiple income sources</li>
-      <li>Monthly reports</li>
-    </ul>
-
-    <button class="calculate-btn"
-      onclick="document.getElementById('planner').scrollIntoView({behavior:'smooth'})">
-      Start Planning
-    </button>
-
-  </div>
-
-</section>
+</div>
 
 <footer>
-  © 2026 FlowMoney. Planning estimates only — not financial advice.
+  Planning estimates only — not financial advice.
 </footer>
+
 
 <script>
 
-function getNumber(id) {
+const SUPABASE_URL = "https://dsqheepfmumjpfrpniuy.supabase.co";
 
-  const value = parseFloat(
-    document.getElementById(id).value
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIOs";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+
+const authSection = document.getElementById("authSection");
+const dashboardSection = document.getElementById("dashboardSection");
+const logoutBtn = document.getElementById("logoutBtn");
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+const signupBtn = document.getElementById("signupBtn");
+const loginBtn = document.getElementById("loginBtn");
+
+const authMessage = document.getElementById("authMessage");
+const saveMessage = document.getElementById("saveMessage");
+
+
+function showMessage(element,text,type=""){
+  element.textContent=text;
+  element.className="message "+type;
+  element.classList.remove("hidden");
+}
+
+
+signupBtn.addEventListener("click",async()=>{
+
+  const email=emailInput.value.trim();
+  const password=passwordInput.value;
+
+  if(!email||!password){
+    showMessage(authMessage,"Please enter your email and password.","warning");
+    return;
+  }
+
+  if(password.length<6){
+    showMessage(authMessage,"Password must be at least 6 characters.","warning");
+    return;
+  }
+
+  signupBtn.disabled=true;
+
+  const {data,error}=await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  signupBtn.disabled=false;
+
+  if(error){
+    showMessage(authMessage,error.message,"warning");
+    return;
+  }
+
+  if(data.session){
+    showDashboard();
+  }else{
+    showMessage(
+      authMessage,
+      "Account created successfully. You can now log in.",
+      "success"
+    );
+  }
+
+});
+
+
+loginBtn.addEventListener("click",async()=>{
+
+  const email=emailInput.value.trim();
+  const password=passwordInput.value;
+
+  if(!email||!password){
+    showMessage(authMessage,"Please enter your email and password.","warning");
+    return;
+  }
+
+  loginBtn.disabled=true;
+
+  const {error}=await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  loginBtn.disabled=false;
+
+  if(error){
+    showMessage(authMessage,error.message,"warning");
+    return;
+  }
+
+  showDashboard();
+
+});
+
+
+logoutBtn.addEventListener("click",async()=>{
+
+  await supabaseClient.auth.signOut();
+
+  dashboardSection.classList.add("hidden");
+  authSection.classList.remove("hidden");
+  logoutBtn.classList.add("hidden");
+
+  emailInput.value="";
+  passwordInput.value="";
+
+});
+
+
+async function showDashboard(){
+
+  authSection.classList.add("hidden");
+  dashboardSection.classList.remove("hidden");
+  logoutBtn.classList.remove("hidden");
+
+  await loadRecords();
+
+}
+
+
+document.getElementById("saveBtn").addEventListener("click",async()=>{
+
+  const {
+    data:{user}
+  }=await supabaseClient.auth.getUser();
+
+  if(!user){
+    showMessage(saveMessage,"Please log in first.","warning");
+    return;
+  }
+
+  const month=document.getElementById("month").value;
+  const income=Number(document.getElementById("income").value)||0;
+  const housing=Number(document.getElementById("housing").value)||0;
+  const food=Number(document.getElementById("food").value)||0;
+  const transport=Number(document.getElementById("transport").value)||0;
+  const bills=Number(document.getElementById("bills").value)||0;
+
+  if(!month){
+    showMessage(saveMessage,"Please select a month.","warning");
+    return;
+  }
+
+  const {error}=await supabaseClient
+    .from("money_records")
+    .insert({
+      user_id:user.id,
+      month,
+      income,
+      housing,
+      food,
+      transport,
+      bills
+    });
+
+  if(error){
+    showMessage(saveMessage,error.message,"warning");
+    return;
+  }
+
+  showMessage(
+    saveMessage,
+    "Monthly record saved successfully.",
+    "success"
   );
 
-  return isNaN(value) ? 0 : value;
+  document.getElementById("income").value="";
+  document.getElementById("housing").value="";
+  document.getElementById("food").value="";
+  document.getElementById("transport").value="";
+  document.getElementById("bills").value="";
 
-}
+  await loadRecords();
 
-function formatMoney(number) {
+});
 
-  return "$" + Math.round(number).toLocaleString();
 
-}
+async function loadRecords(){
 
-function calculatePlan() {
+  const {
+    data:{user}
+  }=await supabaseClient.auth.getUser();
 
-  const income1 = getNumber("income1");
-  const income2 = getNumber("income2");
-  const income3 = getNumber("income3");
+  if(!user)return;
 
-  const housing = getNumber("housing");
-  const food = getNumber("food");
-  const transport = getNumber("transport");
-  const bills = getNumber("bills");
+  const {data,error}=await supabaseClient
+    .from("money_records")
+    .select("*")
+    .eq("user_id",user.id)
+    .order("month",{ascending:false});
 
-  const incomes = [income1, income2, income3];
-
-  const validIncomes =
-    incomes.filter(value => value > 0);
-
-  if (validIncomes.length === 0) {
-
-    alert("Please enter at least one month of income.");
-
+  if(error){
+    console.error(error);
+    showMessage(
+      saveMessage,
+      "Could not load your saved records.",
+      "warning"
+    );
     return;
-
   }
 
-  const averageIncome =
-    validIncomes.reduce((a, b) => a + b, 0)
-    / validIncomes.length;
+  calculatePlan(data||[]);
+  displayRecords(data||[]);
 
-  const conservativeIncome =
-    Math.min(...validIncomes);
+}
 
-  const essentialExpenses =
-    housing + food + transport + bills;
 
-  const reserveTarget =
-    essentialExpenses * 3;
+function calculatePlan(records){
 
-  const reserveContribution =
-    conservativeIncome * 0.10;
-
-  let safeSpend =
-    conservativeIncome
-    - essentialExpenses
-    - reserveContribution;
-
-  if (safeSpend < 0) {
-    safeSpend = 0;
+  if(!records.length){
+    document.getElementById("averageIncome").textContent="$0";
+    document.getElementById("lowestIncome").textContent="$0";
+    document.getElementById("essentialExpenses").textContent="$0";
+    document.getElementById("safeToSpend").textContent="$0";
+    document.getElementById("reserveTarget").textContent="$0";
+    document.getElementById("reserveProgress").textContent="$0";
+    return;
   }
 
-  document.getElementById("averageIncome").textContent =
+  const incomes=records.map(r=>Number(r.income)||0);
+
+  const averageIncome=
+    incomes.reduce((a,b)=>a+b,0)/incomes.length;
+
+  const lowestIncome=Math.min(...incomes);
+
+  const latest=records[0];
+
+  const essentialExpenses=
+    (Number(latest.housing)||0)+
+    (Number(latest.food)||0)+
+    (Number(latest.transport)||0)+
+    (Number(latest.bills)||0);
+
+  const safeToSpend=Math.max(
+    0,
+    lowestIncome-essentialExpenses
+  );
+
+  const reserveTarget=essentialExpenses*3;
+
+  const estimatedReserveProgress=Math.max(
+    0,
+    averageIncome-essentialExpenses
+  );
+
+  document.getElementById("averageIncome").textContent=
     formatMoney(averageIncome);
 
-  document.getElementById("conservativeIncome").textContent =
-    formatMoney(conservativeIncome);
+  document.getElementById("lowestIncome").textContent=
+    formatMoney(lowestIncome);
 
-  document.getElementById("reserveTarget").textContent =
+  document.getElementById("essentialExpenses").textContent=
+    formatMoney(essentialExpenses);
+
+  document.getElementById("safeToSpend").textContent=
+    formatMoney(safeToSpend);
+
+  document.getElementById("reserveTarget").textContent=
     formatMoney(reserveTarget);
 
-  document.getElementById("safeSpend").textContent =
-    formatMoney(safeSpend);
+  document.getElementById("reserveProgress").textContent=
+    formatMoney(estimatedReserveProgress);
 
-  let tip = "";
+  document.getElementById("planMessage").textContent=
+    "Your safe-to-spend estimate uses your lowest recent income and current essential expenses. Review it before making spending decisions.";
 
-  if (essentialExpenses === 0) {
+}
 
-    tip =
-      "Add your essential monthly expenses to get a more useful plan.";
 
-  } else if (conservativeIncome < essentialExpenses) {
+function displayRecords(records){
 
-    tip =
-      "Your lowest recent income is below your essential expenses. " +
-      "Consider reducing flexible spending and building a reserve " +
-      "during higher-income months.";
+  const list=document.getElementById("recordsList");
 
-  } else {
-
-    tip =
-      "When you have a stronger month, consider putting part of " +
-      "the extra income toward your emergency reserve.";
-
+  if(!records.length){
+    list.innerHTML='<p class="small">No records yet.</p>';
+    return;
   }
 
-  document.getElementById("moneyTip").textContent = tip;
+  list.innerHTML="";
 
-  document.getElementById("results").style.display = "block";
+  records.forEach(record=>{
 
-  document.getElementById("results").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+    const essential=
+      (Number(record.housing)||0)+
+      (Number(record.food)||0)+
+      (Number(record.transport)||0)+
+      (Number(record.bills)||0);
+
+    const div=document.createElement("div");
+
+    div.className="record";
+
+    div.innerHTML=`
+      <strong>${escapeHtml(record.month)}</strong>
+      <div>Income: ${formatMoney(record.income)}</div>
+      <div>Essentials: ${formatMoney(essential)}</div>
+    `;
+
+    list.appendChild(div);
+
   });
 
 }
+
+
+function formatMoney(value){
+
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",
+    currency:"USD",
+    maximumFractionDigits:0
+  }).format(Number(value)||0);
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+async function checkSession(){
+
+  const {
+    data:{session}
+  }=await supabaseClient.auth.getSession();
+
+  if(session){
+    showDashboard();
+  }
+
+}
+
+checkSession();
 
 </script>
 
