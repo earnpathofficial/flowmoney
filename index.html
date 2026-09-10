@@ -6,14 +6,17 @@
 
 <title>FlowMoney — Know What You Can Safely Spend</title>
 
-<meta name="description" content="FlowMoney helps people with variable income understand what they can safely spend, save money and plan their emergency reserve.">
+<meta name="description"
+content="FlowMoney helps people globally understand what they can safely spend, save money and plan their emergency reserve.">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
 <style>
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -83,6 +86,10 @@ header{
 }
 
 h2{
+  margin-top:0;
+}
+
+h3{
   margin-top:0;
 }
 
@@ -256,7 +263,6 @@ button:disabled{
 }
 
 .plan-card h3{
-  margin-top:0;
   font-size:22px;
 }
 
@@ -310,7 +316,7 @@ button:disabled{
   line-height:1.5;
 }
 
-/* WALLET */
+/* GLOBAL WALLET */
 
 .wallet-card{
   background:#111827;
@@ -364,6 +370,30 @@ button:disabled{
   margin-top:0;
 }
 
+.global-badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#3730a3;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.provider-box{
+  border:1px solid #eaecf0;
+  border-radius:14px;
+  padding:15px;
+  margin-top:15px;
+  background:#f8fafc;
+}
+
+.provider-box strong{
+  display:block;
+  margin-bottom:5px;
+}
+
 .transaction{
   border:1px solid #eaecf0;
   border-radius:14px;
@@ -394,6 +424,11 @@ button:disabled{
 
 .status-pending{
   color:#b54708;
+  font-weight:700;
+}
+
+.status-completed{
+  color:#027a48;
   font-weight:700;
 }
 
@@ -513,7 +548,7 @@ footer{
   <div class="hero">
 
     <span class="badge">
-      BUILT FOR VARIABLE INCOME
+      GLOBAL MONEY PLANNING
     </span>
 
     <h1>
@@ -521,8 +556,9 @@ footer{
     </h1>
 
     <p>
-      FlowMoney helps you plan around changing income,
-      protect your essentials, save money and build a stronger reserve.
+      FlowMoney helps people around the world plan
+      changing income, protect essentials, save money
+      and build an emergency reserve.
     </p>
 
   </div>
@@ -532,7 +568,7 @@ footer{
   </h2>
 
   <p class="small">
-    Start with your email and a password.
+    Start with your email and password.
   </p>
 
   <label>Email</label>
@@ -571,6 +607,7 @@ footer{
 
 </section>
 
+
 <section
   id="dashboardSection"
   class="hidden"
@@ -583,25 +620,30 @@ footer{
   </h1>
 
   <p class="small">
-    Add your monthly income and essential expenses
-    to understand your spending capacity.
+    Plan your money, save toward your goals and
+    understand what you can safely spend.
   </p>
 
 </div>
 
 
 <!-- =========================================
-     WALLET
+     GLOBAL WALLET
 ========================================= -->
 
 <div class="card wallet-card">
+
+  <span class="global-badge">
+    GLOBAL WALLET
+  </span>
 
   <h2>
     FlowMoney Wallet
   </h2>
 
   <p class="small">
-    Keep money available for your financial goals and emergency reserve.
+    Keep money available for your financial goals,
+    savings and emergency reserve.
   </p>
 
   <div
@@ -638,7 +680,7 @@ footer{
 
 
 <!-- =========================================
-     DEPOSIT / WITHDRAW
+     GLOBAL DEPOSIT / WITHDRAW
 ========================================= -->
 
 <div
@@ -646,15 +688,23 @@ footer{
   class="card hidden"
 >
 
+  <span class="global-badge">
+    GLOBAL PAYMENT
+  </span>
+
   <h2 id="walletActionTitle">
     Deposit Money
   </h2>
 
   <p class="small">
-    Select your country, currency and preferred payment method.
+    Choose your country, currency and available
+    payment method. FlowMoney will use a supported
+    payment provider for the selected market.
   </p>
 
-  <label>Country</label>
+  <label>
+    Country
+  </label>
 
   <select id="walletCountry">
 
@@ -667,6 +717,10 @@ footer{
     <option value="UG">Uganda</option>
     <option value="RW">Rwanda</option>
     <option value="ET">Ethiopia</option>
+    <option value="SN">Senegal</option>
+    <option value="CI">Côte d'Ivoire</option>
+    <option value="CM">Cameroon</option>
+
     <option value="IN">India</option>
     <option value="PK">Pakistan</option>
     <option value="BD">Bangladesh</option>
@@ -679,16 +733,46 @@ footer{
     <option value="JP">Japan</option>
     <option value="CN">China</option>
     <option value="KR">South Korea</option>
+
     <option value="AE">United Arab Emirates</option>
     <option value="SA">Saudi Arabia</option>
     <option value="QA">Qatar</option>
+    <option value="IL">Israel</option>
+    <option value="TR">Türkiye</option>
+
     <option value="US">United States</option>
+    <option value="CA">Canada</option>
+    <option value="MX">Mexico</option>
+    <option value="BR">Brazil</option>
+    <option value="AR">Argentina</option>
+    <option value="CL">Chile</option>
+    <option value="CO">Colombia</option>
+
     <option value="GB">United Kingdom</option>
     <option value="DE">Germany</option>
+    <option value="FR">France</option>
+    <option value="IT">Italy</option>
+    <option value="ES">Spain</option>
+    <option value="NL">Netherlands</option>
+    <option value="BE">Belgium</option>
+    <option value="IE">Ireland</option>
+    <option value="PT">Portugal</option>
+    <option value="AT">Austria</option>
+    <option value="SE">Sweden</option>
+    <option value="NO">Norway</option>
+    <option value="DK">Denmark</option>
+    <option value="FI">Finland</option>
+    <option value="CH">Switzerland</option>
+
+    <option value="AU">Australia</option>
+    <option value="NZ">New Zealand</option>
 
   </select>
 
-  <label>Currency</label>
+
+  <label>
+    Currency
+  </label>
 
   <select id="walletCurrency">
 
@@ -701,6 +785,8 @@ footer{
     <option value="UGX">UGX — Ugandan Shilling (USh)</option>
     <option value="RWF">RWF — Rwandan Franc (FRw)</option>
     <option value="ETB">ETB — Ethiopian Birr (Br)</option>
+    <option value="XOF">XOF — West African CFA Franc (CFA)</option>
+    <option value="XAF">XAF — Central African CFA Franc (FCFA)</option>
 
     <option value="INR">INR — Indian Rupee (₹)</option>
     <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
@@ -720,12 +806,32 @@ footer{
     <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
 
     <option value="USD">USD — US Dollar ($)</option>
+    <option value="CAD">CAD — Canadian Dollar (C$)</option>
+    <option value="MXN">MXN — Mexican Peso (MX$)</option>
+    <option value="BRL">BRL — Brazilian Real (R$)</option>
+    <option value="ARS">ARS — Argentine Peso ($)</option>
+    <option value="CLP">CLP — Chilean Peso ($)</option>
+    <option value="COP">COP — Colombian Peso ($)</option>
+
     <option value="GBP">GBP — British Pound (£)</option>
     <option value="EUR">EUR — Euro (€)</option>
+    <option value="CHF">CHF — Swiss Franc (CHF)</option>
+    <option value="SEK">SEK — Swedish Krona (kr)</option>
+    <option value="NOK">NOK — Norwegian Krone (kr)</option>
+    <option value="DKK">DKK — Danish Krone (kr)</option>
+    <option value="PLN">PLN — Polish Zloty (zł)</option>
+    <option value="CZK">CZK — Czech Koruna (Kč)</option>
+    <option value="HUF">HUF — Hungarian Forint (Ft)</option>
+
+    <option value="AUD">AUD — Australian Dollar (A$)</option>
+    <option value="NZD">NZD — New Zealand Dollar (NZ$)</option>
 
   </select>
 
-  <label>Amount</label>
+
+  <label>
+    Amount
+  </label>
 
   <input
     id="walletAmount"
@@ -735,32 +841,59 @@ footer{
     placeholder="0"
   >
 
-  <label>Payment Method</label>
+
+  <label>
+    Payment Method
+  </label>
 
   <select id="paymentMethod">
 
     <option value="bank">
-      Bank Account
+      🏦 Bank Account
     </option>
 
     <option value="wallet">
-      Mobile / Digital Wallet
+      📱 Mobile / Digital Wallet
+    </option>
+
+    <option value="card">
+      💳 Card / Payment Provider
     </option>
 
   </select>
 
+
   <label id="accountLabel">
-    Bank or Wallet Details
+    Bank Account Details
   </label>
 
   <input
     id="accountDetails"
     type="text"
-    placeholder="Enter account details"
+    placeholder="Enter bank account details"
   >
 
+
+  <div class="provider-box">
+
+    <strong>
+      Payment provider connection
+    </strong>
+
+    <span
+      id="providerText"
+      class="small"
+    >
+      FlowMoney will connect this request to
+      an approved provider available for the
+      selected country and payment method.
+    </span>
+
+  </div>
+
+
   <button id="continueWalletBtn">
-    Continue
+    Continue Deposit
   </button>
 
   <button
@@ -779,13 +912,18 @@ footer{
 
 <div class="card">
 
+  <span class="global-badge">
+    GLOBAL PAYMENTS
+  </span>
+
   <h2>
     Wallet & Payments
   </h2>
 
   <p class="small">
-    FlowMoney is designed to support local bank accounts and digital wallets
-    according to the payment methods available in each country.
+    FlowMoney is designed to support bank accounts,
+    cards and digital wallets through payment
+    providers available in each supported market.
   </p>
 
   <div class="wallet-grid">
@@ -797,16 +935,16 @@ footer{
       </h3>
 
       <p class="small">
-        Add money through supported bank and wallet payment methods.
+        Add money to your FlowMoney wallet through
+        a supported payment method.
       </p>
 
-      <button
-        id="depositInfoBtn"
-      >
+      <button id="depositInfoBtn">
         Add Money
       </button>
 
     </div>
+
 
     <div class="wallet-panel">
 
@@ -815,12 +953,11 @@ footer{
       </h3>
 
       <p class="small">
-        Withdraw to supported bank accounts or digital wallets.
+        Withdraw available wallet funds to a supported
+        bank account or digital wallet.
       </p>
 
-      <button
-        id="withdrawInfoBtn"
-      >
+      <button id="withdrawInfoBtn">
         Withdraw
       </button>
 
@@ -866,51 +1003,209 @@ footer{
 
     <div>
 
-      <label>Currency</label>
+      <label>
+        Currency
+      </label>
 
       <select id="currencySelect">
 
         <optgroup label="Africa">
 
-          <option value="NGN">NGN — Nigerian Naira (₦)</option>
-          <option value="GHS">GHS — Ghanaian Cedi (₵)</option>
-          <option value="KES">KES — Kenyan Shilling (KSh)</option>
-          <option value="ZAR">ZAR — South African Rand (R)</option>
-          <option value="EGP">EGP — Egyptian Pound (E£)</option>
-          <option value="TZS">TZS — Tanzanian Shilling (TSh)</option>
-          <option value="UGX">UGX — Ugandan Shilling (USh)</option>
-          <option value="RWF">RWF — Rwandan Franc (FRw)</option>
-          <option value="ETB">ETB — Ethiopian Birr (Br)</option>
-          <option value="XOF">XOF — West African CFA Franc (CFA)</option>
-          <option value="XAF">XAF — Central African CFA Franc (FCFA)</option>
+          <option value="NGN">
+            NGN — Nigerian Naira (₦)
+          </option>
+
+          <option value="GHS">
+            GHS — Ghanaian Cedi (₵)
+          </option>
+
+          <option value="KES">
+            KES — Kenyan Shilling (KSh)
+          </option>
+
+          <option value="ZAR">
+            ZAR — South African Rand (R)
+          </option>
+
+          <option value="EGP">
+            EGP — Egyptian Pound (E£)
+          </option>
+
+          <option value="TZS">
+            TZS — Tanzanian Shilling (TSh)
+          </option>
+
+          <option value="UGX">
+            UGX — Ugandan Shilling (USh)
+          </option>
+
+          <option value="RWF">
+            RWF — Rwandan Franc (FRw)
+          </option>
+
+          <option value="ETB">
+            ETB — Ethiopian Birr (Br)
+          </option>
+
+          <option value="XOF">
+            XOF — West African CFA Franc (CFA)
+          </option>
+
+          <option value="XAF">
+            XAF — Central African CFA Franc (FCFA)
+          </option>
 
         </optgroup>
+
 
         <optgroup label="Asia">
 
-          <option value="INR">INR — Indian Rupee (₹)</option>
-          <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
-          <option value="BDT">BDT — Bangladeshi Taka (৳)</option>
-          <option value="PHP">PHP — Philippine Peso (₱)</option>
-          <option value="IDR">IDR — Indonesian Rupiah (Rp)</option>
-          <option value="MYR">MYR — Malaysian Ringgit (RM)</option>
-          <option value="SGD">SGD — Singapore Dollar (S$)</option>
-          <option value="THB">THB — Thai Baht (฿)</option>
-          <option value="VND">VND — Vietnamese Dong (₫)</option>
-          <option value="JPY">JPY — Japanese Yen (¥)</option>
-          <option value="CNY">CNY — Chinese Yuan (¥)</option>
-          <option value="KRW">KRW — South Korean Won (₩)</option>
-          <option value="AED">AED — UAE Dirham (د.إ)</option>
-          <option value="SAR">SAR — Saudi Riyal (ر.س)</option>
-          <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
+          <option value="INR">
+            INR — Indian Rupee (₹)
+          </option>
+
+          <option value="PKR">
+            PKR — Pakistani Rupee (Rs)
+          </option>
+
+          <option value="BDT">
+            BDT — Bangladeshi Taka (৳)
+          </option>
+
+          <option value="PHP">
+            PHP — Philippine Peso (₱)
+          </option>
+
+          <option value="IDR">
+            IDR — Indonesian Rupiah (Rp)
+          </option>
+
+          <option value="MYR">
+            MYR — Malaysian Ringgit (RM)
+          </option>
+
+          <option value="SGD">
+            SGD — Singapore Dollar (S$)
+          </option>
+
+          <option value="THB">
+            THB — Thai Baht (฿)
+          </option>
+
+          <option value="VND">
+            VND — Vietnamese Dong (₫)
+          </option>
+
+          <option value="JPY">
+            JPY — Japanese Yen (¥)
+          </option>
+
+          <option value="CNY">
+            CNY — Chinese Yuan (¥)
+          </option>
+
+          <option value="KRW">
+            KRW — South Korean Won (₩)
+          </option>
+
+          <option value="AED">
+            AED — UAE Dirham (د.إ)
+          </option>
+
+          <option value="SAR">
+            SAR — Saudi Riyal (ر.س)
+          </option>
+
+          <option value="QAR">
+            QAR — Qatari Riyal (ر.ق)
+          </option>
 
         </optgroup>
 
-        <optgroup label="Global">
 
-          <option value="USD" selected>USD — US Dollar ($)</option>
-          <option value="GBP">GBP — British Pound (£)</option>
-          <option value="EUR">EUR — Euro (€)</option>
+        <optgroup label="Americas">
+
+          <option value="USD">
+            USD — US Dollar ($)
+          </option>
+
+          <option value="CAD">
+            CAD — Canadian Dollar (C$)
+          </option>
+
+          <option value="MXN">
+            MXN — Mexican Peso (MX$)
+          </option>
+
+          <option value="BRL">
+            BRL — Brazilian Real (R$)
+          </option>
+
+          <option value="ARS">
+            ARS — Argentine Peso ($)
+          </option>
+
+          <option value="CLP">
+            CLP — Chilean Peso ($)
+          </option>
+
+          <option value="COP">
+            COP — Colombian Peso ($)
+          </option>
+
+        </optgroup>
+
+
+        <optgroup label="Europe">
+
+          <option value="GBP">
+            GBP — British Pound (£)
+          </option>
+
+          <option value="EUR">
+            EUR — Euro (€)
+          </option>
+
+          <option value="CHF">
+            CHF — Swiss Franc (CHF)
+          </option>
+
+          <option value="SEK">
+            SEK — Swedish Krona (kr)
+          </option>
+
+          <option value="NOK">
+            NOK — Norwegian Krone (kr)
+          </option>
+
+          <option value="DKK">
+            DKK — Danish Krone (kr)
+          </option>
+
+          <option value="PLN">
+            PLN — Polish Zloty (zł)
+          </option>
+
+          <option value="CZK">
+            CZK — Czech Koruna (Kč)
+          </option>
+
+          <option value="HUF">
+            HUF — Hungarian Forint (Ft)
+          </option>
+
+        </optgroup>
+
+
+        <optgroup label="Oceania">
+
+          <option value="AUD">
+            AUD — Australian Dollar (A$)
+          </option>
+
+          <option value="NZD">
+            NZD — New Zealand Dollar (NZ$)
+          </option>
 
         </optgroup>
 
@@ -918,9 +1213,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Month</label>
+      <label>
+        Month
+      </label>
 
       <input
         id="month"
@@ -929,9 +1227,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Income</label>
+      <label>
+        Income
+      </label>
 
       <input
         id="income"
@@ -942,9 +1243,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Housing</label>
+      <label>
+        Housing
+      </label>
 
       <input
         id="housing"
@@ -955,9 +1259,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Food</label>
+      <label>
+        Food
+      </label>
 
       <input
         id="food"
@@ -968,9 +1275,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Transport</label>
+      <label>
+        Transport
+      </label>
 
       <input
         id="transport"
@@ -981,9 +1291,12 @@ footer{
 
     </div>
 
+
     <div>
 
-      <label>Bills & Other Essentials</label>
+      <label>
+        Bills & Other Essentials
+      </label>
 
       <input
         id="bills"
@@ -994,6 +1307,7 @@ footer{
 
     </div>
 
+
     <div class="full">
 
       <button id="saveBtn">
@@ -1003,6 +1317,7 @@ footer{
     </div>
 
   </div>
+
 
   <div
     id="saveMessage"
@@ -1023,42 +1338,91 @@ footer{
   </h2>
 
   <p class="small">
-    Your plan updates automatically from your saved records.
+    Your plan updates automatically from your
+    saved records.
   </p>
 
   <div class="metrics">
 
     <div class="metric">
-      <span>Average Income</span>
-      <strong id="averageIncome">$0</strong>
+
+      <span>
+        Average Income
+      </span>
+
+      <strong id="averageIncome">
+        $0
+      </strong>
+
     </div>
 
-    <div class="metric">
-      <span>Lowest Recent Income</span>
-      <strong id="lowestIncome">$0</strong>
-    </div>
 
     <div class="metric">
-      <span>Essential Expenses</span>
-      <strong id="essentialExpenses">$0</strong>
+
+      <span>
+        Lowest Recent Income
+      </span>
+
+      <strong id="lowestIncome">
+        $0
+      </strong>
+
     </div>
+
+
+    <div class="metric">
+
+      <span>
+        Essential Expenses
+      </span>
+
+      <strong id="essentialExpenses">
+        $0
+      </strong>
+
+    </div>
+
 
     <div class="metric featured">
-      <span>SAFE-TO-SPEND</span>
-      <strong id="safeToSpend">$0</strong>
+
+      <span>
+        SAFE-TO-SPEND
+      </span>
+
+      <strong id="safeToSpend">
+        $0
+      </strong>
+
     </div>
 
-    <div class="metric">
-      <span>3-Month Reserve Target</span>
-      <strong id="reserveTarget">$0</strong>
-    </div>
 
     <div class="metric">
-      <span>Reserve Progress</span>
-      <strong id="reserveProgress">$0</strong>
+
+      <span>
+        3-Month Reserve Target
+      </span>
+
+      <strong id="reserveTarget">
+        $0
+      </strong>
+
+    </div>
+
+
+    <div class="metric">
+
+      <span>
+        Reserve Progress
+      </span>
+
+      <strong id="reserveProgress">
+        $0
+      </strong>
+
     </div>
 
   </div>
+
 
   <div
     id="planMessage"
@@ -1115,7 +1479,8 @@ footer{
       </h3>
 
       <p class="small">
-        Simple tools for understanding your monthly spending capacity.
+        Simple tools for understanding your monthly
+        spending capacity.
       </p>
 
       <div class="plan-price">
@@ -1123,10 +1488,23 @@ footer{
       </div>
 
       <ul>
-        <li>Monthly income tracking</li>
-        <li>Essential expense planning</li>
-        <li>Safe-to-spend estimate</li>
-        <li>3-month reserve target</li>
+
+        <li>
+          Monthly income tracking
+        </li>
+
+        <li>
+          Essential expense planning
+        </li>
+
+        <li>
+          Safe-to-spend estimate
+        </li>
+
+        <li>
+          3-month reserve target
+        </li>
+
       </ul>
 
       <button
@@ -1137,6 +1515,7 @@ footer{
       </button>
 
     </div>
+
 
     <div class="plan-card pro">
 
@@ -1154,10 +1533,23 @@ footer{
       </div>
 
       <ul>
-        <li>Advanced money insights</li>
-        <li>Longer income history</li>
-        <li>Better reserve planning</li>
-        <li>More powerful money reports</li>
+
+        <li>
+          Advanced money insights
+        </li>
+
+        <li>
+          Longer income history
+        </li>
+
+        <li>
+          Better reserve planning
+        </li>
+
+        <li>
+          More powerful money reports
+        </li>
+
       </ul>
 
       <button
@@ -1174,6 +1566,7 @@ footer{
 
   </div>
 
+
   <div
     id="proMessage"
     class="message hidden"
@@ -1185,9 +1578,11 @@ footer{
 
 </div>
 
+
 <footer>
 
-  Planning estimates only — not financial advice.
+  FlowMoney planning estimates are for informational
+  purposes only and are not financial advice.
 
 </footer>
 
@@ -1304,8 +1699,14 @@ document.getElementById("accountLabel");
 const walletMessage =
 document.getElementById("walletMessage");
 
+const providerText =
+document.getElementById("providerText");
+
 const transactionsList =
 document.getElementById("transactionsList");
+
+const continueWalletBtn =
+document.getElementById("continueWalletBtn");
 
 let walletAction =
 "deposit";
@@ -1316,6 +1717,24 @@ let walletAction =
 ========================================= */
 
 const currencySymbols = {
+
+  USD:"$",
+  CAD:"C$",
+  MXN:"MX$",
+  BRL:"R$",
+  ARS:"$",
+  CLP:"$",
+  COP:"$",
+
+  GBP:"£",
+  EUR:"€",
+  CHF:"CHF",
+  SEK:"kr",
+  NOK:"kr",
+  DKK:"kr",
+  PLN:"zł",
+  CZK:"Kč",
+  HUF:"Ft",
 
   NGN:"₦",
   GHS:"₵",
@@ -1346,9 +1765,8 @@ const currencySymbols = {
   SAR:"ر.س",
   QAR:"ر.ق",
 
-  USD:"$",
-  GBP:"£",
-  EUR:"€"
+  AUD:"A$",
+  NZD:"NZ$"
 
 };
 
@@ -1357,14 +1775,31 @@ const currencySymbols = {
    EXCHANGE RATES
    Base currency: USD
 
-   These are used for display/planning.
-   Real-money transactions must use a
-   verified payment provider/server rate.
+   Planning/display rates only.
+   Real-money conversion must use
+   a verified provider/server rate.
 ========================================= */
 
 const exchangeRates = {
 
   USD:1,
+  CAD:1.37,
+  MXN:18.5,
+  BRL:5.4,
+  ARS:1400,
+  CLP:950,
+  COP:3900,
+
+  GBP:.76,
+  EUR:.86,
+  CHF:.81,
+  SEK:9.3,
+  NOK:10.1,
+  DKK:6.42,
+  PLN:3.65,
+  CZK:21.5,
+  HUF:335,
+
   NGN:1325.98,
   GHS:11.05,
   KES:129.5,
@@ -1374,6 +1809,8 @@ const exchangeRates = {
   UGX:3500,
   RWF:1450,
   ETB:140,
+  XOF:600,
+  XAF:600,
 
   INR:83.8,
   PKR:280,
@@ -1392,10 +1829,179 @@ const exchangeRates = {
   SAR:3.75,
   QAR:3.64,
 
-  GBP:0.76,
-  EUR:0.86
+  AUD:1.52,
+  NZD:1.66
 
 };
+
+
+/* =========================================
+   COUNTRY → DEFAULT CURRENCY
+========================================= */
+
+const countryCurrencies = {
+
+  NG:"NGN",
+  GH:"GHS",
+  KE:"KES",
+  ZA:"ZAR",
+  EG:"EGP",
+  TZ:"TZS",
+  UG:"UGX",
+  RW:"RWF",
+  ET:"ETB",
+  SN:"XOF",
+  CI:"XOF",
+  CM:"XAF",
+
+  IN:"INR",
+  PK:"PKR",
+  BD:"BDT",
+  PH:"PHP",
+  ID:"IDR",
+  MY:"MYR",
+  SG:"SGD",
+  TH:"THB",
+  VN:"VND",
+  JP:"JPY",
+  CN:"CNY",
+  KR:"KRW",
+
+  AE:"AED",
+  SA:"SAR",
+  QA:"QAR",
+
+  IL:"USD",
+  TR:"TRY",
+
+  US:"USD",
+  CA:"CAD",
+  MX:"MXN",
+  BR:"BRL",
+  AR:"ARS",
+  CL:"CLP",
+  CO:"COP",
+
+  GB:"GBP",
+  DE:"EUR",
+  FR:"EUR",
+  IT:"EUR",
+  ES:"EUR",
+  NL:"EUR",
+  BE:"EUR",
+  IE:"EUR",
+  PT:"EUR",
+  AT:"EUR",
+
+  SE:"SEK",
+  NO:"NOK",
+  DK:"DKK",
+  FI:"EUR",
+  CH:"CHF",
+
+  AU:"AUD",
+  NZ:"NZD"
+
+};
+
+
+/* =========================================
+   COUNTRY CHANGE
+========================================= */
+
+walletCountry.addEventListener(
+  "change",
+  ()=>{
+
+    const country =
+      walletCountry.value;
+
+    const defaultCurrency =
+      countryCurrencies[country];
+
+    if(defaultCurrency){
+
+      walletCurrency.value =
+        defaultCurrency;
+
+    }
+
+    updateProviderMessage();
+
+  }
+);
+
+
+/* =========================================
+   PAYMENT METHOD CHANGE
+========================================= */
+
+paymentMethod.addEventListener(
+  "change",
+  ()=>{
+
+    if(paymentMethod.value === "bank"){
+
+      accountLabel.textContent =
+        "Bank Account Details";
+
+      accountDetails.placeholder =
+        "Enter bank account details";
+
+    }
+
+    else if(paymentMethod.value === "wallet"){
+
+      accountLabel.textContent =
+        "Digital / Mobile Wallet Details";
+
+      accountDetails.placeholder =
+        "Enter supported wallet details";
+
+    }
+
+    else{
+
+      accountLabel.textContent =
+        "Payment Provider Details";
+
+      accountDetails.placeholder =
+        "Provider or payment details";
+
+    }
+
+    updateProviderMessage();
+
+  }
+);
+
+
+/* =========================================
+   PROVIDER MESSAGE
+========================================= */
+
+function updateProviderMessage(){
+
+  const country =
+    walletCountry.options[
+      walletCountry.selectedIndex
+    ].text;
+
+  const method =
+    paymentMethod.options[
+      paymentMethod.selectedIndex
+    ].text;
+
+  providerText.textContent =
+    "FlowMoney will route this " +
+    walletAction +
+    " request for " +
+    country +
+    " through a supported payment provider for " +
+    method +
+    ". Provider availability depends on the market.";
+
+}
 
 
 /* =========================================
@@ -1594,7 +2200,9 @@ async function openPaddleCheckout(
 
     });
 
-  }catch(error){
+  }
+
+  catch(error){
 
     console.error(
       "Paddle checkout error:",
@@ -1719,7 +2327,9 @@ signupBtn.addEventListener(
 
       await showDashboard();
 
-    }else{
+    }
+
+    else{
 
       showMessage(
         authMessage,
@@ -1766,12 +2376,12 @@ loginBtn.addEventListener(
       data,
       error
     } =
-    await supabaseClient
-      .auth
-      .signInWithPassword({
-        email,
-        password
-      });
+      await supabaseClient
+        .auth
+        .signInWithPassword({
+          email,
+          password
+        });
 
     loginBtn.disabled =
       false;
@@ -1858,7 +2468,7 @@ async function showDashboard(){
 
 
 /* =========================================
-   CURRENCY CHANGE
+   MONTHLY CURRENCY CHANGE
 ========================================= */
 
 currencySelect.addEventListener(
@@ -1914,19 +2524,17 @@ function openWalletAction(
     walletActionTitle.textContent =
       "Deposit Money";
 
-    document.getElementById(
-      "continueWalletBtn"
-    ).textContent =
+    continueWalletBtn.textContent =
       "Continue Deposit";
 
-  }else{
+  }
+
+  else{
 
     walletActionTitle.textContent =
       "Withdraw Money";
 
-    document.getElementById(
-      "continueWalletBtn"
-    ).textContent =
+    continueWalletBtn.textContent =
       "Continue Withdrawal";
 
   }
@@ -1937,15 +2545,24 @@ function openWalletAction(
   accountDetails.value =
     "";
 
+  updateProviderMessage();
+
   window.scrollTo({
+
     top:
       walletActionCard.offsetTop -
       20,
+
     behavior:"smooth"
+
   });
 
 }
 
+
+/* =========================================
+   WALLET BUTTONS
+========================================= */
 
 document.getElementById(
   "depositBtn"
@@ -2000,36 +2617,6 @@ document.getElementById(
 
 
 /* =========================================
-   PAYMENT METHOD LABEL
-========================================= */
-
-paymentMethod.addEventListener(
-  "change",
-  ()=>{
-
-    if(paymentMethod.value === "bank"){
-
-      accountLabel.textContent =
-        "Bank Account Details";
-
-      accountDetails.placeholder =
-        "Enter bank account details";
-
-    }else{
-
-      accountLabel.textContent =
-        "Wallet Details";
-
-      accountDetails.placeholder =
-        "Enter supported wallet details";
-
-    }
-
-  }
-);
-
-
-/* =========================================
    WALLET DATA
 ========================================= */
 
@@ -2046,14 +2633,6 @@ async function loadWallet(){
     return;
 
   }
-
-  /*
-    This reads wallet transactions only if the
-    table exists.
-
-    Real deposits/withdrawals must later be
-    created by a verified server/payment webhook.
-  */
 
   const {
     data,
@@ -2081,12 +2660,10 @@ async function loadWallet(){
     );
 
     walletBalance.textContent =
-      formatMoney(
-        0
-      );
+      formatMoney(0);
 
     transactionsList.innerHTML =
-      '<p class="small">Wallet is ready for payment-provider connection.</p>';
+      '<p class="small">Wallet payment infrastructure is ready for provider connection.</p>';
 
     return;
 
@@ -2129,7 +2706,10 @@ async function loadWallet(){
       }
 
       if(
-        transaction.type === "withdrawal" &&
+        (
+          transaction.type === "withdrawal" ||
+          transaction.type === "withdraw"
+        ) &&
         transaction.status === "completed"
       ){
 
@@ -2158,7 +2738,7 @@ async function loadWallet(){
 
 
 /* =========================================
-   WALLET TRANSACTION DISPLAY
+   TRANSACTION DISPLAY
 ========================================= */
 
 function displayTransactions(
@@ -2222,6 +2802,11 @@ function displayTransactions(
           ? "+"
           : "-";
 
+      const statusClass =
+        status === "completed"
+          ? "status-completed"
+          : "status-pending";
+
       div.innerHTML = `
 
         <div class="transaction-top">
@@ -2251,7 +2836,7 @@ function displayTransactions(
 
           ·
 
-          <span class="status-pending">
+          <span class="${statusClass}">
             ${escapeHtml(status)}
           </span>
 
@@ -2277,16 +2862,14 @@ function displayTransactions(
    CONTINUE WALLET ACTION
 
    IMPORTANT:
-   This intentionally does NOT create
-   a completed money transaction.
+   This does not create a completed
+   money transaction.
 
-   Real money must be verified by a
-   payment provider/webhook.
+   Real money movement must be verified
+   by a payment provider and server webhook.
 ========================================= */
 
-document.getElementById(
-  "continueWalletBtn"
-).addEventListener(
+continueWalletBtn.addEventListener(
   "click",
   async()=>{
 
@@ -2341,7 +2924,7 @@ document.getElementById(
 
       showMessage(
         walletMessage,
-        "Please enter your bank or wallet details.",
+        "Please enter your bank, wallet or payment details.",
         "warning"
       );
 
@@ -2350,19 +2933,38 @@ document.getElementById(
     }
 
     /*
-      We do NOT mark this as completed.
+      SECURITY:
+      We intentionally do NOT insert a completed
+      wallet transaction from the browser.
 
-      This prevents FlowMoney from creating
-      fake balances. The next integration step
-      will connect the selected country/payment
-      method to a real payment provider.
+      A real payment provider must verify:
+      - money received
+      - money sent
+      - transaction ID
+      - currency
+      - amount
+      - user
+      - country
+      - provider status
+
+      Then a secure server webhook can update
+      wallet_transactions.
     */
+
+    const actionName =
+      walletAction === "deposit"
+        ? "deposit"
+        : "withdrawal";
 
     showMessage(
       walletMessage,
-      walletAction === "deposit"
-        ? "Deposit setup is ready. Connect a supported payment provider to complete the deposit."
-        : "Withdrawal setup is ready. Connect a supported payout provider to complete the withdrawal.",
+      "Your " +
+      actionName +
+      " request is prepared for " +
+      country +
+      " in " +
+      currency +
+      ". The next integration step will connect this request to a supported payment provider. No money has been moved yet.",
       "warning"
     );
 
@@ -2416,6 +3018,9 @@ document
           .getElementById("month")
           .value;
 
+      const currency =
+        currencySelect.value;
+
       const income =
         Number(
           document
@@ -2463,11 +3068,6 @@ document
 
       }
 
-      /*
-        The saved record is stored in the
-        selected currency.
-      */
-
       const {
         error
       } =
@@ -2476,11 +3076,19 @@ document
           .insert({
 
             user_id:user.id,
+
             month,
+
+            currency,
+
             income,
+
             housing,
+
             food,
+
             transport,
+
             bills
 
           });
@@ -2505,7 +3113,9 @@ document
 
       showMessage(
         saveMessage,
-        "Monthly record saved successfully.",
+        "Monthly record saved successfully in " +
+        currency +
+        ".",
         "success"
       );
 
@@ -2657,14 +3267,6 @@ function calculatePlan(
 
   }
 
-  /*
-    Records are stored in their original
-    selected currency.
-
-    Convert everything into the currently
-    selected display currency.
-  */
-
   const displayCurrency =
     currencySelect.value ||
     "USD";
@@ -2672,13 +3274,18 @@ function calculatePlan(
   const incomes =
     records.map(
       record =>
+
         convertCurrency(
+
           Number(
             record.income
           ) || 0,
+
           record.currency ||
-            displayCurrency,
+          displayCurrency,
+
           displayCurrency
+
         )
     );
 
@@ -2713,16 +3320,23 @@ function calculatePlan(
 
   const essentialExpenses =
     convertCurrency(
+
       essentialExpensesOriginal,
+
       recordCurrency,
+
       displayCurrency
+
     );
 
   const safeToSpend =
     Math.max(
+
       0,
+
       lowestIncome -
       essentialExpenses
+
     );
 
   const reserveTarget =
@@ -2730,9 +3344,12 @@ function calculatePlan(
 
   const estimatedReserveProgress =
     Math.max(
+
       0,
+
       averageIncome -
       essentialExpenses
+
     );
 
   document.getElementById(
@@ -2786,9 +3403,12 @@ function calculatePlan(
   document.getElementById(
     "planMessage"
   ).textContent =
-    "Your amounts are automatically converted to " +
+
+    "Your amounts are displayed in " +
+
     displayCurrency +
-    " using the available exchange-rate table. Your safe-to-spend estimate uses your lowest recent income and current essential expenses.";
+
+    " using the available planning exchange-rate table. Your safe-to-spend estimate uses your lowest recent income and current essential expenses.";
 
 }
 
@@ -2831,11 +3451,15 @@ function displayRecords(
 
       const income =
         convertCurrency(
+
           Number(
             record.income
           ) || 0,
+
           originalCurrency,
+
           displayCurrency
+
         );
 
       const essentialOriginal =
@@ -2850,9 +3474,13 @@ function displayRecords(
 
       const essential =
         convertCurrency(
+
           essentialOriginal,
+
           originalCurrency,
+
           displayCurrency
+
         );
 
       const div =
@@ -2866,27 +3494,61 @@ function displayRecords(
       div.innerHTML = `
 
         <div class="record-month">
-          ${escapeHtml(record.month)}
+
+          ${escapeHtml(
+            record.month
+          )}
+
         </div>
 
         <div class="record-row">
-          <span>Income</span>
+
+          <span>
+            Income
+          </span>
+
           <strong>
+
             ${formatMoney(
               income,
               displayCurrency
             )}
+
           </strong>
+
         </div>
 
         <div class="record-row">
-          <span>Essentials</span>
+
+          <span>
+            Essentials
+          </span>
+
           <strong>
+
             ${formatMoney(
               essential,
               displayCurrency
             )}
+
           </strong>
+
+        </div>
+
+        <div class="record-row">
+
+          <span>
+            Original Currency
+          </span>
+
+          <strong>
+
+            ${escapeHtml(
+              originalCurrency
+            )}
+
+          </strong>
+
         </div>
 
       `;
@@ -2971,6 +3633,7 @@ async function checkSession(){
   }
 
 }
+
 
 checkSession();
 
