@@ -8,10 +8,7 @@
 
 <meta name="description" content="FlowMoney helps people with variable income understand what they can safely spend and how much emergency reserve they need.">
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Paddle -->
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
 <style>
@@ -243,8 +240,6 @@ button:disabled{
   padding:4px 0;
   color:#667085;
 }
-
-/* PRICING */
 
 .pricing-grid{
   display:grid;
@@ -719,7 +714,6 @@ footer{
 
 </div>
 
-
 <!-- PRICING -->
 
 <div class="card">
@@ -765,7 +759,6 @@ footer{
       </button>
 
     </div>
-
 
     <!-- PRO -->
 
@@ -822,7 +815,6 @@ footer{
 
 </footer>
 
-
 <script>
 
 /* =========================================
@@ -838,7 +830,6 @@ const FLOWMONEY_STARTER_PRICE_ID =
 const FLOWMONEY_PRO_PRICE_ID =
 "pri_01m21szctcmh09bnhg33ch3zs8";
 
-
 /* Paddle Sandbox */
 
 Paddle.Environment.set("sandbox");
@@ -846,7 +837,6 @@ Paddle.Environment.set("sandbox");
 Paddle.Initialize({
   token:PADDLE_CLIENT_TOKEN
 });
-
 
 /* =========================================
    SUPABASE
@@ -863,7 +853,6 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
-
 
 /* =========================================
    ELEMENTS
@@ -908,7 +897,6 @@ document.getElementById("upgradeProBtn");
 const proMessage =
 document.getElementById("proMessage");
 
-
 /* =========================================
    CURRENCY
 ========================================= */
@@ -949,7 +937,6 @@ const currencySymbols = {
 
 };
 
-
 const savedCurrency =
 localStorage.getItem(
   "flowmoney_currency"
@@ -965,7 +952,6 @@ if(
 
 }
 
-
 currencySelect.addEventListener(
   "change",
   ()=>{
@@ -979,7 +965,6 @@ currencySelect.addEventListener(
 
   }
 );
-
 
 /* =========================================
    MESSAGES
@@ -1002,7 +987,6 @@ function showMessage(
   );
 
 }
-
 
 /* =========================================
    CURRENT USER
@@ -1038,7 +1022,6 @@ async function getCurrentUser(){
   };
 
 }
-
 
 /* =========================================
    PADDLE CHECKOUT
@@ -1095,6 +1078,13 @@ async function openPaddleCheckout(
         email:user.email
       },
 
+      /* SEND SUPABASE USER ID TO PADDLE */
+
+      customData:{
+        user_id:user.id,
+        plan:planName
+      },
+
       settings:{
         displayMode:"overlay",
         theme:"light",
@@ -1122,7 +1112,6 @@ async function openPaddleCheckout(
 
 }
 
-
 /* =========================================
    STARTER CHECKOUT
 ========================================= */
@@ -1139,7 +1128,6 @@ upgradeStarterBtn.addEventListener(
   }
 );
 
-
 /* =========================================
    PRO CHECKOUT
 ========================================= */
@@ -1155,7 +1143,6 @@ upgradeProBtn.addEventListener(
 
   }
 );
-
 
 /* =========================================
    SIGN UP
@@ -1243,7 +1230,6 @@ signupBtn.addEventListener(
   }
 );
 
-
 /* =========================================
    LOGIN
 ========================================= */
@@ -1310,7 +1296,6 @@ loginBtn.addEventListener(
   }
 );
 
-
 /* =========================================
    LOGOUT
 ========================================= */
@@ -1344,7 +1329,6 @@ logoutBtn.addEventListener(
   }
 );
 
-
 /* =========================================
    SHOW DASHBOARD
 ========================================= */
@@ -1366,7 +1350,6 @@ async function showDashboard(){
   await loadRecords();
 
 }
-
 
 /* =========================================
    SAVE MONTHLY RECORD
@@ -1527,7 +1510,6 @@ document
     }
   );
 
-
 /* =========================================
    LOAD RECORDS
 ========================================= */
@@ -1604,7 +1586,6 @@ async function loadRecords(){
   );
 
 }
-
 
 /* =========================================
    CALCULATE PLAN
@@ -1747,7 +1728,6 @@ function calculatePlan(records){
 
 }
 
-
 /* =========================================
    DISPLAY RECORDS
 ========================================= */
@@ -1823,7 +1803,6 @@ function displayRecords(records){
 
 }
 
-
 /* =========================================
    MONEY FORMAT
 ========================================= */
@@ -1851,7 +1830,6 @@ function formatMoney(value){
   );
 
 }
-
 
 /* =========================================
    ESCAPE HTML
@@ -1888,7 +1866,6 @@ function escapeHtml(value){
 
 }
 
-
 /* =========================================
    CHECK SESSION
 ========================================= */
@@ -1921,7 +1898,6 @@ async function checkSession(){
   }
 
 }
-
 
 checkSession();
 
