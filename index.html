@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FlowMoney — Know What You Can Safely Spend</title>
+<title>FlowMoney — Global Money Planning & Wallet</title>
 
-<meta name="description"
-content="FlowMoney helps people globally understand what they can safely spend, save money and plan their emergency reserve.">
+<meta
+  name="description"
+  content="FlowMoney helps people around the world understand what they can safely spend, save money, manage their reserve and connect supported payment methods."
+>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
@@ -167,6 +169,11 @@ button:disabled{
   color:#b54708;
 }
 
+.info{
+  background:#eff8ff;
+  color:#175cd3;
+}
+
 .dashboard-header{
   margin-bottom:20px;
 }
@@ -316,7 +323,10 @@ button:disabled{
   line-height:1.5;
 }
 
-/* GLOBAL WALLET */
+
+/* =========================================
+   GLOBAL WALLET
+========================================= */
 
 .wallet-card{
   background:#111827;
@@ -367,31 +377,30 @@ button:disabled{
 }
 
 .wallet-panel h3{
-  margin-top:0;
+  margin-bottom:8px;
 }
 
-.global-badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#eef2ff;
-  color:#3730a3;
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:10px;
-}
-
-.provider-box{
+.country-box{
+  background:#f8fafc;
   border:1px solid #eaecf0;
   border-radius:14px;
   padding:15px;
   margin-top:15px;
-  background:#f8fafc;
 }
 
-.provider-box strong{
-  display:block;
-  margin-bottom:5px;
+.support-status{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  background:#ecfdf3;
+  color:#027a48;
+}
+
+.pending-status{
+  background:#fffaeb;
+  color:#b54708;
 }
 
 .transaction{
@@ -412,6 +421,7 @@ button:disabled{
   color:#667085;
   font-size:13px;
   margin-top:7px;
+  line-height:1.6;
 }
 
 .deposit-text{
@@ -422,19 +432,29 @@ button:disabled{
   color:#b42318;
 }
 
-.status-pending{
-  color:#b54708;
-  font-weight:700;
-}
-
 .status-completed{
   color:#027a48;
   font-weight:700;
 }
 
-.status-info{
-  color:#475467;
+.status-pending{
+  color:#b54708;
   font-weight:700;
+}
+
+.status-failed{
+  color:#b42318;
+  font-weight:700;
+}
+
+.global-note{
+  background:#eff8ff;
+  color:#175cd3;
+  border-radius:12px;
+  padding:13px;
+  margin-top:15px;
+  font-size:13px;
+  line-height:1.5;
 }
 
 footer{
@@ -443,6 +463,7 @@ footer{
   color:#667085;
   font-size:13px;
 }
+
 
 @media(max-width:750px){
 
@@ -463,6 +484,7 @@ footer{
   }
 
 }
+
 
 @media(max-width:550px){
 
@@ -521,6 +543,7 @@ footer{
 </style>
 </head>
 
+
 <body>
 
 <header>
@@ -538,7 +561,13 @@ footer{
 
 </header>
 
+
 <div class="container">
+
+
+<!-- =========================================
+     AUTH
+========================================= -->
 
 <section
   id="authSection"
@@ -556,9 +585,9 @@ footer{
     </h1>
 
     <p>
-      FlowMoney helps people around the world plan
-      changing income, protect essentials, save money
-      and build an emergency reserve.
+      FlowMoney helps people manage changing income,
+      protect essential expenses, save money and build
+      an emergency reserve.
     </p>
 
   </div>
@@ -568,7 +597,7 @@ footer{
   </h2>
 
   <p class="small">
-    Start with your email and password.
+    Start with your email and a password.
   </p>
 
   <label>Email</label>
@@ -608,6 +637,10 @@ footer{
 </section>
 
 
+<!-- =========================================
+     DASHBOARD
+========================================= -->
+
 <section
   id="dashboardSection"
   class="hidden"
@@ -620,8 +653,8 @@ footer{
   </h1>
 
   <p class="small">
-    Plan your money, save toward your goals and
-    understand what you can safely spend.
+    Manage your money plan, wallet activity and
+    supported payment methods from one place.
   </p>
 
 </div>
@@ -633,17 +666,13 @@ footer{
 
 <div class="card wallet-card">
 
-  <span class="global-badge">
-    GLOBAL WALLET
-  </span>
-
   <h2>
     FlowMoney Wallet
   </h2>
 
   <p class="small">
     Keep money available for your financial goals,
-    savings and emergency reserve.
+    spending plans and emergency reserve.
   </p>
 
   <div
@@ -680,7 +709,7 @@ footer{
 
 
 <!-- =========================================
-     GLOBAL DEPOSIT / WITHDRAW
+     WALLET ACTION
 ========================================= -->
 
 <div
@@ -688,19 +717,16 @@ footer{
   class="card hidden"
 >
 
-  <span class="global-badge">
-    GLOBAL PAYMENT
-  </span>
-
   <h2 id="walletActionTitle">
     Deposit Money
   </h2>
 
   <p class="small">
-    Choose your country, currency and available
-    payment method. FlowMoney will use a supported
-    payment provider for the selected market.
+    Choose your country, currency and a payment
+    method available through FlowMoney's connected
+    payment providers.
   </p>
+
 
   <label>
     Country
@@ -708,66 +734,60 @@ footer{
 
   <select id="walletCountry">
 
-    <option value="NG">Nigeria</option>
-    <option value="GH">Ghana</option>
-    <option value="KE">Kenya</option>
-    <option value="ZA">South Africa</option>
-    <option value="EG">Egypt</option>
-    <option value="TZ">Tanzania</option>
-    <option value="UG">Uganda</option>
-    <option value="RW">Rwanda</option>
-    <option value="ET">Ethiopia</option>
-    <option value="SN">Senegal</option>
-    <option value="CI">Côte d'Ivoire</option>
-    <option value="CM">Cameroon</option>
+    <option value="NG">🇳🇬 Nigeria</option>
+    <option value="GH">🇬🇭 Ghana</option>
+    <option value="KE">🇰🇪 Kenya</option>
+    <option value="ZA">🇿🇦 South Africa</option>
+    <option value="EG">🇪🇬 Egypt</option>
+    <option value="TZ">🇹🇿 Tanzania</option>
+    <option value="UG">🇺🇬 Uganda</option>
+    <option value="RW">🇷🇼 Rwanda</option>
+    <option value="ET">🇪🇹 Ethiopia</option>
 
-    <option value="IN">India</option>
-    <option value="PK">Pakistan</option>
-    <option value="BD">Bangladesh</option>
-    <option value="PH">Philippines</option>
-    <option value="ID">Indonesia</option>
-    <option value="MY">Malaysia</option>
-    <option value="SG">Singapore</option>
-    <option value="TH">Thailand</option>
-    <option value="VN">Vietnam</option>
-    <option value="JP">Japan</option>
-    <option value="CN">China</option>
-    <option value="KR">South Korea</option>
+    <option value="IN">🇮🇳 India</option>
+    <option value="PK">🇵🇰 Pakistan</option>
+    <option value="BD">🇧🇩 Bangladesh</option>
+    <option value="PH">🇵🇭 Philippines</option>
+    <option value="ID">🇮🇩 Indonesia</option>
+    <option value="MY">🇲🇾 Malaysia</option>
+    <option value="SG">🇸🇬 Singapore</option>
+    <option value="TH">🇹🇭 Thailand</option>
+    <option value="VN">🇻🇳 Vietnam</option>
+    <option value="JP">🇯🇵 Japan</option>
+    <option value="CN">🇨🇳 China</option>
+    <option value="KR">🇰🇷 South Korea</option>
 
-    <option value="AE">United Arab Emirates</option>
-    <option value="SA">Saudi Arabia</option>
-    <option value="QA">Qatar</option>
-    <option value="IL">Israel</option>
-    <option value="TR">Türkiye</option>
+    <option value="AE">🇦🇪 United Arab Emirates</option>
+    <option value="SA">🇸🇦 Saudi Arabia</option>
+    <option value="QA">🇶🇦 Qatar</option>
 
-    <option value="US">United States</option>
-    <option value="CA">Canada</option>
-    <option value="MX">Mexico</option>
-    <option value="BR">Brazil</option>
-    <option value="AR">Argentina</option>
-    <option value="CL">Chile</option>
-    <option value="CO">Colombia</option>
-
-    <option value="GB">United Kingdom</option>
-    <option value="DE">Germany</option>
-    <option value="FR">France</option>
-    <option value="IT">Italy</option>
-    <option value="ES">Spain</option>
-    <option value="NL">Netherlands</option>
-    <option value="BE">Belgium</option>
-    <option value="IE">Ireland</option>
-    <option value="PT">Portugal</option>
-    <option value="AT">Austria</option>
-    <option value="SE">Sweden</option>
-    <option value="NO">Norway</option>
-    <option value="DK">Denmark</option>
-    <option value="FI">Finland</option>
-    <option value="CH">Switzerland</option>
-
-    <option value="AU">Australia</option>
-    <option value="NZ">New Zealand</option>
+    <option value="US">🇺🇸 United States</option>
+    <option value="CA">🇨🇦 Canada</option>
+    <option value="GB">🇬🇧 United Kingdom</option>
+    <option value="DE">🇩🇪 Germany</option>
+    <option value="FR">🇫🇷 France</option>
+    <option value="IT">🇮🇹 Italy</option>
+    <option value="ES">🇪🇸 Spain</option>
+    <option value="NL">🇳🇱 Netherlands</option>
+    <option value="AU">🇦🇺 Australia</option>
+    <option value="NZ">🇳🇿 New Zealand</option>
 
   </select>
+
+
+  <div
+    id="countrySupport"
+    class="country-box"
+  >
+    <strong>
+      Payment availability
+    </strong>
+
+    <p class="small">
+      Select a country to see the payment methods
+      configured for that market.
+    </p>
+  </div>
 
 
   <label>
@@ -785,8 +805,6 @@ footer{
     <option value="UGX">UGX — Ugandan Shilling (USh)</option>
     <option value="RWF">RWF — Rwandan Franc (FRw)</option>
     <option value="ETB">ETB — Ethiopian Birr (Br)</option>
-    <option value="XOF">XOF — West African CFA Franc (CFA)</option>
-    <option value="XAF">XAF — Central African CFA Franc (FCFA)</option>
 
     <option value="INR">INR — Indian Rupee (₹)</option>
     <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
@@ -806,23 +824,9 @@ footer{
     <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
 
     <option value="USD">USD — US Dollar ($)</option>
-    <option value="CAD">CAD — Canadian Dollar (C$)</option>
-    <option value="MXN">MXN — Mexican Peso (MX$)</option>
-    <option value="BRL">BRL — Brazilian Real (R$)</option>
-    <option value="ARS">ARS — Argentine Peso ($)</option>
-    <option value="CLP">CLP — Chilean Peso ($)</option>
-    <option value="COP">COP — Colombian Peso ($)</option>
-
     <option value="GBP">GBP — British Pound (£)</option>
     <option value="EUR">EUR — Euro (€)</option>
-    <option value="CHF">CHF — Swiss Franc (CHF)</option>
-    <option value="SEK">SEK — Swedish Krona (kr)</option>
-    <option value="NOK">NOK — Norwegian Krone (kr)</option>
-    <option value="DKK">DKK — Danish Krone (kr)</option>
-    <option value="PLN">PLN — Polish Zloty (zł)</option>
-    <option value="CZK">CZK — Czech Koruna (Kč)</option>
-    <option value="HUF">HUF — Hungarian Forint (Ft)</option>
-
+    <option value="CAD">CAD — Canadian Dollar (C$)</option>
     <option value="AUD">AUD — Australian Dollar (A$)</option>
     <option value="NZD">NZD — New Zealand Dollar (NZ$)</option>
 
@@ -838,7 +842,7 @@ footer{
     type="number"
     min="0"
     step="0.01"
-    placeholder="0"
+    placeholder="Enter amount"
   >
 
 
@@ -849,15 +853,15 @@ footer{
   <select id="paymentMethod">
 
     <option value="bank">
-      🏦 Bank Account
+      Bank Account
     </option>
 
     <option value="wallet">
-      📱 Mobile / Digital Wallet
+      Mobile / Digital Wallet
     </option>
 
     <option value="card">
-      💳 Card / Payment Provider
+      Debit / Credit Card
     </option>
 
   </select>
@@ -870,24 +874,16 @@ footer{
   <input
     id="accountDetails"
     type="text"
-    placeholder="Enter bank account details"
+    placeholder="Enter account details"
   >
 
 
-  <div class="provider-box">
+  <div class="global-note">
 
-    <strong>
-      Payment provider connection
-    </strong>
-
-    <span
-      id="providerText"
-      class="small"
-    >
-      FlowMoney will connect this request to
-      an approved provider available for the
-      selected country and payment method.
-    </span>
+    For security, FlowMoney does not mark money as
+    completed from the browser. A connected payment
+    provider must verify the transaction before the
+    wallet balance changes.
 
   </div>
 
@@ -907,23 +903,19 @@ footer{
 
 
 <!-- =========================================
-     WALLET INFORMATION
+     WALLET & PAYMENTS
 ========================================= -->
 
 <div class="card">
-
-  <span class="global-badge">
-    GLOBAL PAYMENTS
-  </span>
 
   <h2>
     Wallet & Payments
   </h2>
 
   <p class="small">
-    FlowMoney is designed to support bank accounts,
-    cards and digital wallets through payment
-    providers available in each supported market.
+    FlowMoney is designed as a global wallet experience.
+    Available banks, wallets and payment methods depend
+    on the country and payment providers connected to FlowMoney.
   </p>
 
   <div class="wallet-grid">
@@ -935,8 +927,8 @@ footer{
       </h3>
 
       <p class="small">
-        Add money to your FlowMoney wallet through
-        a supported payment method.
+        Add money using a supported bank, card or
+        digital/mobile wallet.
       </p>
 
       <button id="depositInfoBtn">
@@ -953,8 +945,8 @@ footer{
       </h3>
 
       <p class="small">
-        Withdraw available wallet funds to a supported
-        bank account or digital wallet.
+        Withdraw available funds to a supported bank
+        account or digital wallet.
       </p>
 
       <button id="withdrawInfoBtn">
@@ -1123,39 +1115,6 @@ footer{
         </optgroup>
 
 
-        <optgroup label="Americas">
-
-          <option value="USD">
-            USD — US Dollar ($)
-          </option>
-
-          <option value="CAD">
-            CAD — Canadian Dollar (C$)
-          </option>
-
-          <option value="MXN">
-            MXN — Mexican Peso (MX$)
-          </option>
-
-          <option value="BRL">
-            BRL — Brazilian Real (R$)
-          </option>
-
-          <option value="ARS">
-            ARS — Argentine Peso ($)
-          </option>
-
-          <option value="CLP">
-            CLP — Chilean Peso ($)
-          </option>
-
-          <option value="COP">
-            COP — Colombian Peso ($)
-          </option>
-
-        </optgroup>
-
-
         <optgroup label="Europe">
 
           <option value="GBP">
@@ -1166,32 +1125,17 @@ footer{
             EUR — Euro (€)
           </option>
 
-          <option value="CHF">
-            CHF — Swiss Franc (CHF)
+        </optgroup>
+
+
+        <optgroup label="Americas">
+
+          <option value="USD" selected>
+            USD — US Dollar ($)
           </option>
 
-          <option value="SEK">
-            SEK — Swedish Krona (kr)
-          </option>
-
-          <option value="NOK">
-            NOK — Norwegian Krone (kr)
-          </option>
-
-          <option value="DKK">
-            DKK — Danish Krone (kr)
-          </option>
-
-          <option value="PLN">
-            PLN — Polish Zloty (zł)
-          </option>
-
-          <option value="CZK">
-            CZK — Czech Koruna (Kč)
-          </option>
-
-          <option value="HUF">
-            HUF — Hungarian Forint (Ft)
+          <option value="CAD">
+            CAD — Canadian Dollar (C$)
           </option>
 
         </optgroup>
@@ -1338,9 +1282,9 @@ footer{
   </h2>
 
   <p class="small">
-    Your plan updates automatically from your
-    saved records.
+    Your plan updates automatically from your saved records.
   </p>
+
 
   <div class="metrics">
 
@@ -1470,7 +1414,9 @@ footer{
     Payments are processed securely through Paddle.
   </p>
 
+
   <div class="pricing-grid">
+
 
     <div class="plan-card">
 
@@ -1574,6 +1520,7 @@ footer{
 
 </div>
 
+
 </section>
 
 </div>
@@ -1589,6 +1536,7 @@ footer{
 
 <script>
 
+
 /* =========================================
    PADDLE
 ========================================= */
@@ -1602,7 +1550,11 @@ const FLOWMONEY_STARTER_PRICE_ID =
 const FLOWMONEY_PRO_PRICE_ID =
 "pri_01m21szctcmh09bnhg33ch3zs8";
 
-Paddle.Environment.set("sandbox");
+
+Paddle.Environment.set(
+  "sandbox"
+);
+
 
 Paddle.Initialize({
   token:PADDLE_CLIENT_TOKEN
@@ -1616,8 +1568,10 @@ Paddle.Initialize({
 const SUPABASE_URL =
 "https://dsqheepfmumjpfrpniuy.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIOs";
+
 
 const supabaseClient =
 window.supabase.createClient(
@@ -1631,82 +1585,130 @@ window.supabase.createClient(
 ========================================= */
 
 const authSection =
-document.getElementById("authSection");
+document.getElementById(
+  "authSection"
+);
 
 const dashboardSection =
-document.getElementById("dashboardSection");
+document.getElementById(
+  "dashboardSection"
+);
 
 const logoutBtn =
-document.getElementById("logoutBtn");
+document.getElementById(
+  "logoutBtn"
+);
 
 const emailInput =
-document.getElementById("email");
+document.getElementById(
+  "email"
+);
 
 const passwordInput =
-document.getElementById("password");
+document.getElementById(
+  "password"
+);
 
 const signupBtn =
-document.getElementById("signupBtn");
+document.getElementById(
+  "signupBtn"
+);
 
 const loginBtn =
-document.getElementById("loginBtn");
+document.getElementById(
+  "loginBtn"
+);
 
 const authMessage =
-document.getElementById("authMessage");
+document.getElementById(
+  "authMessage"
+);
 
 const saveMessage =
-document.getElementById("saveMessage");
+document.getElementById(
+  "saveMessage"
+);
 
 const currencySelect =
-document.getElementById("currencySelect");
+document.getElementById(
+  "currencySelect"
+);
 
 const upgradeStarterBtn =
-document.getElementById("upgradeStarterBtn");
+document.getElementById(
+  "upgradeStarterBtn"
+);
 
 const upgradeProBtn =
-document.getElementById("upgradeProBtn");
+document.getElementById(
+  "upgradeProBtn"
+);
 
 const proMessage =
-document.getElementById("proMessage");
+document.getElementById(
+  "proMessage"
+);
 
 const walletBalance =
-document.getElementById("walletBalance");
+document.getElementById(
+  "walletBalance"
+);
 
 const walletActionCard =
-document.getElementById("walletActionCard");
+document.getElementById(
+  "walletActionCard"
+);
 
 const walletActionTitle =
-document.getElementById("walletActionTitle");
+document.getElementById(
+  "walletActionTitle"
+);
 
 const walletAmount =
-document.getElementById("walletAmount");
+document.getElementById(
+  "walletAmount"
+);
 
 const walletCurrency =
-document.getElementById("walletCurrency");
+document.getElementById(
+  "walletCurrency"
+);
 
 const walletCountry =
-document.getElementById("walletCountry");
+document.getElementById(
+  "walletCountry"
+);
 
 const paymentMethod =
-document.getElementById("paymentMethod");
+document.getElementById(
+  "paymentMethod"
+);
 
 const accountDetails =
-document.getElementById("accountDetails");
+document.getElementById(
+  "accountDetails"
+);
 
 const accountLabel =
-document.getElementById("accountLabel");
+document.getElementById(
+  "accountLabel"
+);
 
 const walletMessage =
-document.getElementById("walletMessage");
-
-const providerText =
-document.getElementById("providerText");
+document.getElementById(
+  "walletMessage"
+);
 
 const transactionsList =
-document.getElementById("transactionsList");
+document.getElementById(
+  "transactionsList"
+);
 
-const continueWalletBtn =
-document.getElementById("continueWalletBtn");
+const countrySupport =
+document.getElementById(
+  "countrySupport"
+);
+
 
 let walletAction =
 "deposit";
@@ -1719,23 +1721,6 @@ let walletAction =
 const currencySymbols = {
 
   USD:"$",
-  CAD:"C$",
-  MXN:"MX$",
-  BRL:"R$",
-  ARS:"$",
-  CLP:"$",
-  COP:"$",
-
-  GBP:"£",
-  EUR:"€",
-  CHF:"CHF",
-  SEK:"kr",
-  NOK:"kr",
-  DKK:"kr",
-  PLN:"zł",
-  CZK:"Kč",
-  HUF:"Ft",
-
   NGN:"₦",
   GHS:"₵",
   KES:"KSh",
@@ -1765,6 +1750,9 @@ const currencySymbols = {
   SAR:"ر.س",
   QAR:"ر.ق",
 
+  GBP:"£",
+  EUR:"€",
+  CAD:"C$",
   AUD:"A$",
   NZD:"NZ$"
 
@@ -1772,33 +1760,13 @@ const currencySymbols = {
 
 
 /* =========================================
-   EXCHANGE RATES
-   Base currency: USD
-
-   Planning/display rates only.
-   Real-money conversion must use
-   a verified provider/server rate.
+   DISPLAY EXCHANGE TABLE
+   FOR PLANNING ONLY
 ========================================= */
 
 const exchangeRates = {
 
   USD:1,
-  CAD:1.37,
-  MXN:18.5,
-  BRL:5.4,
-  ARS:1400,
-  CLP:950,
-  COP:3900,
-
-  GBP:.76,
-  EUR:.86,
-  CHF:.81,
-  SEK:9.3,
-  NOK:10.1,
-  DKK:6.42,
-  PLN:3.65,
-  CZK:21.5,
-  HUF:335,
 
   NGN:1325.98,
   GHS:11.05,
@@ -1809,8 +1777,8 @@ const exchangeRates = {
   UGX:3500,
   RWF:1450,
   ETB:140,
-  XOF:600,
-  XAF:600,
+  XOF:610,
+  XAF:610,
 
   INR:83.8,
   PKR:280,
@@ -1829,179 +1797,240 @@ const exchangeRates = {
   SAR:3.75,
   QAR:3.64,
 
+  GBP:.76,
+  EUR:.86,
+  CAD:1.36,
   AUD:1.52,
-  NZD:1.66
+  NZD:1.67
 
 };
 
 
 /* =========================================
-   COUNTRY → DEFAULT CURRENCY
+   GLOBAL PAYMENT CONFIGURATION
 ========================================= */
 
-const countryCurrencies = {
+/*
+  These are UI categories.
 
-  NG:"NGN",
-  GH:"GHS",
-  KE:"KES",
-  ZA:"ZAR",
-  EG:"EGP",
-  TZ:"TZS",
-  UG:"UGX",
-  RW:"RWF",
-  ET:"ETB",
-  SN:"XOF",
-  CI:"XOF",
-  CM:"XAF",
+  They do NOT claim that every bank or wallet
+  in a country is already connected.
 
-  IN:"INR",
-  PK:"PKR",
-  BD:"BDT",
-  PH:"PHP",
-  ID:"IDR",
-  MY:"MYR",
-  SG:"SGD",
-  TH:"THB",
-  VN:"VND",
-  JP:"JPY",
-  CN:"CNY",
-  KR:"KRW",
+  Actual availability must come from the
+  payment providers connected to FlowMoney.
+*/
 
-  AE:"AED",
-  SA:"SAR",
-  QA:"QAR",
+const countryPaymentMethods = {
 
-  IL:"USD",
-  TR:"TRY",
+  NG:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Nigerian bank accounts",
+      "Supported mobile/digital wallets",
+      "Supported cards"
+    ]
+  },
 
-  US:"USD",
-  CA:"CAD",
-  MX:"MXN",
-  BR:"BRL",
-  AR:"ARS",
-  CL:"CLP",
-  CO:"COP",
+  GH:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Ghanaian bank accounts",
+      "Supported mobile money wallets",
+      "Supported cards"
+    ]
+  },
 
-  GB:"GBP",
-  DE:"EUR",
-  FR:"EUR",
-  IT:"EUR",
-  ES:"EUR",
-  NL:"EUR",
-  BE:"EUR",
-  IE:"EUR",
-  PT:"EUR",
-  AT:"EUR",
+  KE:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Kenyan bank accounts",
+      "Supported mobile money wallets",
+      "Supported cards"
+    ]
+  },
 
-  SE:"SEK",
-  NO:"NOK",
-  DK:"DKK",
-  FI:"EUR",
-  CH:"CHF",
+  ZA:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported South African bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
 
-  AU:"AUD",
-  NZ:"NZD"
+  IN:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Indian bank accounts",
+      "Supported digital payment methods",
+      "Supported cards"
+    ]
+  },
+
+  US:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported US bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  GB:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported UK bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  DE:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported German bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  FR:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported French bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  AU:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Australian bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  CA:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Canadian bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  AE:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported UAE bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  SA:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported Saudi bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  },
+
+  default:{
+    banks:true,
+    wallets:true,
+    cards:true,
+    examples:[
+      "Supported local bank accounts",
+      "Supported digital wallets",
+      "Supported cards"
+    ]
+  }
 
 };
 
 
 /* =========================================
-   COUNTRY CHANGE
+   UPDATE PAYMENT METHODS
 ========================================= */
+
+function updateCountrySupport(){
+
+  const country =
+    walletCountry.value;
+
+  const config =
+    countryPaymentMethods[country] ||
+    countryPaymentMethods.default;
+
+  countrySupport.innerHTML = `
+
+    <strong>
+      Payment availability
+    </strong>
+
+    <br><br>
+
+    <span class="support-status">
+      Provider-dependent
+    </span>
+
+    <p class="small">
+      Available methods for this country are
+      determined by FlowMoney's connected payment
+      providers.
+    </p>
+
+    <ul class="small">
+
+      ${config.examples.map(
+        item =>
+          `<li>${escapeHtml(item)}</li>`
+      ).join("")}
+
+    </ul>
+
+  `;
+
+}
+
 
 walletCountry.addEventListener(
   "change",
-  ()=>{
-
-    const country =
-      walletCountry.value;
-
-    const defaultCurrency =
-      countryCurrencies[country];
-
-    if(defaultCurrency){
-
-      walletCurrency.value =
-        defaultCurrency;
-
-    }
-
-    updateProviderMessage();
-
-  }
+  updateCountrySupport
 );
 
 
-/* =========================================
-   PAYMENT METHOD CHANGE
-========================================= */
-
-paymentMethod.addEventListener(
-  "change",
-  ()=>{
-
-    if(paymentMethod.value === "bank"){
-
-      accountLabel.textContent =
-        "Bank Account Details";
-
-      accountDetails.placeholder =
-        "Enter bank account details";
-
-    }
-
-    else if(paymentMethod.value === "wallet"){
-
-      accountLabel.textContent =
-        "Digital / Mobile Wallet Details";
-
-      accountDetails.placeholder =
-        "Enter supported wallet details";
-
-    }
-
-    else{
-
-      accountLabel.textContent =
-        "Payment Provider Details";
-
-      accountDetails.placeholder =
-        "Provider or payment details";
-
-    }
-
-    updateProviderMessage();
-
-  }
-);
-
-
-/* =========================================
-   PROVIDER MESSAGE
-========================================= */
-
-function updateProviderMessage(){
-
-  const country =
-    walletCountry.options[
-      walletCountry.selectedIndex
-    ].text;
-
-  const method =
-    paymentMethod.options[
-      paymentMethod.selectedIndex
-    ].text;
-
-  providerText.textContent =
-    "FlowMoney will route this " +
-    walletAction +
-    " request for " +
-    country +
-    " through a supported payment provider for " +
-    method +
-    ". Provider availability depends on the market.";
-
-}
+updateCountrySupport();
 
 
 /* =========================================
@@ -2074,7 +2103,7 @@ function formatMoney(
 
 
 /* =========================================
-   MESSAGES
+   MESSAGE
 ========================================= */
 
 function showMessage(
@@ -2200,9 +2229,7 @@ async function openPaddleCheckout(
 
     });
 
-  }
-
-  catch(error){
+  }catch(error){
 
     console.error(
       "Paddle checkout error:",
@@ -2213,7 +2240,7 @@ async function openPaddleCheckout(
       proMessage,
       "Unable to open " +
       planName +
-      " checkout. Please check your Paddle Sandbox checkout settings.",
+      " checkout. Please check your Paddle Sandbox settings.",
       "warning"
     );
 
@@ -2327,13 +2354,11 @@ signupBtn.addEventListener(
 
       await showDashboard();
 
-    }
-
-    else{
+    }else{
 
       showMessage(
         authMessage,
-        "Account created successfully. You can now log in.",
+        "Account created successfully. Check your email if confirmation is required, then log in.",
         "success"
       );
 
@@ -2468,7 +2493,7 @@ async function showDashboard(){
 
 
 /* =========================================
-   MONTHLY CURRENCY CHANGE
+   CURRENCY CHANGE
 ========================================= */
 
 currencySelect.addEventListener(
@@ -2492,6 +2517,7 @@ const savedCurrency =
 localStorage.getItem(
   "flowmoney_currency"
 );
+
 
 if(
   savedCurrency &&
@@ -2519,25 +2545,29 @@ function openWalletAction(
     .classList
     .remove("hidden");
 
+
   if(action === "deposit"){
 
     walletActionTitle.textContent =
       "Deposit Money";
 
-    continueWalletBtn.textContent =
+    document.getElementById(
+      "continueWalletBtn"
+    ).textContent =
       "Continue Deposit";
 
-  }
-
-  else{
+  }else{
 
     walletActionTitle.textContent =
       "Withdraw Money";
 
-    continueWalletBtn.textContent =
+    document.getElementById(
+      "continueWalletBtn"
+    ).textContent =
       "Continue Withdrawal";
 
   }
+
 
   walletAmount.value =
     "";
@@ -2545,7 +2575,10 @@ function openWalletAction(
   accountDetails.value =
     "";
 
-  updateProviderMessage();
+  walletMessage.classList.add(
+    "hidden"
+  );
+
 
   window.scrollTo({
 
@@ -2560,16 +2593,14 @@ function openWalletAction(
 }
 
 
-/* =========================================
-   WALLET BUTTONS
-========================================= */
-
 document.getElementById(
   "depositBtn"
 ).addEventListener(
   "click",
   ()=>{
-    openWalletAction("deposit");
+    openWalletAction(
+      "deposit"
+    );
   }
 );
 
@@ -2579,7 +2610,9 @@ document.getElementById(
 ).addEventListener(
   "click",
   ()=>{
-    openWalletAction("withdraw");
+    openWalletAction(
+      "withdraw"
+    );
   }
 );
 
@@ -2589,7 +2622,9 @@ document.getElementById(
 ).addEventListener(
   "click",
   ()=>{
-    openWalletAction("deposit");
+    openWalletAction(
+      "deposit"
+    );
   }
 );
 
@@ -2599,7 +2634,9 @@ document.getElementById(
 ).addEventListener(
   "click",
   ()=>{
-    openWalletAction("withdraw");
+    openWalletAction(
+      "withdraw"
+    );
   }
 );
 
@@ -2617,6 +2654,48 @@ document.getElementById(
 
 
 /* =========================================
+   PAYMENT METHOD LABEL
+========================================= */
+
+paymentMethod.addEventListener(
+  "change",
+  ()=>{
+
+    if(
+      paymentMethod.value === "bank"
+    ){
+
+      accountLabel.textContent =
+        "Bank Account Details";
+
+      accountDetails.placeholder =
+        "Enter bank account details";
+
+    }else if(
+      paymentMethod.value === "wallet"
+    ){
+
+      accountLabel.textContent =
+        "Digital / Mobile Wallet Details";
+
+      accountDetails.placeholder =
+        "Enter supported wallet details";
+
+    }else{
+
+      accountLabel.textContent =
+        "Payment Details";
+
+      accountDetails.placeholder =
+        "Enter payment details";
+
+    }
+
+  }
+);
+
+
+/* =========================================
    WALLET DATA
 ========================================= */
 
@@ -2628,18 +2707,25 @@ async function loadWallet(){
   } =
     await getCurrentUser();
 
-  if(userError || !user){
+
+  if(
+    userError ||
+    !user
+  ){
 
     return;
 
   }
+
 
   const {
     data,
     error
   } =
     await supabaseClient
-      .from("wallet_transactions")
+      .from(
+        "wallet_transactions"
+      )
       .select("*")
       .eq(
         "user_id",
@@ -2652,6 +2738,7 @@ async function loadWallet(){
         }
       );
 
+
   if(error){
 
     console.warn(
@@ -2660,21 +2747,30 @@ async function loadWallet(){
     );
 
     walletBalance.textContent =
-      formatMoney(0);
+      formatMoney(
+        0
+      );
 
     transactionsList.innerHTML =
-      '<p class="small">Wallet payment infrastructure is ready for provider connection.</p>';
+      `
+      <p class="small">
+        Wallet is ready for secure payment-provider connection.
+      </p>
+      `;
 
     return;
 
   }
 
+
   let balance =
     0;
+
 
   const selectedCurrency =
     currencySelect.value ||
     "USD";
+
 
   (data || []).forEach(
     transaction=>{
@@ -2688,12 +2784,14 @@ async function loadWallet(){
           transaction.amount
         ) || 0;
 
+
       const converted =
         convertCurrency(
           amount,
           transactionCurrency,
           selectedCurrency
         );
+
 
       if(
         transaction.type === "deposit" &&
@@ -2704,6 +2802,7 @@ async function loadWallet(){
           converted;
 
       }
+
 
       if(
         (
@@ -2721,6 +2820,7 @@ async function loadWallet(){
     }
   );
 
+
   walletBalance.textContent =
     formatMoney(
       Math.max(
@@ -2730,6 +2830,7 @@ async function loadWallet(){
       selectedCurrency
     );
 
+
   displayTransactions(
     data || []
   );
@@ -2738,24 +2839,32 @@ async function loadWallet(){
 
 
 /* =========================================
-   TRANSACTION DISPLAY
+   DISPLAY TRANSACTIONS
 ========================================= */
 
 function displayTransactions(
   transactions
 ){
 
-  if(!transactions.length){
+  if(
+    !transactions.length
+  ){
 
     transactionsList.innerHTML =
-      '<p class="small">No wallet transactions yet.</p>';
+      `
+      <p class="small">
+        No wallet transactions yet.
+      </p>
+      `;
 
     return;
 
   }
 
+
   transactionsList.innerHTML =
     "";
+
 
   transactions.forEach(
     transaction=>{
@@ -2765,25 +2874,42 @@ function displayTransactions(
           "div"
         );
 
+
       div.className =
         "transaction";
+
 
       const type =
         transaction.type ||
         "transaction";
+
 
       const amount =
         Number(
           transaction.amount
         ) || 0;
 
+
       const currency =
         transaction.currency ||
-        currencySelect.value;
+        currencySelect.value ||
+        "USD";
+
 
       const status =
         transaction.status ||
         "pending";
+
+
+      const country =
+        transaction.country ||
+        "";
+
+
+      const method =
+        transaction.payment_method ||
+        "Payment method";
+
 
       const date =
         transaction.created_at
@@ -2792,20 +2918,46 @@ function displayTransactions(
             ).toLocaleString()
           : "";
 
+
+      const isDeposit =
+        type === "deposit";
+
+
       const amountClass =
-        type === "deposit"
+        isDeposit
           ? "deposit-text"
           : "withdraw-text";
 
+
       const sign =
-        type === "deposit"
+        isDeposit
           ? "+"
           : "-";
 
-      const statusClass =
+
+      let statusClass =
+        "status-pending";
+
+
+      if(
         status === "completed"
-          ? "status-completed"
-          : "status-pending";
+      ){
+
+        statusClass =
+          "status-completed";
+
+      }
+
+
+      if(
+        status === "failed"
+      ){
+
+        statusClass =
+          "status-failed";
+
+      }
+
 
       div.innerHTML = `
 
@@ -2818,7 +2970,9 @@ function displayTransactions(
             )}
           </span>
 
-          <strong class="${amountClass}">
+          <strong
+            class="${amountClass}"
+          >
             ${sign}${formatMoney(
               amount,
               currency
@@ -2827,16 +2981,26 @@ function displayTransactions(
 
         </div>
 
+
         <div class="transaction-details">
 
           ${escapeHtml(
-            transaction.payment_method ||
-            "Payment method"
+            method
           )}
 
-          ·
+          ${country
+            ? " · " +
+              escapeHtml(country)
+            : ""
+          }
 
-          <span class="${statusClass}">
+          <br>
+
+          Status:
+
+          <span
+            class="${statusClass}"
+          >
             ${escapeHtml(status)}
           </span>
 
@@ -2847,6 +3011,7 @@ function displayTransactions(
         </div>
 
       `;
+
 
       transactionsList.appendChild(
         div
@@ -2860,16 +3025,11 @@ function displayTransactions(
 
 /* =========================================
    CONTINUE WALLET ACTION
-
-   IMPORTANT:
-   This does not create a completed
-   money transaction.
-
-   Real money movement must be verified
-   by a payment provider and server webhook.
 ========================================= */
 
-continueWalletBtn.addEventListener(
+document.getElementById(
+  "continueWalletBtn"
+).addEventListener(
   "click",
   async()=>{
 
@@ -2879,7 +3039,11 @@ continueWalletBtn.addEventListener(
     } =
       await getCurrentUser();
 
-    if(userError || !user){
+
+    if(
+      userError ||
+      !user
+    ){
 
       showMessage(
         walletMessage,
@@ -2891,24 +3055,32 @@ continueWalletBtn.addEventListener(
 
     }
 
+
     const amount =
       Number(
         walletAmount.value
       ) || 0;
 
+
     const currency =
       walletCurrency.value;
+
 
     const country =
       walletCountry.value;
 
+
     const method =
       paymentMethod.value;
+
 
     const details =
       accountDetails.value.trim();
 
-    if(amount <= 0){
+
+    if(
+      amount <= 0
+    ){
 
       showMessage(
         walletMessage,
@@ -2920,11 +3092,15 @@ continueWalletBtn.addEventListener(
 
     }
 
-    if(!details){
+
+    if(
+      !details &&
+      method !== "card"
+    ){
 
       showMessage(
         walletMessage,
-        "Please enter your bank, wallet or payment details.",
+        "Please enter your bank or wallet details.",
         "warning"
       );
 
@@ -2932,40 +3108,30 @@ continueWalletBtn.addEventListener(
 
     }
 
+
     /*
-      SECURITY:
-      We intentionally do NOT insert a completed
-      wallet transaction from the browser.
+      SECURITY RULE:
 
-      A real payment provider must verify:
-      - money received
-      - money sent
-      - transaction ID
-      - currency
-      - amount
-      - user
-      - country
-      - provider status
+      Do not create a completed wallet transaction
+      directly from browser JavaScript.
 
-      Then a secure server webhook can update
-      wallet_transactions.
+      A secure backend/payment webhook must verify
+      the actual payment first.
     */
 
-    const actionName =
+
+    const actionText =
       walletAction === "deposit"
         ? "deposit"
         : "withdrawal";
 
+
     showMessage(
       walletMessage,
       "Your " +
-      actionName +
-      " request is prepared for " +
-      country +
-      " in " +
-      currency +
-      ". The next integration step will connect this request to a supported payment provider. No money has been moved yet.",
-      "warning"
+      actionText +
+      " request is ready for secure payment-provider processing. The wallet balance will change only after the provider verifies the transaction.",
+      "info"
     );
 
   }
@@ -2977,7 +3143,9 @@ continueWalletBtn.addEventListener(
 ========================================= */
 
 document
-  .getElementById("saveBtn")
+  .getElementById(
+    "saveBtn"
+  )
   .addEventListener(
     "click",
     async()=>{
@@ -2988,7 +3156,10 @@ document
       } =
         await getCurrentUser();
 
-      if(userError){
+
+      if(
+        userError
+      ){
 
         showMessage(
           saveMessage,
@@ -3001,7 +3172,10 @@ document
 
       }
 
-      if(!user){
+
+      if(
+        !user
+      ){
 
         showMessage(
           saveMessage,
@@ -3013,50 +3187,68 @@ document
 
       }
 
+
       const month =
         document
-          .getElementById("month")
+          .getElementById(
+            "month"
+          )
           .value;
 
-      const currency =
-        currencySelect.value;
 
       const income =
         Number(
           document
-            .getElementById("income")
+            .getElementById(
+              "income"
+            )
             .value
         ) || 0;
+
 
       const housing =
         Number(
           document
-            .getElementById("housing")
+            .getElementById(
+              "housing"
+            )
             .value
         ) || 0;
+
 
       const food =
         Number(
           document
-            .getElementById("food")
+            .getElementById(
+              "food"
+            )
             .value
         ) || 0;
+
 
       const transport =
         Number(
           document
-            .getElementById("transport")
+            .getElementById(
+              "transport"
+            )
             .value
         ) || 0;
+
 
       const bills =
         Number(
           document
-            .getElementById("bills")
+            .getElementById(
+              "bills"
+            )
             .value
         ) || 0;
 
-      if(!month){
+
+      if(
+        !month
+      ){
 
         showMessage(
           saveMessage,
@@ -3068,18 +3260,19 @@ document
 
       }
 
+
       const {
         error
       } =
         await supabaseClient
-          .from("money_records")
+          .from(
+            "money_records"
+          )
           .insert({
 
             user_id:user.id,
 
             month,
-
-            currency,
 
             income,
 
@@ -3089,16 +3282,23 @@ document
 
             transport,
 
-            bills
+            bills,
+
+            currency:
+              currencySelect.value
 
           });
 
-      if(error){
+
+      if(
+        error
+      ){
 
         console.error(
           "Database error:",
           error
         );
+
 
         showMessage(
           saveMessage,
@@ -3111,33 +3311,43 @@ document
 
       }
 
+
       showMessage(
         saveMessage,
-        "Monthly record saved successfully in " +
-        currency +
-        ".",
+        "Monthly record saved successfully.",
         "success"
       );
 
+
       document.getElementById(
         "income"
-      ).value = "";
+      ).value =
+        "";
+
 
       document.getElementById(
         "housing"
-      ).value = "";
+      ).value =
+        "";
+
 
       document.getElementById(
         "food"
-      ).value = "";
+      ).value =
+        "";
+
 
       document.getElementById(
         "transport"
-      ).value = "";
+      ).value =
+        "";
+
 
       document.getElementById(
         "bills"
-      ).value = "";
+      ).value =
+        "";
+
 
       await loadRecords();
 
@@ -3157,7 +3367,10 @@ async function loadRecords(){
   } =
     await getCurrentUser();
 
-  if(userError){
+
+  if(
+    userError
+  ){
 
     showMessage(
       saveMessage,
@@ -3170,18 +3383,24 @@ async function loadRecords(){
 
   }
 
-  if(!user){
+
+  if(
+    !user
+  ){
 
     return;
 
   }
+
 
   const {
     data,
     error
   } =
     await supabaseClient
-      .from("money_records")
+      .from(
+        "money_records"
+      )
       .select("*")
       .eq(
         "user_id",
@@ -3194,12 +3413,16 @@ async function loadRecords(){
         }
       );
 
-  if(error){
+
+  if(
+    error
+  ){
 
     console.error(
       "Database error:",
       error
     );
+
 
     showMessage(
       saveMessage,
@@ -3212,9 +3435,11 @@ async function loadRecords(){
 
   }
 
+
   calculatePlan(
     data || []
   );
+
 
   displayRecords(
     data || []
@@ -3231,63 +3456,51 @@ function calculatePlan(
   records
 ){
 
-  if(!records.length){
+  if(
+    !records.length
+  ){
 
-    document.getElementById(
-      "averageIncome"
-    ).textContent =
-      formatMoney(0);
-
-    document.getElementById(
-      "lowestIncome"
-    ).textContent =
-      formatMoney(0);
-
-    document.getElementById(
-      "essentialExpenses"
-    ).textContent =
-      formatMoney(0);
-
-    document.getElementById(
-      "safeToSpend"
-    ).textContent =
-      formatMoney(0);
-
-    document.getElementById(
-      "reserveTarget"
-    ).textContent =
-      formatMoney(0);
-
-    document.getElementById(
+    [
+      "averageIncome",
+      "lowestIncome",
+      "essentialExpenses",
+      "safeToSpend",
+      "reserveTarget",
       "reserveProgress"
-    ).textContent =
-      formatMoney(0);
+    ].forEach(
+      id=>{
+        document.getElementById(
+          id
+        ).textContent =
+          formatMoney(0);
+      }
+    );
 
     return;
 
   }
 
+
   const displayCurrency =
     currencySelect.value ||
     "USD";
 
+
   const incomes =
     records.map(
       record =>
-
         convertCurrency(
-
           Number(
             record.income
           ) || 0,
 
           record.currency ||
-          displayCurrency,
+            displayCurrency,
 
           displayCurrency
-
         )
     );
+
 
   const averageIncome =
     incomes.reduce(
@@ -3296,61 +3509,68 @@ function calculatePlan(
     ) /
     incomes.length;
 
+
   const lowestIncome =
     Math.min(
       ...incomes
     );
 
+
   const latest =
     records[0];
+
 
   const recordCurrency =
     latest.currency ||
     displayCurrency;
 
+
   const essentialExpensesOriginal =
 
-    (Number(latest.housing)||0) +
+    (Number(
+      latest.housing
+    ) || 0) +
 
-    (Number(latest.food)||0) +
+    (Number(
+      latest.food
+    ) || 0) +
 
-    (Number(latest.transport)||0) +
+    (Number(
+      latest.transport
+    ) || 0) +
 
-    (Number(latest.bills)||0);
+    (Number(
+      latest.bills
+    ) || 0);
+
 
   const essentialExpenses =
     convertCurrency(
-
       essentialExpensesOriginal,
-
       recordCurrency,
-
       displayCurrency
-
     );
+
 
   const safeToSpend =
     Math.max(
-
       0,
-
       lowestIncome -
       essentialExpenses
-
     );
+
 
   const reserveTarget =
     essentialExpenses * 3;
 
+
   const estimatedReserveProgress =
     Math.max(
-
       0,
-
       averageIncome -
       essentialExpenses
-
     );
+
 
   document.getElementById(
     "averageIncome"
@@ -3360,6 +3580,7 @@ function calculatePlan(
       displayCurrency
     );
 
+
   document.getElementById(
     "lowestIncome"
   ).textContent =
@@ -3367,6 +3588,7 @@ function calculatePlan(
       lowestIncome,
       displayCurrency
     );
+
 
   document.getElementById(
     "essentialExpenses"
@@ -3376,6 +3598,7 @@ function calculatePlan(
       displayCurrency
     );
 
+
   document.getElementById(
     "safeToSpend"
   ).textContent =
@@ -3383,6 +3606,7 @@ function calculatePlan(
       safeToSpend,
       displayCurrency
     );
+
 
   document.getElementById(
     "reserveTarget"
@@ -3392,6 +3616,7 @@ function calculatePlan(
       displayCurrency
     );
 
+
   document.getElementById(
     "reserveProgress"
   ).textContent =
@@ -3400,14 +3625,12 @@ function calculatePlan(
       displayCurrency
     );
 
+
   document.getElementById(
     "planMessage"
   ).textContent =
-
     "Your amounts are displayed in " +
-
     displayCurrency +
-
     " using the available planning exchange-rate table. Your safe-to-spend estimate uses your lowest recent income and current essential expenses.";
 
 }
@@ -3426,7 +3649,10 @@ function displayRecords(
       "recordsList"
     );
 
-  if(!records.length){
+
+  if(
+    !records.length
+  ){
 
     list.innerHTML =
       '<p class="small">No records yet.</p>';
@@ -3435,12 +3661,15 @@ function displayRecords(
 
   }
 
+
   list.innerHTML =
     "";
+
 
   const displayCurrency =
     currencySelect.value ||
     "USD";
+
 
   records.forEach(
     record=>{
@@ -3449,9 +3678,9 @@ function displayRecords(
         record.currency ||
         displayCurrency;
 
+
       const income =
         convertCurrency(
-
           Number(
             record.income
           ) || 0,
@@ -3459,37 +3688,47 @@ function displayRecords(
           originalCurrency,
 
           displayCurrency
-
         );
+
 
       const essentialOriginal =
 
-        (Number(record.housing)||0) +
+        (Number(
+          record.housing
+        ) || 0) +
 
-        (Number(record.food)||0) +
+        (Number(
+          record.food
+        ) || 0) +
 
-        (Number(record.transport)||0) +
+        (Number(
+          record.transport
+        ) || 0) +
 
-        (Number(record.bills)||0);
+        (Number(
+          record.bills
+        ) || 0);
+
 
       const essential =
         convertCurrency(
-
           essentialOriginal,
 
           originalCurrency,
 
           displayCurrency
-
         );
+
 
       const div =
         document.createElement(
           "div"
         );
 
+
       div.className =
         "record";
+
 
       div.innerHTML = `
 
@@ -3500,6 +3739,7 @@ function displayRecords(
           )}
 
         </div>
+
 
         <div class="record-row">
 
@@ -3518,6 +3758,7 @@ function displayRecords(
 
         </div>
 
+
         <div class="record-row">
 
           <span>
@@ -3535,23 +3776,8 @@ function displayRecords(
 
         </div>
 
-        <div class="record-row">
-
-          <span>
-            Original Currency
-          </span>
-
-          <strong>
-
-            ${escapeHtml(
-              originalCurrency
-            )}
-
-          </strong>
-
-        </div>
-
       `;
+
 
       list.appendChild(
         div
@@ -3615,7 +3841,10 @@ async function checkSession(){
       .auth
       .getSession();
 
-  if(error){
+
+  if(
+    error
+  ){
 
     console.error(
       "Session error:",
@@ -3626,7 +3855,10 @@ async function checkSession(){
 
   }
 
-  if(data.session){
+
+  if(
+    data.session
+  ){
 
     await showDashboard();
 
@@ -3636,6 +3868,7 @@ async function checkSession(){
 
 
 checkSession();
+
 
 </script>
 
