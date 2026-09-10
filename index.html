@@ -6,18 +6,20 @@
 
 <title>FlowMoney — Know What You Can Safely Spend</title>
 
-<meta name="description" content="FlowMoney helps people with variable income understand what they can safely spend and how much emergency reserve they need.">
+<meta name="description" content="FlowMoney helps people with variable income understand what they can safely spend, save money and plan their emergency reserve.">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
 <style>
+
 *{box-sizing:border-box}
 
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:#f5f7fb;
-  color:#172033
+  color:#172033;
 }
 
 header{
@@ -26,17 +28,17 @@ header{
   padding:18px 20px;
   display:flex;
   justify-content:space-between;
-  align-items:center
+  align-items:center;
 }
 
 .logo{
   font-size:22px;
-  font-weight:800
+  font-weight:800;
 }
 
 .container{
   width:min(100% - 28px,1000px);
-  margin:28px auto
+  margin:28px auto;
 }
 
 .card{
@@ -44,17 +46,17 @@ header{
   border-radius:20px;
   padding:24px;
   margin-bottom:20px;
-  box-shadow:0 8px 30px rgba(16,24,40,.07)
+  box-shadow:0 8px 30px rgba(16,24,40,.07);
 }
 
 .auth-card{
   max-width:620px;
-  margin:50px auto
+  margin:50px auto;
 }
 
 .hero{
   text-align:center;
-  margin-bottom:28px
+  margin-bottom:28px;
 }
 
 .badge{
@@ -65,47 +67,51 @@ header{
   border-radius:999px;
   font-size:12px;
   font-weight:800;
-  letter-spacing:.5px
+  letter-spacing:.5px;
 }
 
 .hero h1{
   font-size:42px;
   line-height:1.08;
-  margin:18px 0 12px
+  margin:18px 0 12px;
 }
 
 .hero p{
   color:#667085;
   font-size:17px;
-  line-height:1.5
+  line-height:1.5;
 }
 
-h2{margin-top:0}
+h2{
+  margin-top:0;
+}
 
 .small{
   color:#667085;
   font-size:14px;
-  line-height:1.5
+  line-height:1.5;
 }
 
 label{
   display:block;
   font-weight:700;
-  margin:16px 0 7px
+  margin:16px 0 7px;
 }
 
-input,select{
+input,
+select{
   width:100%;
   padding:14px;
   border:1px solid #d0d5dd;
   border-radius:11px;
   font-size:16px;
-  background:white
+  background:white;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus{
   outline:none;
-  border-color:#667085
+  border-color:#667085;
 }
 
 button{
@@ -117,21 +123,23 @@ button{
   cursor:pointer;
   margin-top:16px;
   background:#111827;
-  color:white
+  color:white;
 }
 
 button.secondary{
   background:#eaecf0;
   color:#111827;
-  margin-left:8px
+  margin-left:8px;
 }
 
 button:disabled{
   opacity:.55;
-  cursor:not-allowed
+  cursor:not-allowed;
 }
 
-.hidden{display:none!important}
+.hidden{
+  display:none!important;
+}
 
 .message{
   margin-top:14px;
@@ -139,48 +147,48 @@ button:disabled{
   border-radius:11px;
   background:#f2f4f7;
   line-height:1.45;
-  word-break:break-word
+  word-break:break-word;
 }
 
 .success{
   background:#ecfdf3;
-  color:#027a48
+  color:#027a48;
 }
 
 .warning{
   background:#fffaeb;
-  color:#b54708
+  color:#b54708;
 }
 
 .dashboard-header{
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .dashboard-header h1{
-  margin-bottom:7px
+  margin-bottom:7px;
 }
 
 .form-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:4px 16px
+  gap:4px 16px;
 }
 
 .full{
-  grid-column:1/-1
+  grid-column:1/-1;
 }
 
 .metrics{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:14px
+  gap:14px;
 }
 
 .metric{
   background:#f8fafc;
   border:1px solid #eaecf0;
   border-radius:16px;
-  padding:18px
+  padding:18px;
 }
 
 .metric span{
@@ -188,38 +196,28 @@ button:disabled{
   color:#667085;
   font-size:13px;
   font-weight:700;
-  margin-bottom:9px
+  margin-bottom:9px;
 }
 
 .metric strong{
-  font-size:25px
+  font-size:25px;
 }
 
 .featured{
   background:#111827;
-  color:white
+  color:white;
 }
 
 .featured span{
-  color:#cbd5e1
+  color:#cbd5e1;
 }
 
 .featured strong{
-  font-size:30px
+  font-size:30px;
 }
 
 .plan-note{
-  margin-top:18px
-}
-
-.history-summary{
-  margin-top:16px;
-  padding:14px;
-  border-radius:12px;
-  background:#f8fafc;
-  color:#475467;
-  font-size:14px;
-  font-weight:700
+  margin-top:18px;
 }
 
 .record{
@@ -227,244 +225,653 @@ button:disabled{
   border-radius:14px;
   padding:17px;
   margin-top:12px;
-  background:#fff
+  background:#fff;
 }
 
 .record-month{
   font-size:17px;
   font-weight:800;
-  margin-bottom:8px
-}
-
-.record-currency{
-  font-size:12px;
-  color:#667085;
-  margin-bottom:10px
+  margin-bottom:8px;
 }
 
 .record-row{
   display:flex;
   justify-content:space-between;
   padding:4px 0;
-  color:#667085
+  color:#667085;
+}
+
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:20px;
+}
+
+.plan-card{
+  border:1px solid #eaecf0;
+  border-radius:18px;
+  padding:22px;
+  background:#fff;
+}
+
+.plan-card h3{
+  margin-top:0;
+  font-size:22px;
+}
+
+.plan-price{
+  font-size:32px;
+  font-weight:800;
+  margin:15px 0;
+}
+
+.plan-card ul{
+  padding-left:20px;
+  line-height:1.8;
+  color:#475467;
+}
+
+.plan-card button{
+  width:100%;
 }
 
 .pro{
   background:#111827;
-  color:white
+  color:white;
 }
 
 .pro p{
   color:#cbd5e1;
-  line-height:1.5
+  line-height:1.5;
 }
 
 .pro-price{
   font-size:32px;
   font-weight:800;
-  margin:15px 0
+  margin:15px 0;
 }
 
 .pro ul{
   padding-left:20px;
   line-height:1.8;
-  color:#e5e7eb
+  color:#e5e7eb;
 }
 
 .pro button{
   background:white;
-  color:#111827
+  color:#111827;
 }
 
 .pro-status{
   margin-top:14px;
   color:#cbd5e1;
   font-size:13px;
-  line-height:1.5
+  line-height:1.5;
 }
 
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  background:rgba(17,24,39,.65);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:1000
+/* WALLET */
+
+.wallet-card{
+  background:#111827;
+  color:white;
 }
 
-.modal{
-  width:min(100%,520px);
+.wallet-card .small{
+  color:#cbd5e1;
+}
+
+.wallet-balance{
+  font-size:42px;
+  font-weight:800;
+  margin:18px 0;
+  word-break:break-word;
+}
+
+.wallet-actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.wallet-actions button{
+  margin-top:0;
+}
+
+.deposit-button{
   background:white;
-  border-radius:20px;
-  padding:26px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25)
+  color:#111827;
 }
 
-.modal h2{
-  margin-bottom:8px
+.withdraw-button{
+  background:#374151;
+  color:white;
 }
 
-.modal p{
-  color:#667085;
-  line-height:1.5
+.wallet-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
 }
 
-.modal ul{
-  color:#475467;
-  line-height:1.8;
-  padding-left:20px
+.wallet-panel{
+  border:1px solid #eaecf0;
+  border-radius:18px;
+  padding:20px;
 }
 
-.modal-actions{
+.wallet-panel h3{
+  margin-top:0;
+}
+
+.transaction{
+  border:1px solid #eaecf0;
+  border-radius:14px;
+  padding:15px;
+  margin-top:10px;
+}
+
+.transaction-top{
   display:flex;
-  gap:10px
+  justify-content:space-between;
+  gap:10px;
+  font-weight:800;
 }
 
-.modal-actions button{
-  flex:1
+.transaction-details{
+  color:#667085;
+  font-size:13px;
+  margin-top:7px;
 }
 
-.modal-actions .close{
-  background:#eaecf0;
-  color:#111827
+.deposit-text{
+  color:#027a48;
+}
+
+.withdraw-text{
+  color:#b42318;
+}
+
+.status-pending{
+  color:#b54708;
+  font-weight:700;
+}
+
+.status-info{
+  color:#475467;
+  font-weight:700;
 }
 
 footer{
   text-align:center;
   padding:30px 15px;
   color:#667085;
-  font-size:13px
+  font-size:13px;
 }
 
 @media(max-width:750px){
+
   .metrics{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .pricing-grid{
+    grid-template-columns:1fr;
+  }
+
+  .wallet-grid{
+    grid-template-columns:1fr;
   }
 
   .hero h1{
-    font-size:34px
+    font-size:34px;
   }
+
 }
 
 @media(max-width:550px){
+
   header{
-    padding:15px
+    padding:15px;
   }
 
   .container{
     width:min(100% - 20px,1000px);
-    margin:18px auto
+    margin:18px auto;
   }
 
   .card{
     padding:18px;
-    border-radius:16px
+    border-radius:16px;
   }
 
   .auth-card{
-    margin:25px auto
+    margin:25px auto;
   }
 
   .hero h1{
-    font-size:30px
+    font-size:30px;
   }
 
   .form-grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .full{
-    grid-column:auto
+    grid-column:auto;
   }
 
   .metrics{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+  }
+
+  .wallet-actions{
+    grid-template-columns:1fr;
   }
 
   button{
-    width:100%
+    width:100%;
   }
 
   button.secondary{
-    margin-left:0
+    margin-left:0;
   }
 
-  .modal-actions{
-    flex-direction:column
+  .wallet-balance{
+    font-size:32px;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">FlowMoney</div>
-  <button id="logoutBtn" class="secondary hidden">Log out</button>
+
+  <div class="logo">
+    FlowMoney
+  </div>
+
+  <button
+    id="logoutBtn"
+    class="secondary hidden"
+  >
+    Log out
+  </button>
+
 </header>
 
 <div class="container">
 
-<section id="authSection" class="card auth-card">
+<section
+  id="authSection"
+  class="card auth-card"
+>
 
   <div class="hero">
-    <span class="badge">BUILT FOR VARIABLE INCOME</span>
 
-    <h1>Know what you can safely spend.</h1>
+    <span class="badge">
+      BUILT FOR VARIABLE INCOME
+    </span>
+
+    <h1>
+      Know what you can safely spend.
+    </h1>
 
     <p>
       FlowMoney helps you plan around changing income,
-      protect your essentials and build a stronger reserve.
+      protect your essentials, save money and build a stronger reserve.
     </p>
+
   </div>
 
-  <h2>Create your FlowMoney account</h2>
+  <h2>
+    Create your FlowMoney account
+  </h2>
 
   <p class="small">
     Start with your email and a password.
   </p>
 
   <label>Email</label>
-  <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+
+  <input
+    id="email"
+    type="email"
+    placeholder="you@example.com"
+    autocomplete="email"
+  >
 
   <label>Password</label>
-  <input id="password" type="password" placeholder="At least 6 characters" autocomplete="current-password">
 
-  <button id="signupBtn">Create Account</button>
-  <button id="loginBtn" class="secondary">Log In</button>
+  <input
+    id="password"
+    type="password"
+    placeholder="At least 6 characters"
+    autocomplete="current-password"
+  >
 
-  <div id="authMessage" class="message hidden"></div>
+  <button id="signupBtn">
+    Create Account
+  </button>
+
+  <button
+    id="loginBtn"
+    class="secondary"
+  >
+    Log In
+  </button>
+
+  <div
+    id="authMessage"
+    class="message hidden"
+  ></div>
 
 </section>
 
-
-<section id="dashboardSection" class="hidden">
+<section
+  id="dashboardSection"
+  class="hidden"
+>
 
 <div class="dashboard-header">
 
-  <h1>Your Money Dashboard</h1>
+  <h1>
+    Your Money Dashboard
+  </h1>
 
   <p class="small">
-    Add your monthly income and essential expenses to understand your spending capacity.
+    Add your monthly income and essential expenses
+    to understand your spending capacity.
   </p>
 
 </div>
 
 
+<!-- =========================================
+     WALLET
+========================================= -->
+
+<div class="card wallet-card">
+
+  <h2>
+    FlowMoney Wallet
+  </h2>
+
+  <p class="small">
+    Keep money available for your financial goals and emergency reserve.
+  </p>
+
+  <div
+    id="walletBalance"
+    class="wallet-balance"
+  >
+    $0
+  </div>
+
+  <div class="wallet-actions">
+
+    <button
+      id="depositBtn"
+      class="deposit-button"
+    >
+      + Deposit Money
+    </button>
+
+    <button
+      id="withdrawBtn"
+      class="withdraw-button"
+    >
+      Withdraw Money
+    </button>
+
+  </div>
+
+  <div
+    id="walletMessage"
+    class="message hidden"
+  ></div>
+
+</div>
+
+
+<!-- =========================================
+     DEPOSIT / WITHDRAW
+========================================= -->
+
+<div
+  id="walletActionCard"
+  class="card hidden"
+>
+
+  <h2 id="walletActionTitle">
+    Deposit Money
+  </h2>
+
+  <p class="small">
+    Select your country, currency and preferred payment method.
+  </p>
+
+  <label>Country</label>
+
+  <select id="walletCountry">
+
+    <option value="NG">Nigeria</option>
+    <option value="GH">Ghana</option>
+    <option value="KE">Kenya</option>
+    <option value="ZA">South Africa</option>
+    <option value="EG">Egypt</option>
+    <option value="TZ">Tanzania</option>
+    <option value="UG">Uganda</option>
+    <option value="RW">Rwanda</option>
+    <option value="ET">Ethiopia</option>
+    <option value="IN">India</option>
+    <option value="PK">Pakistan</option>
+    <option value="BD">Bangladesh</option>
+    <option value="PH">Philippines</option>
+    <option value="ID">Indonesia</option>
+    <option value="MY">Malaysia</option>
+    <option value="SG">Singapore</option>
+    <option value="TH">Thailand</option>
+    <option value="VN">Vietnam</option>
+    <option value="JP">Japan</option>
+    <option value="CN">China</option>
+    <option value="KR">South Korea</option>
+    <option value="AE">United Arab Emirates</option>
+    <option value="SA">Saudi Arabia</option>
+    <option value="QA">Qatar</option>
+    <option value="US">United States</option>
+    <option value="GB">United Kingdom</option>
+    <option value="DE">Germany</option>
+
+  </select>
+
+  <label>Currency</label>
+
+  <select id="walletCurrency">
+
+    <option value="NGN">NGN — Nigerian Naira (₦)</option>
+    <option value="GHS">GHS — Ghanaian Cedi (₵)</option>
+    <option value="KES">KES — Kenyan Shilling (KSh)</option>
+    <option value="ZAR">ZAR — South African Rand (R)</option>
+    <option value="EGP">EGP — Egyptian Pound (E£)</option>
+    <option value="TZS">TZS — Tanzanian Shilling (TSh)</option>
+    <option value="UGX">UGX — Ugandan Shilling (USh)</option>
+    <option value="RWF">RWF — Rwandan Franc (FRw)</option>
+    <option value="ETB">ETB — Ethiopian Birr (Br)</option>
+
+    <option value="INR">INR — Indian Rupee (₹)</option>
+    <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
+    <option value="BDT">BDT — Bangladeshi Taka (৳)</option>
+    <option value="PHP">PHP — Philippine Peso (₱)</option>
+    <option value="IDR">IDR — Indonesian Rupiah (Rp)</option>
+    <option value="MYR">MYR — Malaysian Ringgit (RM)</option>
+    <option value="SGD">SGD — Singapore Dollar (S$)</option>
+    <option value="THB">THB — Thai Baht (฿)</option>
+    <option value="VND">VND — Vietnamese Dong (₫)</option>
+    <option value="JPY">JPY — Japanese Yen (¥)</option>
+    <option value="CNY">CNY — Chinese Yuan (¥)</option>
+    <option value="KRW">KRW — South Korean Won (₩)</option>
+
+    <option value="AED">AED — UAE Dirham (د.إ)</option>
+    <option value="SAR">SAR — Saudi Riyal (ر.س)</option>
+    <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
+
+    <option value="USD">USD — US Dollar ($)</option>
+    <option value="GBP">GBP — British Pound (£)</option>
+    <option value="EUR">EUR — Euro (€)</option>
+
+  </select>
+
+  <label>Amount</label>
+
+  <input
+    id="walletAmount"
+    type="number"
+    min="0"
+    step="0.01"
+    placeholder="0"
+  >
+
+  <label>Payment Method</label>
+
+  <select id="paymentMethod">
+
+    <option value="bank">
+      Bank Account
+    </option>
+
+    <option value="wallet">
+      Mobile / Digital Wallet
+    </option>
+
+  </select>
+
+  <label id="accountLabel">
+    Bank or Wallet Details
+  </label>
+
+  <input
+    id="accountDetails"
+    type="text"
+    placeholder="Enter account details"
+  >
+
+  <button id="continueWalletBtn">
+    Continue
+  </button>
+
+  <button
+    id="cancelWalletBtn"
+    class="secondary"
+  >
+    Cancel
+  </button>
+
+</div>
+
+
+<!-- =========================================
+     WALLET INFORMATION
+========================================= -->
+
 <div class="card">
 
-  <h2>Add Monthly Information</h2>
+  <h2>
+    Wallet & Payments
+  </h2>
+
+  <p class="small">
+    FlowMoney is designed to support local bank accounts and digital wallets
+    according to the payment methods available in each country.
+  </p>
+
+  <div class="wallet-grid">
+
+    <div class="wallet-panel">
+
+      <h3>
+        Deposits
+      </h3>
+
+      <p class="small">
+        Add money through supported bank and wallet payment methods.
+      </p>
+
+      <button
+        id="depositInfoBtn"
+      >
+        Add Money
+      </button>
+
+    </div>
+
+    <div class="wallet-panel">
+
+      <h3>
+        Withdrawals
+      </h3>
+
+      <p class="small">
+        Withdraw to supported bank accounts or digital wallets.
+      </p>
+
+      <button
+        id="withdrawInfoBtn"
+      >
+        Withdraw
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     TRANSACTIONS
+========================================= -->
+
+<div class="card">
+
+  <h2>
+    Transaction History
+  </h2>
+
+  <div id="transactionsList">
+
+    <p class="small">
+      No wallet transactions yet.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================
+     MONTHLY INFORMATION
+========================================= -->
+
+<div class="card">
+
+  <h2>
+    Add Monthly Information
+  </h2>
 
   <div class="form-grid">
 
     <div>
+
       <label>Currency</label>
 
       <select id="currencySelect">
 
         <optgroup label="Africa">
+
           <option value="NGN">NGN — Nigerian Naira (₦)</option>
           <option value="GHS">GHS — Ghanaian Cedi (₵)</option>
           <option value="KES">KES — Kenyan Shilling (KSh)</option>
@@ -476,9 +883,11 @@ footer{
           <option value="ETB">ETB — Ethiopian Birr (Br)</option>
           <option value="XOF">XOF — West African CFA Franc (CFA)</option>
           <option value="XAF">XAF — Central African CFA Franc (FCFA)</option>
+
         </optgroup>
 
         <optgroup label="Asia">
+
           <option value="INR">INR — Indian Rupee (₹)</option>
           <option value="PKR">PKR — Pakistani Rupee (Rs)</option>
           <option value="BDT">BDT — Bangladeshi Taka (৳)</option>
@@ -494,73 +903,128 @@ footer{
           <option value="AED">AED — UAE Dirham (د.إ)</option>
           <option value="SAR">SAR — Saudi Riyal (ر.س)</option>
           <option value="QAR">QAR — Qatari Riyal (ر.ق)</option>
+
         </optgroup>
 
         <optgroup label="Global">
+
           <option value="USD" selected>USD — US Dollar ($)</option>
           <option value="GBP">GBP — British Pound (£)</option>
           <option value="EUR">EUR — Euro (€)</option>
+
         </optgroup>
 
       </select>
+
     </div>
 
-
     <div>
+
       <label>Month</label>
-      <input id="month" type="month">
+
+      <input
+        id="month"
+        type="month"
+      >
+
     </div>
 
-
     <div>
+
       <label>Income</label>
-      <input id="income" type="number" min="0" placeholder="0">
+
+      <input
+        id="income"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
     </div>
 
-
     <div>
+
       <label>Housing</label>
-      <input id="housing" type="number" min="0" placeholder="0">
+
+      <input
+        id="housing"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
     </div>
 
-
     <div>
+
       <label>Food</label>
-      <input id="food" type="number" min="0" placeholder="0">
+
+      <input
+        id="food"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
     </div>
 
-
     <div>
+
       <label>Transport</label>
-      <input id="transport" type="number" min="0" placeholder="0">
-    </div>
 
+      <input
+        id="transport"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
+    </div>
 
     <div>
-      <label>Bills & Other Essentials</label>
-      <input id="bills" type="number" min="0" placeholder="0">
-    </div>
 
+      <label>Bills & Other Essentials</label>
+
+      <input
+        id="bills"
+        type="number"
+        min="0"
+        placeholder="0"
+      >
+
+    </div>
 
     <div class="full">
-      <button id="saveBtn">Save Monthly Record</button>
+
+      <button id="saveBtn">
+        Save Monthly Record
+      </button>
+
     </div>
 
   </div>
 
-  <div id="saveMessage" class="message hidden"></div>
+  <div
+    id="saveMessage"
+    class="message hidden"
+  ></div>
 
 </div>
 
 
+<!-- =========================================
+     MONEY PLAN
+========================================= -->
+
 <div class="card">
 
-  <h2>Your Money Plan</h2>
+  <h2>
+    Your Money Plan
+  </h2>
 
   <p class="small">
     Your plan updates automatically from your saved records.
   </p>
-
 
   <div class="metrics">
 
@@ -596,61 +1060,124 @@ footer{
 
   </div>
 
-
-  <div id="historySummary" class="history-summary">
-    Months tracked: 0
-  </div>
-
-
-  <div id="planMessage" class="message plan-note">
+  <div
+    id="planMessage"
+    class="message plan-note"
+  >
     Add your monthly information to calculate your plan.
   </div>
 
 </div>
 
 
+<!-- =========================================
+     SAVED RECORDS
+========================================= -->
+
 <div class="card">
 
-  <h2>Your Saved Records</h2>
-
-  <p class="small">
-    Your monthly history is kept separately and displayed in your selected currency.
-  </p>
+  <h2>
+    Your Saved Records
+  </h2>
 
   <div id="recordsList">
-    <p class="small">No records yet.</p>
+
+    <p class="small">
+      No records yet.
+    </p>
+
   </div>
 
 </div>
 
 
-<div class="card pro">
+<!-- =========================================
+     PRICING
+========================================= -->
 
-  <h2>FlowMoney Pro</h2>
+<div class="card">
 
-  <p>
-    Get a clearer picture of your changing income,
-    spending capacity and emergency reserve.
+  <h2>
+    Choose Your FlowMoney Plan
+  </h2>
+
+  <p class="small">
+    Start with the plan that fits your needs.
+    Payments are processed securely through Paddle.
   </p>
 
-  <div class="pro-price">$5/month</div>
+  <div class="pricing-grid">
 
-  <ul>
-    <li>Advanced money insights</li>
-    <li>Longer income history</li>
-    <li>Better reserve planning</li>
-    <li>More powerful money reports</li>
-  </ul>
+    <div class="plan-card">
 
-  <button id="upgradeProBtn">
-    Upgrade to Pro — $5/month
-  </button>
+      <h3>
+        FlowMoney Starter
+      </h3>
 
-  <div class="pro-status">
-    Secure checkout will be connected before paid subscriptions are activated.
+      <p class="small">
+        Simple tools for understanding your monthly spending capacity.
+      </p>
+
+      <div class="plan-price">
+        $10/month
+      </div>
+
+      <ul>
+        <li>Monthly income tracking</li>
+        <li>Essential expense planning</li>
+        <li>Safe-to-spend estimate</li>
+        <li>3-month reserve target</li>
+      </ul>
+
+      <button
+        id="upgradeStarterBtn"
+        class="starter-button"
+      >
+        Get Starter — $10/month
+      </button>
+
+    </div>
+
+    <div class="plan-card pro">
+
+      <h3>
+        FlowMoney Pro
+      </h3>
+
+      <p>
+        Get a clearer picture of your changing income,
+        spending capacity and emergency reserve.
+      </p>
+
+      <div class="pro-price">
+        $20/month
+      </div>
+
+      <ul>
+        <li>Advanced money insights</li>
+        <li>Longer income history</li>
+        <li>Better reserve planning</li>
+        <li>More powerful money reports</li>
+      </ul>
+
+      <button
+        id="upgradeProBtn"
+      >
+        Upgrade to Pro — $20/month
+      </button>
+
+      <div class="pro-status">
+        Secure checkout powered by Paddle.
+      </div>
+
+    </div>
+
   </div>
 
-  <div id="proMessage" class="message hidden"></div>
+  <div
+    id="proMessage"
+    class="message hidden"
+  ></div>
 
 </div>
 
@@ -658,54 +1185,44 @@ footer{
 
 </div>
 
-
 <footer>
+
   Planning estimates only — not financial advice.
+
 </footer>
 
 
-<div id="proModal" class="modal-backdrop hidden">
-
-  <div class="modal">
-
-    <h2>FlowMoney Pro</h2>
-
-    <p>
-      You're ready to upgrade. Pro is designed for users
-      who want deeper income history and stronger money planning.
-    </p>
-
-    <ul>
-      <li>Advanced money insights</li>
-      <li>Longer income history</li>
-      <li>Better reserve planning</li>
-      <li>More powerful money reports</li>
-    </ul>
-
-    <div class="pro-price">$5/month</div>
-
-    <p>
-      <strong>Payment setup is the next step.</strong>
-      Your FlowMoney account and dashboard are already prepared for the Pro upgrade.
-    </p>
-
-    <div class="modal-actions">
-      <button id="closeProBtn" class="close">Not now</button>
-      <button id="continueProBtn" disabled>Checkout coming next</button>
-    </div>
-
-  </div>
-
-</div>
-
-
 <script>
+
+/* =========================================
+   PADDLE
+========================================= */
+
+const PADDLE_CLIENT_TOKEN =
+"test_88a4645605506663833f3137401";
+
+const FLOWMONEY_STARTER_PRICE_ID =
+"pri_01m21s0xnnnra26x96ea73yhwh";
+
+const FLOWMONEY_PRO_PRICE_ID =
+"pri_01m21szctcmh09bnhg33ch3zs8";
+
+Paddle.Environment.set("sandbox");
+
+Paddle.Initialize({
+  token:PADDLE_CLIENT_TOKEN
+});
+
+
+/* =========================================
+   SUPABASE
+========================================= */
 
 const SUPABASE_URL =
 "https://dsqheepfmumjpfrpniuy.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIO5";
+"sb_publishable_iejwrk-waPHUjuyS6hbbCA_yd5iJIOs";
 
 const supabaseClient =
 window.supabase.createClient(
@@ -713,6 +1230,10 @@ window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 
+
+/* =========================================
+   ELEMENTS
+========================================= */
 
 const authSection =
 document.getElementById("authSection");
@@ -744,23 +1265,55 @@ document.getElementById("saveMessage");
 const currencySelect =
 document.getElementById("currencySelect");
 
+const upgradeStarterBtn =
+document.getElementById("upgradeStarterBtn");
+
 const upgradeProBtn =
 document.getElementById("upgradeProBtn");
-
-const proModal =
-document.getElementById("proModal");
-
-const closeProBtn =
-document.getElementById("closeProBtn");
-
-const continueProBtn =
-document.getElementById("continueProBtn");
 
 const proMessage =
 document.getElementById("proMessage");
 
+const walletBalance =
+document.getElementById("walletBalance");
 
-/* CURRENCIES */
+const walletActionCard =
+document.getElementById("walletActionCard");
+
+const walletActionTitle =
+document.getElementById("walletActionTitle");
+
+const walletAmount =
+document.getElementById("walletAmount");
+
+const walletCurrency =
+document.getElementById("walletCurrency");
+
+const walletCountry =
+document.getElementById("walletCountry");
+
+const paymentMethod =
+document.getElementById("paymentMethod");
+
+const accountDetails =
+document.getElementById("accountDetails");
+
+const accountLabel =
+document.getElementById("accountLabel");
+
+const walletMessage =
+document.getElementById("walletMessage");
+
+const transactionsList =
+document.getElementById("transactionsList");
+
+let walletAction =
+"deposit";
+
+
+/* =========================================
+   CURRENCY SYMBOLS
+========================================= */
 
 const currencySymbols = {
 
@@ -788,6 +1341,7 @@ const currencySymbols = {
   JPY:"¥",
   CNY:"¥",
   KRW:"₩",
+
   AED:"د.إ",
   SAR:"ر.س",
   QAR:"ر.ق",
@@ -799,167 +1353,54 @@ const currencySymbols = {
 };
 
 
-/*
-  Exchange rates are stored relative to USD.
+/* =========================================
+   EXCHANGE RATES
+   Base currency: USD
 
-  We try Frankfurter first and then
-  ExchangeRate-API Open as a backup.
-*/
+   These are used for display/planning.
+   Real-money transactions must use a
+   verified payment provider/server rate.
+========================================= */
 
-let exchangeRates = null;
-let exchangeRatesLoaded = false;
-let exchangeRateSource = "";
+const exchangeRates = {
 
+  USD:1,
+  NGN:1325.98,
+  GHS:11.05,
+  KES:129.5,
+  ZAR:17.2,
+  EGP:48.5,
+  TZS:2650,
+  UGX:3500,
+  RWF:1450,
+  ETB:140,
 
-async function loadExchangeRates(){
+  INR:83.8,
+  PKR:280,
+  BDT:119,
+  PHP:57,
+  IDR:15700,
+  MYR:4.35,
+  SGD:1.34,
+  THB:33.5,
+  VND:25000,
+  JPY:157,
+  CNY:7.15,
+  KRW:1380,
 
-  if(exchangeRatesLoaded && exchangeRates){
-    return exchangeRates;
-  }
+  AED:3.67,
+  SAR:3.75,
+  QAR:3.64,
 
+  GBP:0.76,
+  EUR:0.86
 
-  try{
-
-    const response =
-      await fetch(
-        "https://api.frankfurter.app/latest?from=USD"
-      );
-
-    if(!response.ok){
-      throw new Error("Primary exchange-rate service failed.");
-    }
-
-    const data = await response.json();
-
-    exchangeRates = {
-      USD:1,
-      ...(data.rates || {})
-    };
-
-    exchangeRatesLoaded = true;
-    exchangeRateSource = "Frankfurter";
-
-    /*
-      Try to fill currencies that Frankfurter
-      does not provide.
-    */
-
-    await fillMissingRates();
-
-    return exchangeRates;
-
-  }catch(primaryError){
-
-    console.warn(
-      "Primary exchange-rate service failed:",
-      primaryError
-    );
-
-    try{
-
-      const response =
-        await fetch(
-          "https://open.er-api.com/v6/latest/USD"
-        );
-
-      if(!response.ok){
-        throw new Error("Backup exchange-rate service failed.");
-      }
-
-      const data = await response.json();
-
-      exchangeRates = {
-        USD:1,
-        ...(data.rates || {})
-      };
-
-      exchangeRatesLoaded = true;
-      exchangeRateSource = "ExchangeRate-API";
-
-      return exchangeRates;
-
-    }catch(backupError){
-
-      console.error(
-        "All exchange-rate services failed:",
-        backupError
-      );
-
-      exchangeRates = {USD:1};
-      exchangeRatesLoaded = true;
-      exchangeRateSource = "Fallback";
-
-      return exchangeRates;
-    }
-  }
-}
+};
 
 
-async function fillMissingRates(){
-
-  /*
-    Frankfurter may not contain every currency
-    in FlowMoney's supported list.
-
-    For missing currencies, try the backup service.
-  */
-
-  const requiredCurrencies = Object.keys(currencySymbols);
-
-  const missing = requiredCurrencies.filter(
-    currency =>
-      !exchangeRates[currency] &&
-      currency !== "USD"
-  );
-
-  if(!missing.length){
-    return;
-  }
-
-
-  try{
-
-    const response =
-      await fetch(
-        "https://open.er-api.com/v6/latest/USD"
-      );
-
-    if(!response.ok){
-      return;
-    }
-
-    const data = await response.json();
-
-    if(data.rates){
-
-      missing.forEach(currency=>{
-
-        if(data.rates[currency]){
-          exchangeRates[currency] =
-            data.rates[currency];
-        }
-
-      });
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      "Could not fill missing exchange rates:",
-      error
-    );
-
-  }
-}
-
-
-/*
-  Convert an amount from one currency
-  into another currency.
-
-  We use USD as the internal base.
-*/
+/* =========================================
+   CURRENCY CONVERSION
+========================================= */
 
 function convertCurrency(
   amount,
@@ -970,99 +1411,65 @@ function convertCurrency(
   const numericAmount =
     Number(amount) || 0;
 
-  const from =
-    fromCurrency || "USD";
-
-  const to =
-    toCurrency || "USD";
-
-
-  if(from === to){
-    return numericAmount;
-  }
-
-
-  if(!exchangeRates){
-    return numericAmount;
-  }
-
-
-  const fromRate =
-    exchangeRates[from];
-
-  const toRate =
-    exchangeRates[to];
-
-
-  if(!fromRate || !toRate){
-
-    console.warn(
-      "Missing exchange rate:",
-      from,
-      to
-    );
+  if(
+    !exchangeRates[fromCurrency] ||
+    !exchangeRates[toCurrency]
+  ){
 
     return numericAmount;
+
   }
-
-
-  /*
-    source currency -> USD
-  */
 
   const usdAmount =
-    numericAmount / fromRate;
+    numericAmount /
+    exchangeRates[fromCurrency];
 
+  return (
+    usdAmount *
+    exchangeRates[toCurrency]
+  );
 
-  /*
-    USD -> target currency
-  */
-
-  return usdAmount * toRate;
 }
 
 
-/* LOCAL CURRENCY PREFERENCE */
+/* =========================================
+   FORMAT MONEY
+========================================= */
 
-const savedCurrency =
-localStorage.getItem("flowmoney_currency");
-
-if(
-  savedCurrency &&
-  currencySymbols[savedCurrency]
+function formatMoney(
+  value,
+  currency=null
 ){
-  currencySelect.value =
-    savedCurrency;
+
+  const amount =
+    Number(value) || 0;
+
+  const selectedCurrency =
+    currency ||
+    currencySelect.value ||
+    "USD";
+
+  const symbol =
+    currencySymbols[selectedCurrency] ||
+    selectedCurrency;
+
+  return (
+    symbol +
+    amount.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:0,
+        maximumFractionDigits:2
+      }
+    )
+  );
+
 }
 
 
-currencySelect.addEventListener(
-  "change",
-  async()=>{
-
-    localStorage.setItem(
-      "flowmoney_currency",
-      currencySelect.value
-    );
-
-    showMessage(
-      saveMessage,
-      "Converting your saved records...",
-      ""
-    );
-
-    await loadRecords();
-
-    showMessage(
-      saveMessage,
-      "Currency updated and amounts converted automatically.",
-      "success"
-    );
-  }
-);
-
-
-/* MESSAGE HELPER */
+/* =========================================
+   MESSAGES
+========================================= */
 
 function showMessage(
   element,
@@ -1070,7 +1477,8 @@ function showMessage(
   type=""
 ){
 
-  element.textContent = text;
+  element.textContent =
+    text;
 
   element.className =
     "message " + type;
@@ -1078,10 +1486,13 @@ function showMessage(
   element.classList.remove(
     "hidden"
   );
+
 }
 
 
-/* AUTHENTICATION */
+/* =========================================
+   CURRENT USER
+========================================= */
 
 async function getCurrentUser(){
 
@@ -1089,8 +1500,9 @@ async function getCurrentUser(){
     data,
     error
   } =
-    await supabaseClient.auth.getUser();
-
+    await supabaseClient
+      .auth
+      .getUser();
 
   if(error){
 
@@ -1106,7 +1518,6 @@ async function getCurrentUser(){
 
   }
 
-
   return {
     user:data.user,
     error:null
@@ -1115,7 +1526,131 @@ async function getCurrentUser(){
 }
 
 
-/* SIGN UP */
+/* =========================================
+   PADDLE CHECKOUT
+========================================= */
+
+async function openPaddleCheckout(
+  priceId,
+  planName
+){
+
+  const {
+    user,
+    error
+  } =
+    await getCurrentUser();
+
+  if(error){
+
+    showMessage(
+      proMessage,
+      "Authentication error: " +
+      error.message,
+      "warning"
+    );
+
+    return;
+
+  }
+
+  if(!user){
+
+    showMessage(
+      authMessage,
+      "Please log in before choosing a paid FlowMoney plan.",
+      "warning"
+    );
+
+    return;
+
+  }
+
+  try{
+
+    Paddle.Checkout.open({
+
+      items:[
+        {
+          priceId:priceId,
+          quantity:1
+        }
+      ],
+
+      customer:{
+        email:user.email
+      },
+
+      customData:{
+        user_id:user.id,
+        plan:planName
+      },
+
+      settings:{
+        displayMode:"overlay",
+        theme:"light",
+        locale:"en"
+      }
+
+    });
+
+  }catch(error){
+
+    console.error(
+      "Paddle checkout error:",
+      error
+    );
+
+    showMessage(
+      proMessage,
+      "Unable to open " +
+      planName +
+      " checkout. Please check your Paddle Sandbox checkout settings.",
+      "warning"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   STARTER
+========================================= */
+
+upgradeStarterBtn.addEventListener(
+  "click",
+  async()=>{
+
+    await openPaddleCheckout(
+      FLOWMONEY_STARTER_PRICE_ID,
+      "Starter"
+    );
+
+  }
+);
+
+
+/* =========================================
+   PRO
+========================================= */
+
+upgradeProBtn.addEventListener(
+  "click",
+  async()=>{
+
+    await openPaddleCheckout(
+      FLOWMONEY_PRO_PRICE_ID,
+      "Pro"
+    );
+
+  }
+);
+
+
+/* =========================================
+   SIGN UP
+========================================= */
 
 signupBtn.addEventListener(
   "click",
@@ -1127,7 +1662,6 @@ signupBtn.addEventListener(
     const password =
       passwordInput.value;
 
-
     if(!email || !password){
 
       showMessage(
@@ -1137,8 +1671,8 @@ signupBtn.addEventListener(
       );
 
       return;
-    }
 
+    }
 
     if(password.length < 6){
 
@@ -1149,24 +1683,25 @@ signupBtn.addEventListener(
       );
 
       return;
+
     }
 
-
-    signupBtn.disabled = true;
-
+    signupBtn.disabled =
+      true;
 
     const {
       data,
       error
     } =
-      await supabaseClient.auth.signUp({
-        email,
-        password
-      });
+      await supabaseClient
+        .auth
+        .signUp({
+          email,
+          password
+        });
 
-
-    signupBtn.disabled = false;
-
+    signupBtn.disabled =
+      false;
 
     if(error){
 
@@ -1177,8 +1712,8 @@ signupBtn.addEventListener(
       );
 
       return;
-    }
 
+    }
 
     if(data.session){
 
@@ -1198,7 +1733,9 @@ signupBtn.addEventListener(
 );
 
 
-/* LOGIN */
+/* =========================================
+   LOGIN
+========================================= */
 
 loginBtn.addEventListener(
   "click",
@@ -1210,7 +1747,6 @@ loginBtn.addEventListener(
     const password =
       passwordInput.value;
 
-
     if(!email || !password){
 
       showMessage(
@@ -1220,24 +1756,25 @@ loginBtn.addEventListener(
       );
 
       return;
+
     }
 
-
-    loginBtn.disabled = true;
-
+    loginBtn.disabled =
+      true;
 
     const {
       data,
       error
     } =
-      await supabaseClient.auth.signInWithPassword({
+    await supabaseClient
+      .auth
+      .signInWithPassword({
         email,
         password
       });
 
-
-    loginBtn.disabled = false;
-
+    loginBtn.disabled =
+      false;
 
     if(error){
 
@@ -1248,8 +1785,8 @@ loginBtn.addEventListener(
       );
 
       return;
-    }
 
+    }
 
     if(data.user){
 
@@ -1261,58 +1798,581 @@ loginBtn.addEventListener(
 );
 
 
-/* LOG OUT */
+/* =========================================
+   LOGOUT
+========================================= */
 
 logoutBtn.addEventListener(
   "click",
   async()=>{
 
-    await supabaseClient.auth.signOut();
+    await supabaseClient
+      .auth
+      .signOut();
 
-    dashboardSection.classList.add(
-      "hidden"
-    );
+    dashboardSection
+      .classList
+      .add("hidden");
 
-    authSection.classList.remove(
-      "hidden"
-    );
+    authSection
+      .classList
+      .remove("hidden");
 
-    logoutBtn.classList.add(
-      "hidden"
-    );
+    logoutBtn
+      .classList
+      .add("hidden");
 
-    emailInput.value = "";
-    passwordInput.value = "";
+    emailInput.value =
+      "";
+
+    passwordInput.value =
+      "";
 
   }
 );
 
 
-/* SHOW DASHBOARD */
+/* =========================================
+   SHOW DASHBOARD
+========================================= */
 
 async function showDashboard(){
 
-  authSection.classList.add(
-    "hidden"
-  );
+  authSection
+    .classList
+    .add("hidden");
 
-  dashboardSection.classList.remove(
-    "hidden"
-  );
+  dashboardSection
+    .classList
+    .remove("hidden");
 
-  logoutBtn.classList.remove(
-    "hidden"
-  );
-
-
-  await loadExchangeRates();
+  logoutBtn
+    .classList
+    .remove("hidden");
 
   await loadRecords();
+
+  await loadWallet();
 
 }
 
 
-/* SAVE MONTHLY RECORD */
+/* =========================================
+   CURRENCY CHANGE
+========================================= */
+
+currencySelect.addEventListener(
+  "change",
+  async()=>{
+
+    localStorage.setItem(
+      "flowmoney_currency",
+      currencySelect.value
+    );
+
+    await loadRecords();
+
+    await loadWallet();
+
+  }
+);
+
+
+const savedCurrency =
+localStorage.getItem(
+  "flowmoney_currency"
+);
+
+if(
+  savedCurrency &&
+  currencySymbols[savedCurrency]
+){
+
+  currencySelect.value =
+    savedCurrency;
+
+}
+
+
+/* =========================================
+   WALLET ACTION
+========================================= */
+
+function openWalletAction(
+  action
+){
+
+  walletAction =
+    action;
+
+  walletActionCard
+    .classList
+    .remove("hidden");
+
+  if(action === "deposit"){
+
+    walletActionTitle.textContent =
+      "Deposit Money";
+
+    document.getElementById(
+      "continueWalletBtn"
+    ).textContent =
+      "Continue Deposit";
+
+  }else{
+
+    walletActionTitle.textContent =
+      "Withdraw Money";
+
+    document.getElementById(
+      "continueWalletBtn"
+    ).textContent =
+      "Continue Withdrawal";
+
+  }
+
+  walletAmount.value =
+    "";
+
+  accountDetails.value =
+    "";
+
+  window.scrollTo({
+    top:
+      walletActionCard.offsetTop -
+      20,
+    behavior:"smooth"
+  });
+
+}
+
+
+document.getElementById(
+  "depositBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    openWalletAction("deposit");
+  }
+);
+
+
+document.getElementById(
+  "withdrawBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    openWalletAction("withdraw");
+  }
+);
+
+
+document.getElementById(
+  "depositInfoBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    openWalletAction("deposit");
+  }
+);
+
+
+document.getElementById(
+  "withdrawInfoBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    openWalletAction("withdraw");
+  }
+);
+
+
+document.getElementById(
+  "cancelWalletBtn"
+).addEventListener(
+  "click",
+  ()=>{
+    walletActionCard
+      .classList
+      .add("hidden");
+  }
+);
+
+
+/* =========================================
+   PAYMENT METHOD LABEL
+========================================= */
+
+paymentMethod.addEventListener(
+  "change",
+  ()=>{
+
+    if(paymentMethod.value === "bank"){
+
+      accountLabel.textContent =
+        "Bank Account Details";
+
+      accountDetails.placeholder =
+        "Enter bank account details";
+
+    }else{
+
+      accountLabel.textContent =
+        "Wallet Details";
+
+      accountDetails.placeholder =
+        "Enter supported wallet details";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   WALLET DATA
+========================================= */
+
+async function loadWallet(){
+
+  const {
+    user,
+    error:userError
+  } =
+    await getCurrentUser();
+
+  if(userError || !user){
+
+    return;
+
+  }
+
+  /*
+    This reads wallet transactions only if the
+    table exists.
+
+    Real deposits/withdrawals must later be
+    created by a verified server/payment webhook.
+  */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("wallet_transactions")
+      .select("*")
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    console.warn(
+      "Wallet table is not connected yet:",
+      error.message
+    );
+
+    walletBalance.textContent =
+      formatMoney(
+        0
+      );
+
+    transactionsList.innerHTML =
+      '<p class="small">Wallet is ready for payment-provider connection.</p>';
+
+    return;
+
+  }
+
+  let balance =
+    0;
+
+  const selectedCurrency =
+    currencySelect.value ||
+    "USD";
+
+  (data || []).forEach(
+    transaction=>{
+
+      const transactionCurrency =
+        transaction.currency ||
+        selectedCurrency;
+
+      const amount =
+        Number(
+          transaction.amount
+        ) || 0;
+
+      const converted =
+        convertCurrency(
+          amount,
+          transactionCurrency,
+          selectedCurrency
+        );
+
+      if(
+        transaction.type === "deposit" &&
+        transaction.status === "completed"
+      ){
+
+        balance +=
+          converted;
+
+      }
+
+      if(
+        transaction.type === "withdrawal" &&
+        transaction.status === "completed"
+      ){
+
+        balance -=
+          converted;
+
+      }
+
+    }
+  );
+
+  walletBalance.textContent =
+    formatMoney(
+      Math.max(
+        0,
+        balance
+      ),
+      selectedCurrency
+    );
+
+  displayTransactions(
+    data || []
+  );
+
+}
+
+
+/* =========================================
+   WALLET TRANSACTION DISPLAY
+========================================= */
+
+function displayTransactions(
+  transactions
+){
+
+  if(!transactions.length){
+
+    transactionsList.innerHTML =
+      '<p class="small">No wallet transactions yet.</p>';
+
+    return;
+
+  }
+
+  transactionsList.innerHTML =
+    "";
+
+  transactions.forEach(
+    transaction=>{
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+      div.className =
+        "transaction";
+
+      const type =
+        transaction.type ||
+        "transaction";
+
+      const amount =
+        Number(
+          transaction.amount
+        ) || 0;
+
+      const currency =
+        transaction.currency ||
+        currencySelect.value;
+
+      const status =
+        transaction.status ||
+        "pending";
+
+      const date =
+        transaction.created_at
+          ? new Date(
+              transaction.created_at
+            ).toLocaleString()
+          : "";
+
+      const amountClass =
+        type === "deposit"
+          ? "deposit-text"
+          : "withdraw-text";
+
+      const sign =
+        type === "deposit"
+          ? "+"
+          : "-";
+
+      div.innerHTML = `
+
+        <div class="transaction-top">
+
+          <span>
+            ${escapeHtml(
+              type.charAt(0).toUpperCase() +
+              type.slice(1)
+            )}
+          </span>
+
+          <strong class="${amountClass}">
+            ${sign}${formatMoney(
+              amount,
+              currency
+            )}
+          </strong>
+
+        </div>
+
+        <div class="transaction-details">
+
+          ${escapeHtml(
+            transaction.payment_method ||
+            "Payment method"
+          )}
+
+          ·
+
+          <span class="status-pending">
+            ${escapeHtml(status)}
+          </span>
+
+          <br>
+
+          ${escapeHtml(date)}
+
+        </div>
+
+      `;
+
+      transactionsList.appendChild(
+        div
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   CONTINUE WALLET ACTION
+
+   IMPORTANT:
+   This intentionally does NOT create
+   a completed money transaction.
+
+   Real money must be verified by a
+   payment provider/webhook.
+========================================= */
+
+document.getElementById(
+  "continueWalletBtn"
+).addEventListener(
+  "click",
+  async()=>{
+
+    const {
+      user,
+      error:userError
+    } =
+      await getCurrentUser();
+
+    if(userError || !user){
+
+      showMessage(
+        walletMessage,
+        "Please log in first.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+    const amount =
+      Number(
+        walletAmount.value
+      ) || 0;
+
+    const currency =
+      walletCurrency.value;
+
+    const country =
+      walletCountry.value;
+
+    const method =
+      paymentMethod.value;
+
+    const details =
+      accountDetails.value.trim();
+
+    if(amount <= 0){
+
+      showMessage(
+        walletMessage,
+        "Please enter a valid amount.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+    if(!details){
+
+      showMessage(
+        walletMessage,
+        "Please enter your bank or wallet details.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+    /*
+      We do NOT mark this as completed.
+
+      This prevents FlowMoney from creating
+      fake balances. The next integration step
+      will connect the selected country/payment
+      method to a real payment provider.
+    */
+
+    showMessage(
+      walletMessage,
+      walletAction === "deposit"
+        ? "Deposit setup is ready. Connect a supported payment provider to complete the deposit."
+        : "Withdrawal setup is ready. Connect a supported payout provider to complete the withdrawal.",
+      "warning"
+    );
+
+  }
+);
+
+
+/* =========================================
+   SAVE MONTHLY RECORD
+========================================= */
 
 document
   .getElementById("saveBtn")
@@ -1324,8 +2384,7 @@ document
         user,
         error:userError
       } =
-      await getCurrentUser();
-
+        await getCurrentUser();
 
       if(userError){
 
@@ -1337,8 +2396,8 @@ document
         );
 
         return;
-      }
 
+      }
 
       if(!user){
 
@@ -1349,14 +2408,13 @@ document
         );
 
         return;
-      }
 
+      }
 
       const month =
         document
           .getElementById("month")
           .value;
-
 
       const income =
         Number(
@@ -1365,14 +2423,12 @@ document
             .value
         ) || 0;
 
-
       const housing =
         Number(
           document
             .getElementById("housing")
             .value
         ) || 0;
-
 
       const food =
         Number(
@@ -1381,7 +2437,6 @@ document
             .value
         ) || 0;
 
-
       const transport =
         Number(
           document
@@ -1389,18 +2444,12 @@ document
             .value
         ) || 0;
 
-
       const bills =
         Number(
           document
             .getElementById("bills")
             .value
         ) || 0;
-
-
-      const currency =
-        currencySelect.value;
-
 
       if(!month){
 
@@ -1411,78 +2460,30 @@ document
         );
 
         return;
-      }
 
+      }
 
       /*
-        Prevent accidental duplicate
-        records for the same month.
-      */
-
-      const {
-        data:existing,
-        error:existingError
-      } =
-      await supabaseClient
-        .from("money_records")
-        .select("id")
-        .eq("user_id",user.id)
-        .eq("month",month)
-        .limit(1);
-
-
-      if(existingError){
-
-        console.error(
-          existingError
-        );
-
-      }
-
-
-      if(existing && existing.length){
-
-        showMessage(
-          saveMessage,
-          "A record for this month already exists. Please choose another month.",
-          "warning"
-        );
-
-        return;
-      }
-
-
-      /*
-        IMPORTANT:
-        Save the original currency
-        together with the monthly values.
+        The saved record is stored in the
+        selected currency.
       */
 
       const {
         error
       } =
-      await supabaseClient
-        .from("money_records")
-        .insert({
+        await supabaseClient
+          .from("money_records")
+          .insert({
 
-          user_id:user.id,
+            user_id:user.id,
+            month,
+            income,
+            housing,
+            food,
+            transport,
+            bills
 
-          month,
-
-          currency,
-
-          income,
-
-          housing,
-
-          food,
-
-          transport,
-
-          bills
-
-        });
-
+          });
 
       if(error){
 
@@ -1499,15 +2500,14 @@ document
         );
 
         return;
-      }
 
+      }
 
       showMessage(
         saveMessage,
         "Monthly record saved successfully.",
         "success"
       );
-
 
       document.getElementById(
         "income"
@@ -1529,14 +2529,15 @@ document
         "bills"
       ).value = "";
 
-
       await loadRecords();
 
     }
   );
 
 
-/* LOAD RECORDS */
+/* =========================================
+   LOAD RECORDS
+========================================= */
 
 async function loadRecords(){
 
@@ -1544,8 +2545,7 @@ async function loadRecords(){
     user,
     error:userError
   } =
-  await getCurrentUser();
-
+    await getCurrentUser();
 
   if(userError){
 
@@ -1557,27 +2557,32 @@ async function loadRecords(){
     );
 
     return;
-  }
 
+  }
 
   if(!user){
+
     return;
+
   }
-
-
-  await loadExchangeRates();
-
 
   const {
     data,
     error
   } =
-  await supabaseClient
-    .from("money_records")
-    .select("*")
-    .eq("user_id",user.id)
-    .order("month",{ascending:false});
-
+    await supabaseClient
+      .from("money_records")
+      .select("*")
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "month",
+        {
+          ascending:false
+        }
+      );
 
   if(error){
 
@@ -1594,13 +2599,12 @@ async function loadRecords(){
     );
 
     return;
-  }
 
+  }
 
   calculatePlan(
     data || []
   );
-
 
   displayRecords(
     data || []
@@ -1609,144 +2613,110 @@ async function loadRecords(){
 }
 
 
-/* CALCULATE PLAN */
+/* =========================================
+   CALCULATE PLAN
+========================================= */
 
-function calculatePlan(records){
-
-  const displayCurrency =
-    currencySelect.value || "USD";
-
+function calculatePlan(
+  records
+){
 
   if(!records.length){
 
-    [
-      "averageIncome",
-      "lowestIncome",
-      "essentialExpenses",
-      "safeToSpend",
-      "reserveTarget",
+    document.getElementById(
+      "averageIncome"
+    ).textContent =
+      formatMoney(0);
+
+    document.getElementById(
+      "lowestIncome"
+    ).textContent =
+      formatMoney(0);
+
+    document.getElementById(
+      "essentialExpenses"
+    ).textContent =
+      formatMoney(0);
+
+    document.getElementById(
+      "safeToSpend"
+    ).textContent =
+      formatMoney(0);
+
+    document.getElementById(
+      "reserveTarget"
+    ).textContent =
+      formatMoney(0);
+
+    document.getElementById(
       "reserveProgress"
-    ]
-    .forEach(id=>{
-
-      document
-        .getElementById(id)
-        .textContent =
-        formatMoney(0);
-
-    });
-
-
-    document
-      .getElementById(
-        "historySummary"
-      )
-      .textContent =
-      "Months tracked: 0";
-
+    ).textContent =
+      formatMoney(0);
 
     return;
+
   }
 
-
   /*
-    Convert every saved month's income
-    into the currently selected currency.
+    Records are stored in their original
+    selected currency.
+
+    Convert everything into the currently
+    selected display currency.
   */
 
-  const convertedRecords =
-    records.map(record=>{
-
-      const originalCurrency =
-        record.currency || "USD";
-
-
-      const income =
-        convertCurrency(
-          record.income,
-          originalCurrency,
-          displayCurrency
-        );
-
-
-      const housing =
-        convertCurrency(
-          record.housing,
-          originalCurrency,
-          displayCurrency
-        );
-
-
-      const food =
-        convertCurrency(
-          record.food,
-          originalCurrency,
-          displayCurrency
-        );
-
-
-      const transport =
-        convertCurrency(
-          record.transport,
-          originalCurrency,
-          displayCurrency
-        );
-
-
-      const bills =
-        convertCurrency(
-          record.bills,
-          originalCurrency,
-          displayCurrency
-        );
-
-
-      return {
-        ...record,
-        convertedIncome:income,
-        convertedHousing:housing,
-        convertedFood:food,
-        convertedTransport:transport,
-        convertedBills:bills
-      };
-
-    });
-
+  const displayCurrency =
+    currencySelect.value ||
+    "USD";
 
   const incomes =
-    convertedRecords.map(
+    records.map(
       record =>
-        record.convertedIncome
+        convertCurrency(
+          Number(
+            record.income
+          ) || 0,
+          record.currency ||
+            displayCurrency,
+          displayCurrency
+        )
     );
-
 
   const averageIncome =
     incomes.reduce(
-      (total,value)=>
-        total + value,
+      (a,b)=>a+b,
       0
-    ) / incomes.length;
-
+    ) /
+    incomes.length;
 
   const lowestIncome =
-    Math.min(...incomes);
-
-
-  /*
-    Records are sorted newest first.
-    Therefore records[0] is the latest month.
-  */
+    Math.min(
+      ...incomes
+    );
 
   const latest =
-    convertedRecords[0];
+    records[0];
 
+  const recordCurrency =
+    latest.currency ||
+    displayCurrency;
+
+  const essentialExpensesOriginal =
+
+    (Number(latest.housing)||0) +
+
+    (Number(latest.food)||0) +
+
+    (Number(latest.transport)||0) +
+
+    (Number(latest.bills)||0);
 
   const essentialExpenses =
-    latest.convertedHousing +
-    latest.convertedFood +
-    latest.convertedTransport +
-    latest.convertedBills;
-
+    convertCurrency(
+      essentialExpensesOriginal,
+      recordCurrency,
+      displayCurrency
+    );
 
   const safeToSpend =
     Math.max(
@@ -1755,117 +2725,86 @@ function calculatePlan(records){
       essentialExpenses
     );
 
-
   const reserveTarget =
     essentialExpenses * 3;
 
-
-  /*
-    Reserve progress is an estimate
-    based on the current month's income
-    remaining after essentials.
-  */
-
-  const reserveProgress =
+  const estimatedReserveProgress =
     Math.max(
       0,
-      latest.convertedIncome -
+      averageIncome -
       essentialExpenses
     );
 
-
-  document
-    .getElementById(
-      "averageIncome"
-    )
-    .textContent =
+  document.getElementById(
+    "averageIncome"
+  ).textContent =
     formatMoney(
-      averageIncome
+      averageIncome,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "lowestIncome"
-    )
-    .textContent =
+  document.getElementById(
+    "lowestIncome"
+  ).textContent =
     formatMoney(
-      lowestIncome
+      lowestIncome,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "essentialExpenses"
-    )
-    .textContent =
+  document.getElementById(
+    "essentialExpenses"
+  ).textContent =
     formatMoney(
-      essentialExpenses
+      essentialExpenses,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "safeToSpend"
-    )
-    .textContent =
+  document.getElementById(
+    "safeToSpend"
+  ).textContent =
     formatMoney(
-      safeToSpend
+      safeToSpend,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "reserveTarget"
-    )
-    .textContent =
+  document.getElementById(
+    "reserveTarget"
+  ).textContent =
     formatMoney(
-      reserveTarget
+      reserveTarget,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "reserveProgress"
-    )
-    .textContent =
+  document.getElementById(
+    "reserveProgress"
+  ).textContent =
     formatMoney(
-      reserveProgress
+      estimatedReserveProgress,
+      displayCurrency
     );
 
-
-  document
-    .getElementById(
-      "historySummary"
-    )
-    .textContent =
-    "Months tracked: " +
-    records.length +
-    " • Display currency: " +
-    displayCurrency;
-
-
-  document
-    .getElementById(
-      "planMessage"
-    )
-    .textContent =
-    "Your plan uses your complete saved monthly history. Safe-to-spend uses your lowest recent income and the latest month's essential expenses. Your amounts are automatically converted to " +
+  document.getElementById(
+    "planMessage"
+  ).textContent =
+    "Your amounts are automatically converted to " +
     displayCurrency +
-    " using the latest available exchange rates.";
+    " using the available exchange-rate table. Your safe-to-spend estimate uses your lowest recent income and current essential expenses.";
 
 }
 
 
-/* DISPLAY SAVED RECORDS */
+/* =========================================
+   DISPLAY RECORDS
+========================================= */
 
-function displayRecords(records){
+function displayRecords(
+  records
+){
 
   const list =
     document.getElementById(
       "recordsList"
     );
-
 
   if(!records.length){
 
@@ -1873,203 +2812,102 @@ function displayRecords(records){
       '<p class="small">No records yet.</p>';
 
     return;
+
   }
 
-
-  list.innerHTML = "";
-
+  list.innerHTML =
+    "";
 
   const displayCurrency =
-    currencySelect.value || "USD";
+    currencySelect.value ||
+    "USD";
 
+  records.forEach(
+    record=>{
 
-  records.forEach(record=>{
+      const originalCurrency =
+        record.currency ||
+        displayCurrency;
 
-    /*
-      Old records created before the
-      currency column existed are treated
-      as USD.
-    */
+      const income =
+        convertCurrency(
+          Number(
+            record.income
+          ) || 0,
+          originalCurrency,
+          displayCurrency
+        );
 
-    const originalCurrency =
-      record.currency || "USD";
+      const essentialOriginal =
 
+        (Number(record.housing)||0) +
 
-    const income =
-      convertCurrency(
-        record.income,
-        originalCurrency,
-        displayCurrency
+        (Number(record.food)||0) +
+
+        (Number(record.transport)||0) +
+
+        (Number(record.bills)||0);
+
+      const essential =
+        convertCurrency(
+          essentialOriginal,
+          originalCurrency,
+          displayCurrency
+        );
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+      div.className =
+        "record";
+
+      div.innerHTML = `
+
+        <div class="record-month">
+          ${escapeHtml(record.month)}
+        </div>
+
+        <div class="record-row">
+          <span>Income</span>
+          <strong>
+            ${formatMoney(
+              income,
+              displayCurrency
+            )}
+          </strong>
+        </div>
+
+        <div class="record-row">
+          <span>Essentials</span>
+          <strong>
+            ${formatMoney(
+              essential,
+              displayCurrency
+            )}
+          </strong>
+        </div>
+
+      `;
+
+      list.appendChild(
+        div
       );
 
-
-    const housing =
-      convertCurrency(
-        record.housing,
-        originalCurrency,
-        displayCurrency
-      );
-
-
-    const food =
-      convertCurrency(
-        record.food,
-        originalCurrency,
-        displayCurrency
-      );
-
-
-    const transport =
-      convertCurrency(
-        record.transport,
-        originalCurrency,
-        displayCurrency
-      );
-
-
-    const bills =
-      convertCurrency(
-        record.bills,
-        originalCurrency,
-        displayCurrency
-      );
-
-
-    const essential =
-      housing +
-      food +
-      transport +
-      bills;
-
-
-    const div =
-      document.createElement(
-        "div"
-      );
-
-
-    div.className = "record";
-
-
-    div.innerHTML = `
-
-      <div class="record-month">
-        ${escapeHtml(
-          formatMonth(record.month)
-        )}
-      </div>
-
-      <div class="record-currency">
-        Original currency:
-        ${escapeHtml(originalCurrency)}
-        • Displayed in:
-        ${escapeHtml(displayCurrency)}
-      </div>
-
-      <div class="record-row">
-        <span>Income</span>
-        <strong>
-          ${formatMoney(income)}
-        </strong>
-      </div>
-
-      <div class="record-row">
-        <span>Essentials</span>
-        <strong>
-          ${formatMoney(essential)}
-        </strong>
-      </div>
-
-    `;
-
-
-    list.appendChild(
-      div
-    );
-
-  });
-
-}
-
-
-/* FORMAT MONTH */
-
-function formatMonth(month){
-
-  if(!month){
-    return "Unknown month";
-  }
-
-
-  const parts =
-    month.split("-");
-
-
-  if(parts.length !== 2){
-    return month;
-  }
-
-
-  const year =
-    Number(parts[0]);
-
-  const monthNumber =
-    Number(parts[1]);
-
-
-  const date =
-    new Date(
-      year,
-      monthNumber - 1,
-      1
-    );
-
-
-  return date.toLocaleDateString(
-    "en-US",
-    {
-      month:"long",
-      year:"numeric"
     }
   );
 
 }
 
 
-/* MONEY FORMAT */
+/* =========================================
+   ESCAPE HTML
+========================================= */
 
-function formatMoney(value){
-
-  const amount =
-    Number(value) || 0;
-
-
-  const currency =
-    currencySelect.value || "USD";
-
-
-  const symbol =
-    currencySymbols[currency] ||
-    currency;
-
-
-  return (
-    symbol +
-    amount.toLocaleString(
-      "en-US",
-      {
-        minimumFractionDigits:0,
-        maximumFractionDigits:2
-      }
-    )
-  );
-
-}
-
-
-/* SECURITY */
-
-function escapeHtml(value){
+function escapeHtml(
+  value
+){
 
   return String(value)
 
@@ -2101,70 +2939,9 @@ function escapeHtml(value){
 }
 
 
-/* FLOWMONEY PRO */
-
-upgradeProBtn.addEventListener(
-  "click",
-  ()=>{
-
-    proModal.classList.remove(
-      "hidden"
-    );
-
-  }
-);
-
-
-closeProBtn.addEventListener(
-  "click",
-  ()=>{
-
-    proModal.classList.add(
-      "hidden"
-    );
-
-  }
-);
-
-
-proModal.addEventListener(
-  "click",
-  event=>{
-
-    if(
-      event.target ===
-      proModal
-    ){
-
-      proModal.classList.add(
-        "hidden"
-      );
-
-    }
-
-  }
-);
-
-
-continueProBtn.addEventListener(
-  "click",
-  ()=>{
-
-    showMessage(
-      proMessage,
-      "Secure Pro checkout will be connected in the next payment setup step.",
-      "warning"
-    );
-
-    proModal.classList.add(
-      "hidden"
-    );
-
-  }
-);
-
-
-/* SESSION */
+/* =========================================
+   CHECK SESSION
+========================================= */
 
 async function checkSession(){
 
@@ -2172,8 +2949,9 @@ async function checkSession(){
     data,
     error
   } =
-  await supabaseClient.auth.getSession();
-
+    await supabaseClient
+      .auth
+      .getSession();
 
   if(error){
 
@@ -2183,8 +2961,8 @@ async function checkSession(){
     );
 
     return;
-  }
 
+  }
 
   if(data.session){
 
@@ -2193,7 +2971,6 @@ async function checkSession(){
   }
 
 }
-
 
 checkSession();
 
